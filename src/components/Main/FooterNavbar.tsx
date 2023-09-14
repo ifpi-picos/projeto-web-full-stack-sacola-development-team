@@ -37,16 +37,18 @@ export default function LabelBottomNavigation() {
     const handleMenuClick = (newValue: string) => {
         switch (newValue) {
             case 'home':
-                router.push('mainPage');
+                router.push('/mainPage'); // Use o caminho completo da rota, incluindo /
                 break;
             case 'biblioteca':
-                router.push('biblioteca');
+                router.push('/biblioteca'); // Use o caminho completo da rota, incluindo /
                 break;
             case 'perfil':
-                router.push('telaPerfil');
+                router.push('/telaPerfil'); // Use o caminho completo da rota, incluindo /
                 break;
         }
     };
+    
+
 
 
     return (

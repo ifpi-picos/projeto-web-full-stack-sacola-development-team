@@ -106,7 +106,7 @@ export default function TelaJogo() {
                 ) : (
                     <Loading isLoading={true}/>
                 )}
-                <div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
+<div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
                     {/* Conditional rendering of the screenshot section */}
                     {gameInfo && gameInfo.screenshots && gameInfo.screenshots.length > 0 && (
                         <>
@@ -115,9 +115,11 @@ export default function TelaJogo() {
                                 alt=""
                                 width={900}
                                 height={500}
-                                className="mx-auto md:ml-14"
+                                className="mx-auto md:ml-5" // Alterei md:ml-14 para md:ml-0
                             />
-                            <h2 className="text-center mt-4 text-white">{gameInfo.summary}</h2>
+                            <div className="text-center mt-4 text-justify text-white md:ml-0"> {/* Alterei md:ml-14 para md:ml-0 */}
+                                <h2>{gameInfo.summary}</h2>
+                            </div>
                         </>
                     )}
                 </div>
