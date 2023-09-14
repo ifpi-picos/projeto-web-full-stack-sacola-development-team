@@ -12,14 +12,25 @@ export async function getLatestGameInfo() {
       }
   
       const today = new Date();
-      const nextWeek = addDays(today, 7); // Adiciona 7 dias à data atual
-  
+      const startOfWeek = new Date(today);
+      startOfWeek.setHours(0, 0, 0, 0);
+      startOfWeek.setDate(today.getDate() - today.getDay()); // Define o início da semana como o domingo
+      
+      const endOfWeek = new Date(today);
+      endOfWeek.setHours(23, 59, 59, 999);
+      endOfWeek.setDate(startOfWeek.getDate() + 6); // Define o final da semana como o sábado
+      
       const queryString = `
-        fields id, cover.image_id;
-        where release_dates.date >= ${Math.floor(today.getTime() / 1000)} &
-              release_dates.date <= ${Math.floor(nextWeek.getTime() / 1000)};
+        fields id, cover.image_id, first_release_date;
+        where first_release_date >= ${Math.floor(startOfWeek.getTime() / 1000)}
+        & first_release_date <= ${Math.floor(endOfWeek.getTime() / 1000)}
+        & cover != null 
+        & cover.image_id != null;
+        sort first_release_date desc;
         limit 10;
       `;
+            
+    
   
       const response = await fetch(endpoint + 'games', {
         method: 'POST',
@@ -40,7 +51,7 @@ export async function getLatestGameInfo() {
       apiCache.set('latestGames', gameInfo);
       setTimeout(() => {
         apiCache.delete('latestGames');
-      }, 60 * 60 * 1000); 
+      }, 24 * 60 * 60 * 1000); // 24 horas
   
       return gameInfo;
     } catch (error) {

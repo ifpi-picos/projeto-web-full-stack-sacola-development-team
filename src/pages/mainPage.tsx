@@ -26,7 +26,7 @@ export default function MainPage({gamesData}: MainPageProps) {
 
             <div
                 className='mt-8 sm:mt-16'> {/* Espaçamento para dispositivos móveis e maior espaçamento para telas maiores */}
-                <h1 className="text-2xl flex justify-center items-center mb-4">Jogos lançados recentemente</h1>
+                <h1 className="text-2xl flex justify-center items-center mb-4 text-white">Jogos lançados recentemente</h1>
                 <Carrossel games={gamesData}></Carrossel>
             </div>
             <div className="h-16"></div>
