@@ -1,5 +1,13 @@
 export default class Player {
-    constructor(id: string = '', name: string | null, username: string, email: string | null, photo?: string | null, friends: string[] = [], games: string[] = []) {
+    constructor(
+        id: string = '',
+        name: string | null,
+        username: string,
+        email: string | null,
+        photo?: string | null,
+        friends: Record<string, any> = {},
+        games: Record<string, any> = {}
+    ) {
         this._id = id;
         this._name = name;
         this._username = username;
@@ -21,11 +29,11 @@ export default class Player {
 
     private _name: string | null;
 
-    get name(): string {
-        return <string>this._name;
+    get name(): string | null {
+        return this._name;
     }
 
-    set name(value: string) {
+    set name(value: string | null) {
         this._name = value;
     }
 
@@ -41,46 +49,54 @@ export default class Player {
 
     private _email: string | null;
 
-    get email(): string {
-        return <string>this._email;
+    get email(): string | null {
+        return this._email;
     }
 
-    set email(value: string) {
+    set email(value: string | null) {
         this._email = value;
     }
 
     private _photo: string | null | undefined;
 
-    get photo(): string {
-        return <string>this._photo;
+    get photo(): string | null | undefined {
+        return this._photo;
     }
 
-    set photo(value: string) {
+    set photo(value: string | null | undefined) {
         this._photo = value;
     }
 
-    private _friends: string[];
+    private _friends: Record<string, any>;
 
-    get friends(): string[] {
+    get friends(): Record<string, any> {
         return this._friends;
     }
 
-    set friends(value: string[]) {
+    set friends(value: Record<string, any>) {
         this._friends = value;
     }
 
-    private _games: string[];
+    private _games: Record<string, any>;
 
-    get games(): string[] {
+    get games(): Record<string, any> {
         return this._games;
     }
 
-    set games(value: string[]) {
+    set games(value: Record<string, any>) {
         this._games = value;
     }
 
     static fromJSON(json: any): Player {
-        return new Player(json.id, json.name, json.username, json.email, json.photo, json.friends, json.games);
+        return new Player(
+            json._id,
+            json.name,
+            json.username,
+            json.email,
+            json.photo,
+            json.friends,
+            json.games
+        );
     }
 
     toJSON(): any {
@@ -92,6 +108,6 @@ export default class Player {
             photo: this.photo,
             friends: this.friends,
             games: this.games
-        }
+        };
     }
 }

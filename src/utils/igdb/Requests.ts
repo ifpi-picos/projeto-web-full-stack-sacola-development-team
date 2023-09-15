@@ -18,7 +18,7 @@ export async function getLatestGameInfo(locale = 'en_US') {
 
       const endOfWeek = new Date(today);
       endOfWeek.setHours(23, 59, 59, 999);
-      endOfWeek.setDate(startOfWeek.getDate() + 6); // Define o final da semana como o sábado
+      endOfWeek.setDate(startOfWeek.getDate() + 8); // Define o final da semana como o sábado
 
       const queryString = `
           fields id, cover.image_id, first_release_date, summary;

@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+  import  Image  from 'next/image';
 
 
 const style = {
@@ -121,7 +122,9 @@ export default function SearchModal({ onGameSelect }: SearchModalProps) {
                 {searchResults.map((game) => (
                   <li key={game.id} onClick={() => handleGameSelect(game)} className="flex items-center cursor-pointer p-1">
                     {game.cover && (
-                      <img
+                      <Image
+                        width={32}
+                        height={32}
                         src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.cover.image_id}.jpg`}
                         alt={game.name}
                         className="w-8 h-8 mr-2"

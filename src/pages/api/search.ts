@@ -1,7 +1,7 @@
 // pages/api/search.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export async function searchRequest (req: NextApiRequest, res: NextApiResponse) {
   try {
     const clientId = process.env.IGDB_CLIENT_ID;
     const accessToken = process.env.IGDB_ACCESS_TOKEN;
