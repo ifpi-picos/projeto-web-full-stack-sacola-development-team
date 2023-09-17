@@ -15,20 +15,18 @@ auth.useDeviceLanguage();
 
 export default function useAuth() {
 
-
     // Funções de ‘login’
     async function login(email: string, password: string) {
         try {
-            await signInWithEmailAndPassword(auth, email, password)
-            console.log("logged in")
+            const user = await signInWithEmailAndPassword(auth, email, password)
+            localStorage.setItem('user', JSON.stringify(user))
         } catch (e: any) {
-            console.log(e.code)
             if (e.code === "auth/user-not-found") {
-                console.log("user not found")
+                throw new Error('Usuário não encontrado!')
             } else if (e.code === "auth/wrong-password") {
-                console.log("wrong password")
+                throw new Error('Senha incorreta!')
             } else if (e.code === "auth/invalid-email") {
-                console.log("invalid email")
+                throw new Error('Email inválido!')
             }
         }
     }
@@ -44,6 +42,7 @@ export default function useAuth() {
 
             // await addUserDocument(player)
 
+            localStorage.setItem('user', JSON.stringify(user))
             return 'Sucess'
 
         } catch (e: any) {
@@ -65,7 +64,6 @@ export default function useAuth() {
 
     async function loginOrRegisterWithGoogle() {
         try {
-
             const res = await signInWithPopup(auth, provider)
             const user = res.user
             const player = new Player(
@@ -82,20 +80,19 @@ export default function useAuth() {
                 player: player.toJSON()
             })
 
+            localStorage.setItem('user', JSON.stringify(user))
         } catch (e: any) {
             console.log(e.code)
             if (e.code === "auth/account-exists-with-different-credential") {
-                console.log("account exists with different credential")
+                throw new Error('Conta já existe com credenciais diferentes!')
             } else if (e.code === "auth/invalid-credential") {
-                console.log("invalid credential")
+                throw new Error('Credencial inválida!')
             } else if (e.code === "auth/operation-not-allowed") {
-                console.log("operation not allowed")
+                throw new Error('Operação não permitida!')
             } else if (e.code === "auth/user-disabled") {
-                console.log("user disabled")
+                throw new Error('Usuário desabilitado!')
             } else if (e.code === "auth/user-not-found") {
-                console.log("user not found")
-            } else if (e.code === "auth/wrong-password") {
-                console.log("wrong password")
+                throw new Error('Usuário não encontrado!')
             }
         }
     }
@@ -118,7 +115,7 @@ export default function useAuth() {
     async function logout() {
         try {
             await auth.signOut()
-            console.log("logged out")
+            localStorage.removeItem('user')
             window.location.href = '/'
         } catch (e: any) {
             console.log(e.code)
@@ -129,11 +126,19 @@ export default function useAuth() {
     }
 
 
+    // User is logged in
+    async function isLogged() {
+        const user = localStorage.getItem('user')
+        return !!user;
+    }
+
+
     return {
         login,
         register,
         loginOrRegisterWithGoogle,
         forgotPassword,
-        logout
+        logout,
+        isLogged
     }
 }

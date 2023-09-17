@@ -1,43 +1,36 @@
+import Player from "@/core/Player";
 
+export async function getUserInfo() {
+    const clientAcessToken = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
+    const url = process.env.NEXT_PUBLIC_VERCEL_URL;
+    let userId = '';
+    if (typeof window !== 'undefined') {
+        // @ts-ignore
+        userId = JSON.parse(localStorage.getItem('user'));
+    }
 
-export async function getUserInfo ()  {
-
-    
-
-    try{
-        const clientAcessToken = process.env.VERCEL_TOKEN;
-        const url = process.env.VERCEL_URL;
-
-        if(!clientAcessToken){
+    try {
+        if (!clientAcessToken) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
         }
-        
-        const response = await fetch(url + '/users/UbFuTPc984PBIwQsuDTdX81xR734',{
+
+        const response = await fetch(url + '/users/UbFuTPc984PBIwQsuDTdX81xR734', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-            Authorization: `${clientAcessToken}`,
-        }
-        
+                Authorization: `${clientAcessToken}`,
+            }
+
         });
-        if(response.ok){
+        if (response.ok) {
             const data = await response.json();
-            console.log(data);
-            return data;
-        }
-        else{
+            const userDTO = data.user;
+            return Player.fromJSON(userDTO);
+        } else {
             throw new Error('Erro ao buscar informações do usuário.');
         }
-    
-    }
 
-    catch(error){
+    } catch (error) {
         console.error(error);
-        
     }
-    
-    
-   
-    
 }
-
