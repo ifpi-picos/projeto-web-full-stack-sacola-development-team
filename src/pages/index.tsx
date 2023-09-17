@@ -34,8 +34,8 @@ export default function Home() {
             const email = emailRef.current?.value;
             await login(email, passwordRef);
             window.location.href = "mainPage";
-        } catch (error) {
-            await SweetAlerts("error", "Erro", "Erro ao fazer login!");
+        } catch (error: any) {
+            await SweetAlerts("error", "Erro", "Erro ao fazer login!\n" + error.message);
         } finally {
             loading(false);
         }
@@ -45,7 +45,6 @@ export default function Home() {
         loading(true);
         try {
             await loginOrRegisterWithGoogle();
-            window.location.href = "/mainPage";
         } catch (error) {
             await SweetAlerts("error", "Erro", "Erro ao fazer login com o Google!");
         } finally {

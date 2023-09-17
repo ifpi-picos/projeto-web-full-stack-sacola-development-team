@@ -82,8 +82,8 @@ export default function TelaJogo() {
                                     {gameInfo.genres.map((genre: any) => (
                                         <span key={genre.id}
                                               className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">
-          {genre.name}
-        </span>
+                                          {genre.name}
+                                        </span>
                                     ))}
                                 </div>
                             </div>
@@ -95,8 +95,8 @@ export default function TelaJogo() {
                                     {gameInfo.platforms.map((platform: any) => (
                                         <span key={platform.id}
                                               className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">
-          {platform.name}
-        </span>
+                                          {platform.name}
+                                        </span>
                                     ))}
                                 </div>
                             </div>
@@ -106,7 +106,7 @@ export default function TelaJogo() {
                 ) : (
                     <Loading isLoading={true}/>
                 )}
-<div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
+                <div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
                     {/* Conditional rendering of the screenshot section */}
                     {gameInfo && gameInfo.screenshots && gameInfo.screenshots.length > 0 && (
                         <>
@@ -117,7 +117,8 @@ export default function TelaJogo() {
                                 height={500}
                                 className="mx-auto md:ml-5" // Alterei md:ml-14 para md:ml-0
                             />
-                            <div className="text-center mt-4 text-justify text-white md:ml-0"> {/* Alterei md:ml-14 para md:ml-0 */}
+                            <div
+                                className="text-center mt-4 text-justify text-white md:ml-0"> {/* Alterei md:ml-14 para md:ml-0 */}
                                 <h2>{gameInfo.summary}</h2>
                             </div>
                         </>
