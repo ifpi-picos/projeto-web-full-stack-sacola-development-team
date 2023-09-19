@@ -8,6 +8,7 @@ import Loading from "@/components/Main/loading";
 import {SweetAlerts} from "@/components/Utils/SweetAlerts";
 
 
+
 export default function Cadastro() {
 
     const {register} = useAuth();
@@ -111,6 +112,8 @@ export default function Cadastro() {
                                 >Email
                                 </label>
                             </div>
+
+
 
                             <FormularioCadastro onChangeName={handleNameChange} onChangeUser={handleUsernameChange}/>
                             <div className="relative mb-6" data-te-input-wrapper-init="">

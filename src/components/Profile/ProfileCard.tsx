@@ -3,12 +3,9 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Player from "@/core/Player";
 
 
-interface ProfileData {
-    PlayerData: Player;
-}
 
-export default function ProfileCard(profileData: ProfileData) {
 
+export default function ProfileCard(profileData: any) {
 
     return (
         <div className="w-screen h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
@@ -16,7 +13,7 @@ export default function ProfileCard(profileData: ProfileData) {
                 <div className="mx-auto w-full md:w-2/3">
                     <div
                         className="rounded-3xl shadow-lg bg-gray-900 md:bg-gray-900 w-full flex flex-row flex-wrap p-3 antialiased">
-                        <div className="md:w-1/3 w-full md:w-1/3 h-72 md:h-96">
+                        <div className=" w-full md:w-1/3 h-72 md:h-96">
                             <img
                                 className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14 h-48 md:h-64"
                                 src={profileData.PlayerData.photo ? profileData.PlayerData.photo : "https://res.cloudinary.com/dgzsvgc8t/image/upload/v1694632294/olympic_flag.jpg"}
