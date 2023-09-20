@@ -70,7 +70,7 @@ const FormularioCadastro: React.FC<FormularioCadastroProps> = ({onChangeName, on
 
             {/* E assim por diante para outros campos, como "Confirmar senha" */}
 
-            <MyCloudinaryUploadWidget />
+            
         </div>
     );
 };

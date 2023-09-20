@@ -1,8 +1,8 @@
 import EditIcon from "@mui/icons-material/Edit";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Player from "@/core/Player";
-
-
+import Image from "next/image";
+import ShareIcon from "@mui/icons-material/Share";
 
 
 export default function ProfileCard(profileData: any) {
@@ -14,10 +14,12 @@ export default function ProfileCard(profileData: any) {
                     <div
                         className="rounded-3xl shadow-lg bg-gray-900 md:bg-gray-900 w-full flex flex-row flex-wrap p-3 antialiased">
                         <div className=" w-full md:w-1/3 h-72 md:h-96">
-                            <img
-                                className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14 h-48 md:h-64"
-                                src={profileData.PlayerData.photo ? profileData.PlayerData.photo : "https://res.cloudinary.com/dgzsvgc8t/image/upload/v1694632294/olympic_flag.jpg"}
+                        <Image
+                                className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14"
+                                src={profileData.PlayerData.photo ? profileData.PlayerData.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695230843/efusxtkjwlwfs00wczd6.jpg"}
                                 alt="Profile"
+                                width={250} // Set the width to 320px (20rem)
+                                height={100} // Set the height to 192px (12rem)
                             />
                         </div>
                         <div className="md:w-2/3 w-full px-3 flex flex-row flex-wrap">

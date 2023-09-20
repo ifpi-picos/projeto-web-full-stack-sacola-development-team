@@ -1,8 +1,8 @@
-/** @type {import('next').NextConfig} */
+/**  @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.igdb.com'],
+    domains: ['images.igdb.com', 'res.cloudinary.com'],
   },
     async headers() {
         return [

@@ -1,7 +1,7 @@
-import { CldUploadWidget } from 'next-cloudinary'; // Importa o componente CldUploadWidget da biblioteca next-cloudinary
-import { useState } from 'react'; // Importa o hook useState da biblioteca React
+import { CldUploadWidget } from 'next-cloudinary';
+import { useState } from 'react'; 
 
-const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET; // Obtém a variável de ambiente NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET; 
 
 export default function CloudinaryUploadWidget() {
   const [imageURL, setImageURL] = useState(''); // Inicializa o estado imageURL como uma string vazia
@@ -41,9 +41,11 @@ export default function CloudinaryUploadWidget() {
         <div>
           <h3>URL da imagem:</h3>
           <p>{imageURL}</p>
+          <img src={imageURL} alt="" />
           <a href={imageURL} target="_blank" rel="noopener noreferrer">
             Abrir Imagem
           </a>
+
         </div>
       )}
     </div>
