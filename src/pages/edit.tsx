@@ -1,19 +1,10 @@
-import { CldUploadWidget } from "next-cloudinary";
+import MyCloudinaryUploadWidget from "@/components/CloudinaryUploadWidget";
 
-export default function CloudinaryUploadWidget() {
+export default function Edit() {
   return (
-<CldUploadWidget signatureEndpoint="/api/sign-cloudinary-params">
-  {({ open }) => {
-    function handleOnClick(e: { preventDefault: () => void; }) {
-      e.preventDefault();
-      open();
-    }
-    return (
-      <button className="button" onClick={handleOnClick}>
-        Upload an Image
-      </button>
-    );
-  }}
-</CldUploadWidget>
-  );
+    <div>
+      <h1>Editar foto de perfil</h1>
+      < MyCloudinaryUploadWidget/>
+    </div>
+  )
 }
