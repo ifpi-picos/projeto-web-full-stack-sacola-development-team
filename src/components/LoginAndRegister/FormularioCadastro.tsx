@@ -76,3 +76,6 @@ const FormularioCadastro: React.FC<FormularioCadastroProps> = ({onChangeName, on
 };
 
 export default FormularioCadastro;
+
+
+

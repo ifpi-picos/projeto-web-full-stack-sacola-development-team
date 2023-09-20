@@ -81,6 +81,7 @@ export default function useAuth() {
             })
 
             localStorage.setItem('user', JSON.stringify(user))
+            console.log(user)
         } catch (e: any) {
             console.log(e.code)
             if (e.code === "auth/account-exists-with-different-credential") {

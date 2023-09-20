@@ -45,7 +45,7 @@ export default function Home() {
         loading(true);
         try {
             await loginOrRegisterWithGoogle();
-            window.location.href = "/mainPage";
+            // window.location.href = "/mainPage";
         } catch (error: any) {
             await SweetAlerts("error", "Erro", "Erro ao fazer login com o Google!" + error.message);
         } finally {
