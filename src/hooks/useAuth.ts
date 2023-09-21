@@ -66,6 +66,7 @@ export default function useAuth() {
         try {
             const res = await signInWithPopup(auth, provider)
             const user = res.user
+            if (user === null) throw new Error(user)
             const player = new Player(
                 user.uid,
                 user.displayName,

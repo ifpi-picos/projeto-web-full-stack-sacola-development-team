@@ -1,5 +1,5 @@
 import React from 'react';
-import MyCloudinaryUploadWidget from '../CloudinaryUploadWidget';
+import MyCloudinaryUploadWidget from '../Utils/CloudinaryUploadWidget';
 
 interface FormularioCadastroProps {
     onChangeName?: (name: string) => void;
@@ -68,7 +68,7 @@ const FormularioCadastro: React.FC<FormularioCadastroProps> = ({onChangeName, on
 
             </div>
 
-            {/* E assim por diante para outros campos, como "Confirmar senha" */}
+            
 
             
         </div>

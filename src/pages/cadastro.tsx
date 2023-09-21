@@ -6,6 +6,9 @@ import FormularioCadastro from "../components/LoginAndRegister/FormularioCadastr
 import Link from "next/link";
 import Loading from "@/components/Main/loading";
 import {SweetAlerts} from "@/components/Utils/SweetAlerts";
+import MyCloudinaryUploadWidget from "@/components/Utils/CloudinaryUploadWidget";
+
+
 
 
 
@@ -143,7 +146,9 @@ export default function Cadastro() {
                             <p className="p-4">Já tem uma conta? <Link className="text-blue-500" href="/">Faça seu login
                                 aqui</Link>
                             </p>
-
+                            <div className="flex items-center justify-center">
+                                < MyCloudinaryUploadWidget/>
+                                </div>
                         </form>
                     </div>
                 </div>

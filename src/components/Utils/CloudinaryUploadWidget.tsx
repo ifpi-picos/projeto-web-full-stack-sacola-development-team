@@ -29,15 +29,15 @@ export default function CloudinaryUploadWidget() {
 
           return (
             // Botão que inicia o processo de upload quando clicado
-            <button className="button" onClick={handleOnClick}>
-              Upload an Image
+            <button className="button p-2 bg-blue-400" onClick={handleOnClick}>
+             Enviar imagem
             </button>
           );
         }}
       </CldUploadWidget>
 
       {/* Renderiza a URL da imagem se estiver disponível */}
-      {imageURL && (
+      {/* {imageURL && (
         <div>
           <h3>URL da imagem:</h3>
           <p>{imageURL}</p>
@@ -47,7 +47,7 @@ export default function CloudinaryUploadWidget() {
           </a>
 
         </div>
-      )}
+      )} */}
     </div>
   );
 }
