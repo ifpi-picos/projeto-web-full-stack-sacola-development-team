@@ -34,12 +34,12 @@ export default function useAuth() {
 
 
     // Funções de ‘cadastro’
-    async function register(name: string, username: string, email: string, password: string) {
+    async function register(name: string, username: string, email: string, password: string, photoURL: string) {
         try {
             const res = await createUserWithEmailAndPassword(auth, email, password)
             const user = res.user
 
-            const player = new Player(user.uid, name, username, email, '')
+            const player = new Player(user.uid, name, username, email, photoURL)
 
             await addUserDocument(player)
 

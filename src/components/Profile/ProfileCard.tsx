@@ -16,7 +16,7 @@ export default function ProfileCard(profileData: any) {
                         <div className=" w-full md:w-1/3 h-72 md:h-96">
                         <Image
                                 className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14"
-                                src={profileData.PlayerData.photo ? profileData.PlayerData.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695230843/efusxtkjwlwfs00wczd6.jpg"}
+                                src={profileData.PlayerData.photo ? profileData.PlayerData.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695332007/t4nyuc1bqvfo9ez9cnsd.jpg"}
                                 alt="Profile"
                                 width={250} // Set the width to 320px (20rem)
                                 height={100} // Set the height to 192px (12rem)

@@ -72,6 +72,8 @@ const FormularioCadastro: React.FC<FormularioCadastroProps> = ({onChangeName, on
 
             
         </div>
+        
+        
     );
 };
 

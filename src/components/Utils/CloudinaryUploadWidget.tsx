@@ -1,15 +1,30 @@
 import { CldUploadWidget } from 'next-cloudinary';
 import { useState } from 'react'; 
 
+interface UploadImageProps{
+  onURLChange?: (url: string) => void;
+
+
+}
+
+
 const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET; 
 
-export default function CloudinaryUploadWidget() {
+export default function CloudinaryUploadWidget( {onURLChange}: UploadImageProps) {
   const [imageURL, setImageURL] = useState(''); // Inicializa o estado imageURL como uma string vazia
+
+
+
 
   // Função chamada quando o upload é bem-sucedido
   function handleUploadSuccess(result: any) {
     // A URL da imagem pode ser acessada através da propriedade secure_url do resultado
     const imageUrl = result.info.secure_url;
+    if (onURLChange) {
+      onURLChange(imageUrl);
+    } else {
+      console.warn('Você precisa passar a prop onChange para o formulário de cadastro');  
+    }
     console.log('Upload bem-sucedido. URL da imagem:', imageUrl);
 
     // Atualiza o estado com a URL da imagem

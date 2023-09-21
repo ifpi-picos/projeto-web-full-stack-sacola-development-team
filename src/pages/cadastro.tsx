@@ -29,6 +29,7 @@ export default function Cadastro() {
     const emailRef = useRef<HTMLInputElement>(null);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
 
 
     const handleNameChange = (newName: SetStateAction<string>) => {
@@ -47,6 +48,12 @@ export default function Cadastro() {
         setConfirmPassword(newPassword2);
     }
 
+    const onURLChange = (url: string) => {
+        setImageUrl(url);
+        
+    }
+
+    
 
     async function handleRegister() {
         const email = emailRef.current?.value as string;
@@ -62,7 +69,7 @@ export default function Cadastro() {
         loading(true);
 
         try {
-            const res = await register(name, username, email, password);
+            const res = await register(name, username, email, password, imageUrl);
             if (res !== 'Sucess') {
                 throw new Error(res);
             }
@@ -146,7 +153,7 @@ export default function Cadastro() {
                                 aqui</Link>
                             </p>
                             <div className="flex items-center justify-center">
-                                < MyCloudinaryUploadWidget/>
+                                < MyCloudinaryUploadWidget onURLChange={onURLChange}/>
                                 </div>
                         </form>
                     </div>
