@@ -8,7 +8,8 @@ import {
 } from "@firebase/auth";
 import {addDoc, collection,} from "firebase/firestore";
 import Player from "@/core/Player";
-// import {addUserDocument} from "@/core/Services/RegisterService/Register";
+import {addUserDocument} from "@/services/registerService";
+
 
 // Define o idioma padrão do auth
 auth.useDeviceLanguage();
@@ -40,7 +41,7 @@ export default function useAuth() {
 
             const player = new Player(user.uid, name, username, email, '')
 
-            // await addUserDocument(player)
+            await addUserDocument(player)
 
             localStorage.setItem('user', JSON.stringify(user))
             return 'Sucess'
@@ -76,9 +77,7 @@ export default function useAuth() {
                 []
             )
 
-            await addDoc(collection(db, "players"), {
-                player: player.toJSON()
-            })
+            await addUserDocument(player)
 
             localStorage.setItem('user', JSON.stringify(user))
         } catch (e: any) {

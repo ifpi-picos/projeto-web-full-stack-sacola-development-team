@@ -64,7 +64,6 @@ export default function Cadastro() {
                 throw new Error(res);
             }
             await SweetAlerts('success', 'Sucesso', 'Cadastro realizado com sucesso!');
-            // window.location.href = '/teste';
         } catch (error: any) {
             await SweetAlerts('error', 'Erro', error.message);
         } finally {
