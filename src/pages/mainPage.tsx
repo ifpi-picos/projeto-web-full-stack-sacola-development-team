@@ -32,7 +32,7 @@ export default function MainPage({gamesData}: MainPageProps) {
     async function verifyLogin() {
         const isUserLogged = await isLogged();
         if (!isUserLogged) {
-            window.location.href = '/';
+            // window.location.href = '/';
         }
     }
 

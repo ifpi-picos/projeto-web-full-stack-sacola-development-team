@@ -1,11 +1,32 @@
 import EditIcon from "@mui/icons-material/Edit";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import Player from "@/core/Player";
 import Image from "next/image";
 import ShareIcon from "@mui/icons-material/Share";
+import {useEffect, useState} from "react";
 
 
 export default function ProfileCard(profileData: any) {
+
+    let player = {
+        id: '',
+        username: '',
+        photo: '',
+        userFriends: {
+            friends_total: 0,
+        },
+        userGames: {
+            games_total: 0,
+        },
+    }
+    if (profileData.PlayerData !== null) {
+        player = {
+            id: profileData.PlayerData._id,
+            username: profileData.PlayerData.username,
+            photo: profileData.PlayerData.photo,
+            userFriends: profileData.PlayerData.userFriends,
+            userGames: profileData.PlayerData.userGames,
+        }
+    }
 
     return (
         <div className="w-screen h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
@@ -14,9 +35,9 @@ export default function ProfileCard(profileData: any) {
                     <div
                         className="rounded-3xl shadow-lg bg-gray-900 md:bg-gray-900 w-full flex flex-row flex-wrap p-3 antialiased">
                         <div className=" w-full md:w-1/3 h-72 md:h-96">
-                        <Image
+                            <Image
                                 className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14"
-                                src={profileData.PlayerData.photo ? profileData.PlayerData.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695332007/t4nyuc1bqvfo9ez9cnsd.jpg"}
+                                src={player.photo ? player.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695332007/t4nyuc1bqvfo9ez9cnsd.jpg"}
                                 alt="Profile"
                                 width={250} // Set the width to 320px (20rem)
                                 height={100} // Set the height to 192px (12rem)
@@ -30,10 +51,10 @@ export default function ProfileCard(profileData: any) {
 
                                 <div className="flex flex-col justify-center items-center p-10 text-2xl text-white">
                                     <h3 className="text-center mb-2">
-                                        {profileData.PlayerData.username}
+                                        {player.username}
                                     </h3>
                                     <span>
-                                            {profileData.PlayerData.id}
+                                            {player.id}
                                         {" "}
                                         <ContentCopyIcon
                                             className="text-white cursor-pointer hover:text-gray-400 mx-auto "/>
@@ -47,13 +68,13 @@ export default function ProfileCard(profileData: any) {
                                     <div
                                         className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white">
                                         <h3>
-                                            Amigos: <span>{profileData.PlayerData.userFriends.friends_total}</span>
+                                            Amigos: <span>{player.userFriends.friends_total}</span>
                                         </h3>
                                     </div>
                                     <div
                                         className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white ">
                                         <h3>
-                                            Jogos: <span>{profileData.PlayerData.userGames.games_total}</span>
+                                            Jogos: <span>{player.userGames.games_total}</span>
                                         </h3>
                                     </div>
 

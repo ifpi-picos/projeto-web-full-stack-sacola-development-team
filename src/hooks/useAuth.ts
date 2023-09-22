@@ -1,4 +1,4 @@
-import {auth, db} from "@/firebase/firebase";
+import {auth} from "@/firebase/firebase";
 import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
@@ -6,7 +6,6 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup
 } from "@firebase/auth";
-import {addDoc, collection,} from "firebase/firestore";
 import Player from "@/core/Player";
 import {addUserDocument} from "@/services/registerService";
 
@@ -81,6 +80,7 @@ export default function useAuth() {
             await addUserDocument(player)
 
             localStorage.setItem('user', JSON.stringify(user))
+            console.log(user)
         } catch (e: any) {
             console.log(e.code)
             if (e.code === "auth/account-exists-with-different-credential") {
@@ -132,6 +132,11 @@ export default function useAuth() {
         return !!user;
     }
 
+    // Pick the user from local storage
+    async function getUser() {
+        return localStorage.getItem('user');
+    }
+
 
     return {
         login,
@@ -139,6 +144,7 @@ export default function useAuth() {
         loginOrRegisterWithGoogle,
         forgotPassword,
         logout,
-        isLogged
+        isLogged,
+        getUser
     }
 }
