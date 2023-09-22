@@ -4,6 +4,7 @@ const authorizationToken = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
 const url = process.env.NEXT_PUBLIC_VERCEL_URL;
 
 export async function addUserDocument(player: Player) {
+    console.log(authorizationToken)
     try {
         if (!authorizationToken) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
@@ -32,14 +33,13 @@ export async function addUserDocument(player: Player) {
             console.log(data)
             return data;
         } else {
-            console.error(await response.json());
-            throw new Error('Erro ao buscar informações do usuário.');
+            const errorData = await response.json();
+            throw new Error(errorData.message);
         }
 
     } catch (error: any) {
-        console.error(error);
         if (error.message === 'Usuário já cadastrado!') {
-            return error.message;
+            console.log(error.message);
         } else {
             throw new Error('Erro ao buscar informações do usuário.');
         }
