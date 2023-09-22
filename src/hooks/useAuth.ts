@@ -77,10 +77,12 @@ export default function useAuth() {
                 []
             )
 
-            await addUserDocument(player)
+            if (localStorage.getItem('user') === null) {
+                await addUserDocument(player)
+                localStorage.setItem('user', JSON.stringify(user))
+                return
+            }
 
-            localStorage.setItem('user', JSON.stringify(user))
-            console.log(user)
         } catch (e: any) {
             console.log(e.code)
             if (e.code === "auth/account-exists-with-different-credential") {
