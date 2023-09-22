@@ -7,7 +7,7 @@ import useAuth from "@/hooks/useAuth";
 
 
 
-export default function telaPerfil() {
+export default function TelaPerfil() {
 
     const {getUser} = useAuth();
 
