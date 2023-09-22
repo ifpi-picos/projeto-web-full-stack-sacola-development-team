@@ -44,8 +44,11 @@ export default function Home() {
     async function handleLoginWithGoogle() {
         loading(true);
         try {
-            await loginOrRegisterWithGoogle();
-            window.location.href = "/mainPage";
+            if (await loginOrRegisterWithGoogle()) {
+                return window.location.href = "/mainPage";
+            } else {
+                console.log("Erro ao fazer login com o Google!")
+            }
         } catch (error: any) {
             await SweetAlerts("error", "Erro", "Erro ao fazer login com o Google!" + error.message);
         } finally {
