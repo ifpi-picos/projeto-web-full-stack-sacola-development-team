@@ -80,8 +80,7 @@ export default function useAuth() {
             )
 
             localStorage.setItem('user', JSON.stringify(user))
-            await addUserDocument(player)
-            return true
+            return await addUserDocument(player) === true;
 
         } catch (e: any) {
             console.log(e.code)

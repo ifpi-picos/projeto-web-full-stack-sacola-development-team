@@ -29,7 +29,7 @@ export async function addUserDocument(player: Player) {
         if (response.ok) {
             const data = await response.json();
             console.log(data)
-            return data;
+            return true;
         } else {
             const errorData = await response.json();
             if (errorData.message === 'Usuário já cadastrado!') {
