@@ -32,7 +32,11 @@ export async function addUserDocument(player: Player) {
             return data;
         } else {
             const errorData = await response.json();
-            throw new Error(errorData.message);
+            if (errorData.message === 'Usuário já cadastrado!') {
+                return true
+            } else {
+                throw new Error(errorData.message);
+            }
         }
 
     } catch (error: any) {
