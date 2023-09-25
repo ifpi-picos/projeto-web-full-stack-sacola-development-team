@@ -1,6 +1,6 @@
 
 import useAuth from "@/hooks/useAuth";
-import {FormEvent, useRef, useState} from "react";
+import {FormEvent, useEffect, useRef, useState} from "react";
 import ExibirSenha from "../components/LoginAndRegister/ExibirSenha";
 import Link from "next/link";
 import GoogleButton from "@/components/LoginAndRegister/GoogleButton";
@@ -41,6 +41,7 @@ export default function Home() {
             loading(false);
         }
     }
+
 
     async function handleLoginWithGoogle() {
         loading(true);

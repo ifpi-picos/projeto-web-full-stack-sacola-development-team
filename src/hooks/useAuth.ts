@@ -67,7 +67,7 @@ export default function useAuth() {
         try {
             const res = await signInWithPopup(auth, provider)
             const user = res.user
-            console.log(user)
+
             if (user === null) throw new Error(user)
             const player = new Player(
                 user.uid,
@@ -80,7 +80,7 @@ export default function useAuth() {
             )
 
             localStorage.setItem('user', JSON.stringify(user))
-            await addUserDocument(player)
+            // await addUserDocument(player)
             return true
 
         } catch (e: any) {
