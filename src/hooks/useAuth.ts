@@ -13,6 +13,7 @@ import {addUserDocument} from "@/services/registerService";
 // Define o idioma padrão do auth
 auth.useDeviceLanguage();
 
+
 export default function useAuth() {
 
     // Funções de ‘login’
@@ -78,15 +79,9 @@ export default function useAuth() {
                 []
             )
 
-            // if (localStorage.getItem('user') === null) {
-            //     await addUserDocument(player)
-            //     localStorage.setItem('user', JSON.stringify(user))
-            //     return
-            // }
-
-            await addUserDocument(player)
             localStorage.setItem('user', JSON.stringify(user))
-            return localStorage.getItem('user') !== null;
+            await addUserDocument(player)
+            return true
 
         } catch (e: any) {
             console.log(e.code)
@@ -135,8 +130,7 @@ export default function useAuth() {
 
     // User is logged in
     async function isLogged() {
-        const user = localStorage.getItem('user')
-        return !!user;
+        return localStorage.getItem('user') !== null;
     }
 
     // Pick the user from local storage

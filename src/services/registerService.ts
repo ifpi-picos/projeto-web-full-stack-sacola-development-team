@@ -8,8 +8,7 @@ export async function addUserDocument(player: Player) {
         if (!authorizationToken) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
         }
-        console.log(JSON.stringify(player.toJSON()));
-        console.log(player.name)
+
         const playerJson = {
             _id: player.id,
             name: player.name,
@@ -17,7 +16,7 @@ export async function addUserDocument(player: Player) {
             email: player.email,
             photo: player.photo,
         }
-        console.log(JSON.stringify(playerJson));
+
         const response = await fetch(url + '/users', {
             method: 'POST',
             headers: {

@@ -29,15 +29,14 @@ export async function getServerSideProps() {
 export default function MainPage({gamesData}: MainPageProps) {
     const {isLogged} = useAuth();
 
-    async function verifyLogin() {
-        const isUserLogged = await isLogged();
-        if (!isUserLogged) {
-            window.location.href = '/';
-        }
-    }
-
-
     useEffect(() => {
+        async function verifyLogin() {
+            const isUserLogged = await isLogged();
+            if (!isUserLogged) {
+                window.location.href = '/';
+            }
+        }
+
         verifyLogin();
     }, []);
 
