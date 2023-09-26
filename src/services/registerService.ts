@@ -9,6 +9,14 @@ export async function addUserDocument(player: Player) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
         }
 
+        const playerJson = {
+            _id: player.id,
+            name: player.name,
+            username: player.name,
+            email: player.email,
+            photo: player.photo,
+        }
+
         const response = await fetch(url + '/users', {
             method: 'POST',
             headers: {
@@ -16,18 +24,26 @@ export async function addUserDocument(player: Player) {
                 Authorization: `${authorizationToken}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(player.toJSON())
+            body: JSON.stringify(playerJson)
         });
         if (response.ok) {
             const data = await response.json();
-            return data;
+            console.log(data)
+            return true;
         } else {
-            console.error(await response.json());
-            throw new Error('Erro ao buscar informações do usuário.');
+            const errorData = await response.json();
+            if (errorData.message === 'Usuário já cadastrado!') {
+                return true
+            } else {
+                throw new Error(errorData.message);
+            }
         }
 
-    } catch (error) {
-        console.error(error);
-        throw new Error('Erro ao buscar informações do usuário.');
+    } catch (error: any) {
+        if (error.message === 'Usuário já cadastrado!') {
+            console.log(error.message);
+        } else {
+            throw new Error('Erro ao buscar informações do usuário.');
+        }
     }
 }

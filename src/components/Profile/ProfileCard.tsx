@@ -1,104 +1,93 @@
 import EditIcon from "@mui/icons-material/Edit";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import Player from "@/core/Player";
 import Image from "next/image";
 import ShareIcon from "@mui/icons-material/Share";
-import { useState } from "react";
-import ProfileModal from "@/components/Profile/EditProfile";
+import {useEffect, useState} from "react";
 
-interface UserData {
-  username: string;
-  avatarUrl: string;
-}
 
 export default function ProfileCard(profileData: any) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const initialUserData: UserData = {
-    username: "SeuNomeDeUsuario",
-    avatarUrl: "URLDaSuaFotoDePerfil",
-  };
-  const [userData, setUserData] = useState<UserData>(initialUserData);
 
-  const handleSaveProfile = (newUserData: UserData) => {
-   
-    console.log("Dados do usuário salvos:", newUserData);
-    setUserData(newUserData); // Atualize o estado local se necessário.
-    setIsModalOpen(false); // Feche o modal após salvar.
-  };
+    let player = {
+        id: '',
+        username: '',
+        photo: '',
+        userFriends: {
+            friends_total: 0,
+        },
+        userGames: {
+            games_total: 0,
+        },
+    }
+    if (profileData.PlayerData !== null) {
+        player = {
+            id: profileData.PlayerData._id,
+            username: profileData.PlayerData.username,
+            photo: profileData.PlayerData.photo,
+            userFriends: profileData.PlayerData.userFriends,
+            userGames: profileData.PlayerData.userGames,
+        }
+    }
 
-  return (
-    <div className="w-screen h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
-      {profileData ? (
-        <div className="mx-auto w-full md:w-2/3">
-          <div className="rounded-3xl shadow-lg bg-gray-900 md:bg-gray-900 w-full flex flex-row flex-wrap p-3 antialiased">
-            <div className=" w-full md:w-1/3 h-72 md:h-96">
-              <Image
-                className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14"
-                src={
-                  profileData.PlayerData.photo
-                    ? profileData.PlayerData.photo
-                    : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695332007/t4nyuc1bqvfo9ez9cnsd.jpg"
-                }
-                alt="Profile"
-                width={250} // Set the width to 320px (20rem)
-                height={100} // Set the height to 192px (12rem)
-              />
-            </div>
-            <div className="md:w-2/3 w-full px-3 flex flex-row flex-wrap">
-              <div className="w-full text-right font-semibold relative pt-3 md:pt-0">
-                <div className="text-2xl text-white leading-tight">
-                  <EditIcon
-                    className="text-white cursor-pointer hover:text-gray-400"
-                    onClick={() => setIsModalOpen(true)}
-                  />
-                  <ProfileModal
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                    userData={userData}
-                    onSave={handleSaveProfile}
-                  />
+    return (
+        <div className="w-screen h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
+            {profileData ? (
+                <div className="mx-auto w-full md:w-2/3">
+                    <div
+                        className="rounded-3xl shadow-lg bg-gray-900 md:bg-gray-900 w-full flex flex-row flex-wrap p-3 antialiased">
+                        <div className=" w-full md:w-1/3 h-72 md:h-96">
+                            <Image
+                                className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14"
+                                src={player.photo ? player.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695332007/t4nyuc1bqvfo9ez9cnsd.jpg"}
+                                alt="Profile"
+                                width={250} // Set the width to 320px (20rem)
+                                height={100} // Set the height to 192px (12rem)
+                            />
+                        </div>
+                        <div className="md:w-2/3 w-full px-3 flex flex-row flex-wrap">
+                            <div className="w-full text-right font-semibold relative pt-3 md:pt-0">
+                                <div className="text-2xl text-white leading-tight">
+                                    <EditIcon className="text-white cursor-pointer hover:text-gray-400"/>
+                                </div>
+
+                                <div className="flex flex-col justify-center items-center p-10 text-2xl text-white">
+                                    <h3 className="text-center mb-2">
+                                        {player.username}
+                                    </h3>
+                                    <span>
+                                            {player.id}
+                                        {" "}
+                                        <ContentCopyIcon
+                                            className="text-white cursor-pointer hover:text-gray-400 mx-auto "/>
+                                    </span>
+                                </div>
+
+                                <div className="flex flex-row justify-center items-center gap-2 text-2xl text-white">
+                                    Level: <span>5</span>
+                                </div>
+                                <div className="flex justify-center items-center flex-col">
+                                    <div
+                                        className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white">
+                                        <h3>
+                                            Amigos: <span>{player.userFriends.friends_total}</span>
+                                        </h3>
+                                    </div>
+                                    <div
+                                        className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white ">
+                                        <h3>
+                                            Jogos: <span>{player.userGames.games_total}</span>
+                                        </h3>
+                                    </div>
+
+                                    <div className="h-16"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div className="flex flex-col justify-center items-center p-10 text-2xl text-white">
-                  <h3 className="text-center mb-2">
-                    {profileData.PlayerData.username}
-                  </h3>
-                  <span>
-                    {profileData.PlayerData.id}{" "}
-                    <ContentCopyIcon className="text-white cursor-pointer hover:text-gray-400 mx-auto " />
-                  </span>
-                </div>
-
-                <div className="flex flex-row justify-center items-center gap-2 text-2xl text-white">
-                  Level: <span>5</span>
-                </div>
-                <div className="flex justify-center items-center flex-col">
-                  <div className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white">
-                    <h3>
-                      Amigos:{" "}
-                      <span>
-                        {profileData.PlayerData.userFriends.friends_total}
-                      </span>
-                    </h3>
-                  </div>
-                  <div className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white ">
-                    <h3>
-                      Jogos:{" "}
-                      <span>
-                        {profileData.PlayerData.userGames.games_total}
-                      </span>
-                    </h3>
-                  </div>
-
-                  <div className="h-16"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+            ) : (
+                <div>Carregando...</div>
+            )}
         </div>
-      ) : (
-        <div>Carregando...</div>
-      )}
-    </div>
-  );
+    );
 }

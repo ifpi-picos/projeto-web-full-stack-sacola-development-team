@@ -1,4 +1,4 @@
-import {auth, db} from "@/firebase/firebase";
+import {auth} from "@/firebase/firebase";
 import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
@@ -6,13 +6,13 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup
 } from "@firebase/auth";
-import {addDoc, collection,} from "firebase/firestore";
 import Player from "@/core/Player";
 import {addUserDocument} from "@/services/registerService";
 
 
 // Define o idioma padrão do auth
 auth.useDeviceLanguage();
+
 
 export default function useAuth() {
 
@@ -67,6 +67,7 @@ export default function useAuth() {
         try {
             const res = await signInWithPopup(auth, provider)
             const user = res.user
+
             if (user === null) throw new Error(user)
             const player = new Player(
                 user.uid,
@@ -78,9 +79,9 @@ export default function useAuth() {
                 []
             )
 
-            await addUserDocument(player)
-
             localStorage.setItem('user', JSON.stringify(user))
+            return await addUserDocument(player) === true;
+
         } catch (e: any) {
             console.log(e.code)
             if (e.code === "auth/account-exists-with-different-credential") {
@@ -128,8 +129,12 @@ export default function useAuth() {
 
     // User is logged in
     async function isLogged() {
-        const user = localStorage.getItem('user')
-        return !!user;
+        return localStorage.getItem('user') !== null;
+    }
+
+    // Pick the user from local storage
+    async function getUser() {
+        return localStorage.getItem('user');
     }
 
 
@@ -139,6 +144,7 @@ export default function useAuth() {
         loginOrRegisterWithGoogle,
         forgotPassword,
         logout,
-        isLogged
+        isLogged,
+        getUser
     }
 }

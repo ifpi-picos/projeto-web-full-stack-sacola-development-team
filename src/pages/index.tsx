@@ -1,5 +1,6 @@
+
 import useAuth from "@/hooks/useAuth";
-import {FormEvent, useRef, useState} from "react";
+import {FormEvent, useEffect, useRef, useState} from "react";
 import ExibirSenha from "../components/LoginAndRegister/ExibirSenha";
 import Link from "next/link";
 import GoogleButton from "@/components/LoginAndRegister/GoogleButton";
@@ -41,11 +42,15 @@ export default function Home() {
         }
     }
 
+
     async function handleLoginWithGoogle() {
         loading(true);
         try {
-            await loginOrRegisterWithGoogle();
-            window.location.href = "/mainPage";
+            if (await loginOrRegisterWithGoogle()) {
+                return window.location.href = "/mainPage";
+            } else {
+                console.log("Erro ao fazer login com o Google!")
+            }
         } catch (error: any) {
             await SweetAlerts("error", "Erro", "Erro ao fazer login com o Google!" + error.message);
         } finally {
