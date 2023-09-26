@@ -48,8 +48,11 @@ export default function Home() {
         loading(true);
         try {
             const player = await loginOrRegisterWithGoogle();
+            console.log(player);
             if (player) {
-                if (await addUserDocument(player))
+                const documentUser = await addUserDocument(player);
+                console.log(documentUser)
+                if (documentUser)
                     return window.location.href = "/mainPage";
             } else {
                 console.log("Erro ao fazer login com o Google!")
