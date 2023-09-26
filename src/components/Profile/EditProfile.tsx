@@ -1,4 +1,6 @@
 import { useState, ChangeEvent } from 'react';
+import MyCloudinaryUploadWidget from "@/components/Utils/CloudinaryUploadWidget";
+
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -18,16 +20,13 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 }) => {
   const [username, setUsername] = useState(userData.username);
   const [avatarUrl, setAvatarUrl] = useState(userData.avatarUrl);
-  const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState('');
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setAvatarUrl(url);
-      setSelectedAvatar(file);
-    }
-  };
+
+  const onURLChange = (url: string) => {
+    setImageUrl(url);
+    setAvatarUrl(url);
+  }
 
   const handleSave = () => {
     onSave({ username, avatarUrl });
@@ -42,26 +41,21 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           <label htmlFor="avatar" className="block font-medium text-black">
             Foto de Perfil
           </label>
-          <div className="flex items-center">
-            <input
-              type="file"
-              id="avatar"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
-            />
+          <div className="flex items-center  gap-20">
+            <MyCloudinaryUploadWidget onURLChange={onURLChange}/>
             <label
               htmlFor="avatar"
-              className="cursor-pointer bg-gray-200 rounded-full w-12 h-12 md:w-20 md:h-20 flex items-center justify-center"
+              className="cursor-pointer   w-24 h-24 md:w-20 md:h-20 flex items-center justify-center"
             >
-              {avatarUrl ? (
+              {imageUrl ? (
                 <img
-                  src={avatarUrl}
-                  alt="Perfil"
-                  className="w-full h-full object-cover rounded-full"
+                  src={imageUrl}
+                  alt="Avatar"
+                  className="flex mb-5"
                 />
+                
               ) : (
-                <span className="text-black">+</span>
+               <span></span>
               )}
             </label>
           </div>
