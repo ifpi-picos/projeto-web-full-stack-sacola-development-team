@@ -9,7 +9,7 @@ export async function getUserInfo(id: string) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
         }
 
-        const response = await fetch(url + '/users/ ' + userId, {
+        const response = await fetch(`${url}/users/${id}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
