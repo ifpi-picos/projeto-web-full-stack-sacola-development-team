@@ -6,6 +6,7 @@ import Link from "next/link";
 import GoogleButton from "@/components/LoginAndRegister/GoogleButton";
 import Loading from "@/components/Main/loading";
 import {SweetAlerts} from "@/components/Utils/SweetAlerts";
+import {addUserDocument} from "@/services/registerService";
 
 export default function Home() {
     const {login, loginOrRegisterWithGoogle} = useAuth();
@@ -46,8 +47,10 @@ export default function Home() {
     async function handleLoginWithGoogle() {
         loading(true);
         try {
-            if (await loginOrRegisterWithGoogle()) {
-                return window.location.href = "/mainPage";
+            const player = await loginOrRegisterWithGoogle();
+            if (player) {
+                if (await addUserDocument(player))
+                    return window.location.href = "/mainPage";
             } else {
                 console.log("Erro ao fazer login com o Google!")
             }
