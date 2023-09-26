@@ -43,7 +43,7 @@ export async function addUserDocument(player: Player) {
         if (error.message === 'Usuário já cadastrado!') {
             console.log(error.message);
         } else {
-            throw new Error('Erro ao buscar informações do usuário.');
+            throw new Error('Erro ao buscar informações do usuário.' + error.message);
         }
     }
 }
