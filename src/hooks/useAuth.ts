@@ -79,8 +79,9 @@ export default function useAuth() {
                 []
             )
 
+            await addUserDocument(player)
             localStorage.setItem('user', JSON.stringify(user))
-            return player;
+            return true
 
         } catch (e: any) {
             console.log(e.code)

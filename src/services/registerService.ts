@@ -4,7 +4,6 @@ const authorizationToken = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
 const url = process.env.NEXT_PUBLIC_VERCEL_URL;
 
 export async function addUserDocument(player: Player) {
-    console.log(authorizationToken)
     try {
         if (!authorizationToken) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
