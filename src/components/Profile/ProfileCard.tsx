@@ -2,31 +2,28 @@ import EditIcon from "@mui/icons-material/Edit";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Image from "next/image";
 import ShareIcon from "@mui/icons-material/Share";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import useAuth from "@/hooks/useAuth";
+import {getUserInfo} from "@/services/userInfo";
 
 
-export default function ProfileCard(profileData: any) {
+export default function ProfileCard() {
 
-    let player = {
-        id: '',
-        username: '',
-        photo: '',
-        userFriends: {
-            friends_total: 0,
-        },
-        userGames: {
-            games_total: 0,
-        },
-    }
-    if (profileData.PlayerData !== null) {
-        player = {
-            id: profileData.PlayerData._id,
-            username: profileData.PlayerData.username,
-            photo: profileData.PlayerData.photo,
-            userFriends: profileData.PlayerData.userFriends,
-            userGames: profileData.PlayerData.userGames,
+    const {getUser} = useAuth();
+
+    const [profileData, setProfileData] = React.useState<any>(null);
+
+    useEffect(() => {
+        async function handleInfos() {
+            // @ts-ignore
+            const id = JSON.parse(await getUser()).uid;
+            const profileData = await getUserInfo(id);
+
+            // @ts-ignore
+            setProfileData(profileData.toJSON());
         }
-    }
+        handleInfos();
+    }, []);
 
     return (
         <div className="w-screen h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
@@ -37,7 +34,7 @@ export default function ProfileCard(profileData: any) {
                         <div className=" w-full md:w-1/3 h-72 md:h-96">
                             <Image
                                 className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14"
-                                src={player.photo ? player.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695332007/t4nyuc1bqvfo9ez9cnsd.jpg"}
+                                src={profileData.photo ? profileData.photo : "https://res.cloudinary.com/dwkdquhlf/image/upload/v1695332007/t4nyuc1bqvfo9ez9cnsd.jpg"}
                                 alt="Profile"
                                 width={250} // Set the width to 320px (20rem)
                                 height={100} // Set the height to 192px (12rem)
@@ -51,10 +48,10 @@ export default function ProfileCard(profileData: any) {
 
                                 <div className="flex flex-col justify-center items-center p-10 text-2xl text-white">
                                     <h3 className="text-center mb-2">
-                                        {player.username}
+                                        {profileData.username}
                                     </h3>
                                     <span>
-                                            {player.id}
+                                            {profileData._id}
                                         {" "}
                                         <ContentCopyIcon
                                             className="text-white cursor-pointer hover:text-gray-400 mx-auto "/>
@@ -68,13 +65,13 @@ export default function ProfileCard(profileData: any) {
                                     <div
                                         className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white">
                                         <h3>
-                                            Amigos: <span>{player.userFriends.friends_total}</span>
+                                            Amigos: <span>{profileData.userFriends.friends_total}</span>
                                         </h3>
                                     </div>
                                     <div
                                         className="flex flex-row justify-center items-center gap-2 text-2xl mt-8 w-56 h-16 bg-zinc-800 text-white ">
                                         <h3>
-                                            Jogos: <span>{player.userGames.games_total}</span>
+                                            Jogos: <span>{profileData.userGames.games_total}</span>
                                         </h3>
                                     </div>
 
