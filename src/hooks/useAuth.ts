@@ -19,8 +19,8 @@ export default function useAuth() {
     // Funções de ‘login’
     async function login(email: string, password: string) {
         try {
-            const user = await signInWithEmailAndPassword(auth, email, password)
-            localStorage.setItem('user', JSON.stringify(user))
+            const res = await signInWithEmailAndPassword(auth, email, password)
+            localStorage.setItem('user', JSON.stringify(res.user.uid))
         } catch (e: any) {
             if (e.code === "auth/user-not-found") {
                 throw new Error('Usuário não encontrado!')
@@ -43,7 +43,7 @@ export default function useAuth() {
 
             await addUserDocument(player)
 
-            localStorage.setItem('user', JSON.stringify(user))
+            localStorage.setItem('user', JSON.stringify(res.user.uid))
             return 'Sucess'
 
         } catch (e: any) {
@@ -80,7 +80,7 @@ export default function useAuth() {
             )
 
             await addUserDocument(player)
-            localStorage.setItem('user', JSON.stringify(user))
+            localStorage.setItem('user', JSON.stringify(res.user.uid))
             return true
 
         } catch (e: any) {

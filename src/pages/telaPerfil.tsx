@@ -9,8 +9,6 @@ import useAuth from "@/hooks/useAuth";
 
 export default function TelaPerfil() {
 
-
-
     return (
         <div className="bg-blue-jeans-50 min-h-screen">
             <Header/>

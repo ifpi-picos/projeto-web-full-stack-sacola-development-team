@@ -16,7 +16,7 @@ export default function ProfileCard() {
     useEffect(() => {
         async function handleInfos() {
             // @ts-ignore
-            const id = JSON.parse(await getUser()).uid;
+            const id = JSON.parse(await getUser());
             const profileData = await getUserInfo(id);
 
             // @ts-ignore
