@@ -5,28 +5,15 @@ import ShareIcon from "@mui/icons-material/Share";
 import {useEffect, useState} from "react";
 
 
-export default function ProfileCard(profileData: any) {
+export default function ProfileCard() {
+    
+    const [profileData, setProfileData] = useState<any>(null);
 
-    let player = {
-        id: '',
-        username: '',
-        photo: '',
-        userFriends: {
-            friends_total: 0,
-        },
-        userGames: {
-            games_total: 0,
-        },
-    }
-    if (profileData.PlayerData !== null) {
-        player = {
-            id: profileData.PlayerData._id,
-            username: profileData.PlayerData.username,
-            photo: profileData.PlayerData.photo,
-            userFriends: profileData.PlayerData.userFriends,
-            userGames: profileData.PlayerData.userGames,
+    useEffect(() => {
+        async function getProfileData() {
+        
         }
-    }
+    }, []);
 
     return (
         <div className="w-screen h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
