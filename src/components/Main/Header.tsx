@@ -160,7 +160,7 @@ export default function PersistentDrawerLeft() {
                         <MenuIcon/>
 
                     </IconButton>
-                    <Image src="/gamemate.png" alt="Logo" width={150} height={150}/>
+                    <Image className='cursor-pointer' src="/gamemate.png" alt="Logo" width={150} height={150}/>
                     <SearchModal onGameSelect={function (game: GameInfo): void {
                         throw new Error('Function not implemented.');
                     } }/>
