@@ -1,4 +1,3 @@
-
 import useAuth from "@/hooks/useAuth";
 import {FormEvent, useEffect, useRef, useState} from "react";
 import ExibirSenha from "../components/LoginAndRegister/ExibirSenha";
