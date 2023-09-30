@@ -26,6 +26,7 @@ export async function getLatestGameInfo(locale = 'en_US') {
           & first_release_date <= ${Math.floor(endOfWeek.getTime() / 1000)}
           & cover != null 
           & cover.image_id != null;
+        
           sort first_release_date desc;
           limit 10;
       `;

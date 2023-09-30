@@ -5,13 +5,28 @@ import ShareIcon from "@mui/icons-material/Share";
 import React, {useEffect, useState} from "react";
 import useAuth from "@/hooks/useAuth";
 import {getUserInfo} from "@/services/userInfo";
+import ProfileModal from "./EditProfile";
 
+interface UserData {
+    username: string;
+    avatarUrl: string;
+}
 
 export default function ProfileCard() {
-
     const {getUser} = useAuth();
-
     const [profileData, setProfileData] = React.useState<any>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+   
+
+    const handleSaveProfile = (newUserData: UserData) => {
+        // Implemente a lógica para salvar os dados do usuário no estado global ou em algum backend aqui.
+        console.log("Dados do usuário salvos:", newUserData);
+         
+        setIsModalOpen(false); // Feche o modal após salvar.
+    };
+
+
+
 
     useEffect(() => {
         async function handleInfos() {
@@ -43,19 +58,21 @@ export default function ProfileCard() {
                         <div className="md:w-2/3 w-full px-3 flex flex-row flex-wrap">
                             <div className="w-full text-right font-semibold relative pt-3 md:pt-0">
                                 <div className="text-2xl text-white leading-tight">
-                                    <EditIcon className="text-white cursor-pointer hover:text-gray-400"/>
+                                    <EditIcon className="text-white cursor-pointer hover:text-gray-400"
+                                    onClick={() => setIsModalOpen(true)}/>
+                                    <ProfileModal
+                                        isOpen={isModalOpen}
+                                        onClose={() => setIsModalOpen(false)}
+                                        userData={profileData}
+                                        onSave={handleSaveProfile}
+                                    />
                                 </div>
 
                                 <div className="flex flex-col justify-center items-center p-10 text-2xl text-white">
                                     <h3 className="text-center mb-2">
                                         {profileData.username}
                                     </h3>
-                                    <span>
-                                            {profileData._id}
-                                        {" "}
-                                        <ContentCopyIcon
-                                            className="text-white cursor-pointer hover:text-gray-400 mx-auto "/>
-                                    </span>
+                                   
                                 </div>
 
                                 <div className="flex flex-row justify-center items-center gap-2 text-2xl text-white">
