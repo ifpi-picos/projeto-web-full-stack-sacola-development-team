@@ -1,11 +1,12 @@
 import Player from "@/core/Player";
 
-const authorizationToken = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
-const url = process.env.NEXT_PUBLIC_VERCEL_URL;
+const Client_Token = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
+// const url = process.env.NEXT_PUBLIC_VERCEL_URL;
+const url = 'http://localhost:5000/api'
 
-export async function addUserDocument(player: Player) {
+export async function addUserDocument(player: Player, Token: string) {
     try {
-        if (!authorizationToken) {
+        if (!Client_Token) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
         }
 
@@ -21,7 +22,8 @@ export async function addUserDocument(player: Player) {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                Authorization: `${authorizationToken}`,
+                Client_Token: `${Client_Token}`,
+                Authorization: `Bearer ${Token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(playerJson)
@@ -40,10 +42,6 @@ export async function addUserDocument(player: Player) {
         }
 
     } catch (error: any) {
-        if (error.message === 'Usuário já cadastrado!') {
-            console.log(error.message);
-        } else {
-            throw new Error('Erro ao buscar informações do usuário.' + error.message);
-        }
+       throw new Error(error.message);
     }
 }

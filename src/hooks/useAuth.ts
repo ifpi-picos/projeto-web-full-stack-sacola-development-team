@@ -16,11 +16,21 @@ auth.useDeviceLanguage();
 
 export default function useAuth() {
 
+    const provider = new GoogleAuthProvider();
+
     // Funções de ‘login’
     async function login(email: string, password: string) {
         try {
             const res = await signInWithEmailAndPassword(auth, email, password)
-            localStorage.setItem('user', JSON.stringify(res.user.uid))
+            const user = res.user
+            if (user) {
+                user.getIdToken().then(async (token) => {
+                    localStorage.setItem('acessToken', token)
+                })
+                return 'Sucess'
+            } else {
+                throw new Error('Usuário não encontrado!')
+            }
         } catch (e: any) {
             if (e.code === "auth/user-not-found") {
                 throw new Error('Usuário não encontrado!')
@@ -28,6 +38,9 @@ export default function useAuth() {
                 throw new Error('Senha incorreta!')
             } else if (e.code === "auth/invalid-email") {
                 throw new Error('Email inválido!')
+            }
+            else {
+                return e.message;
             }
         }
     }
@@ -39,13 +52,16 @@ export default function useAuth() {
             const res = await createUserWithEmailAndPassword(auth, email, password)
             const user = res.user
 
-            const player = new Player(user.uid, name, username, email, photoURL)
-
-            await addUserDocument(player)
-
-            localStorage.setItem('user', JSON.stringify(res.user.uid))
-            return 'Sucess'
-
+            if (user) {
+                user.getIdToken().then(async (token) => {
+                    localStorage.setItem('acessToken', token)
+                    const player = new Player(user.uid, name, username, email, photoURL)
+                    await addUserDocument(player, token)
+                })
+                return 'Sucess'
+            } else {
+                throw new Error('Usuário não encontrado!')
+            }
         } catch (e: any) {
             if (e.code === "auth/email-already-in-use") {
                 return 'Email já cadastrado!'
@@ -60,28 +76,37 @@ export default function useAuth() {
         }
     }
 
-    //Função de ‘login’/cadastro' com o google
-    const provider = new GoogleAuthProvider();
-
+    // Funções de ‘login’ e ‘cadastro’ com o Google
     async function loginOrRegisterWithGoogle() {
         try {
             const res = await signInWithPopup(auth, provider)
+            const credential = GoogleAuthProvider.credentialFromResult(res)
+
+            if (credential === null) throw new Error('credential is null')
+
+            const token = credential.accessToken
             const user = res.user
 
             if (user === null) throw new Error(user)
-            const player = new Player(
-                user.uid,
-                user.displayName,
-                '',
-                user.email,
-                user.photoURL,
-                [],
-                []
-            )
 
-            await addUserDocument(player)
-            localStorage.setItem('user', JSON.stringify(res.user.uid))
-            return true
+            if (user) {
+                user.getIdToken().then(async (token) => {
+                    localStorage.setItem('acessToken', token)
+                    const player = new Player(
+                        user.uid,
+                        user.displayName,
+                        '',
+                        user.email,
+                        user.photoURL,
+                        [],
+                        []
+                    )
+                    await addUserDocument(player, token)
+                })
+                return true
+            } else {
+                throw new Error('Usuário não encontrado!')
+            }
 
         } catch (e: any) {
             console.log(e.code)
@@ -117,7 +142,7 @@ export default function useAuth() {
     async function logout() {
         try {
             await auth.signOut()
-            localStorage.removeItem('user')
+            localStorage.removeItem('acessToken')
             window.location.href = '/'
         } catch (e: any) {
             console.log(e.code)
@@ -130,12 +155,12 @@ export default function useAuth() {
 
     // User is logged in
     async function isLogged() {
-        return localStorage.getItem('user') !== null;
+        return localStorage.getItem('acessToken') !== null;
     }
 
     // Pick the user from local storage
     async function getUser() {
-        return localStorage.getItem('user');
+        return localStorage.getItem('acessToken');
     }
 
 

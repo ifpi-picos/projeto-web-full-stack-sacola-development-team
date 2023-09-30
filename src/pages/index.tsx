@@ -33,8 +33,11 @@ export default function Home() {
 
         try {
             const email = emailRef.current?.value;
-            await login(email, passwordRef);
-            window.location.href = "mainPage";
+            const res = await login(email, passwordRef);
+            console.log(res)
+            if (res === "Sucess") {
+                window.location.href = "mainPage";
+            }
         } catch (error: any) {
             await SweetAlerts("error", "Erro", "Erro ao fazer login!\n" + error.message);
         } finally {
