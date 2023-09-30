@@ -1,19 +1,22 @@
 import Player from "@/core/Player";
 
-export async function getUserInfo(id: string) {
-    const clientAcessToken = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
+export async function getUserInfo() {
+    const Client_Token = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
     const url = process.env.NEXT_PUBLIC_VERCEL_URL;
+    const Token = localStorage.getItem('acessToken');
 
     try {
-        if (!clientAcessToken) {
+        if (!Client_Token) {
             throw new Error('Variáveis de ambiente não configuradas corretamente.');
         }
 
-        const response = await fetch(`${url}/users/${id}`, {
+        const response = await fetch(`${url}/user`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                Authorization: `${clientAcessToken}`,
+                Client_Token: `${Client_Token}`,
+                Authorization: `Bearer ${Token}`,
+                'Content-Type': 'application/json'
             }
         });
 
