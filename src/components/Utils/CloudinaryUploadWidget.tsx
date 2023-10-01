@@ -51,24 +51,11 @@ export default function CloudinaryUploadWidget({
               className="bg-blue-400 w-full  text-white py-2 px-4 rounded hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-600  "
               onClick={handleOnClick}
             >
-              Enviar Imagem
+              Enviar Foto de Perfil
             </button>
           );
         }}
       </CldUploadWidget>
-
-      {/* Renderiza a URL da imagem se estiver disponível */}
-      {/* {imageURL && (
-        <div>
-          <h3>URL da imagem:</h3>
-          <p>{imageURL}</p>
-          <img src={imageURL} alt="" />
-          <a href={imageURL} target="_blank" rel="noopener noreferrer">
-            Abrir Imagem
-          </a>
-
-        </div>
-      )} */}
     </div>
   );
 }
