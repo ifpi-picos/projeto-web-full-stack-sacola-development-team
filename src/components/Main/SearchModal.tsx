@@ -1,5 +1,4 @@
-// components/SearchModal.tsx
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -7,24 +6,26 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-  import  Image  from 'next/image';
+import Image from 'next/image';
 
+const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '45%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 350,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+const ModalContent = styled(Box)`
+  background-color: white;
+  border: 2px solid #000;
+  box-shadow: 24px;
+  padding: 16px;
+  text-align: center;
+  width: 500px;
+`;
 
-const SearchButton = styled(IconButton)({});
-
+const SearchButton = styled(IconButton)({
+  marginLeft: 'auto',
+});
 interface GameInfo {
   id: number;
   name: string;
@@ -90,37 +91,38 @@ export default function SearchModal({ onGameSelect }: SearchModalProps) {
           <SearchIcon />
         </SearchButton>
   
-        <Modal
+        <StyledModal
           keepMounted
           open={open}
           onClose={handleClose}
           aria-labelledby="search-modal-title"
           aria-describedby="search-modal-description"
-          className="backdrop-filter backdrop-blur-lg"
         >
-          <Box sx={style} className="text-black">
-            <Typography id="search-modal-title" variant="h6" component="h2" className="flex items-center justify-center">
+          <ModalContent>
+            <Typography variant="h6" component="h2" className="text-black">
               Pesquisar:
             </Typography>
-            <div>
-              <input
-                type="text"
-                placeholder=""
-                className="outline-none border-b-2 border-gray-500 w-full"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    searchGame();
-                  }
-                }}
-              />
-              <button onClick={searchGame}>Search</button>
-            </div>
+            <input
+              type="text"
+              placeholder=""
+              className="outline-none border-b-2 border-gray-500 w-full text-black"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  searchGame();
+                }
+              }}
+            />
+            <button onClick={searchGame}>Search</button>
             <div className={isMobile ? 'overflow-y-scroll max-h-40' : ''}>
               <ul>
                 {searchResults.map((game) => (
-                  <li key={game.id} onClick={() => handleGameSelect(game)} className="flex items-center cursor-pointer p-1">
+                  <li
+                    key={game.id}
+                    onClick={() => handleGameSelect(game)}
+                    className="flex items-center cursor-pointer p-2 border-b border-gray-300 hover:bg-gray-100"
+                  >
                     {game.cover && (
                       <Image
                         width={32}
@@ -130,14 +132,13 @@ export default function SearchModal({ onGameSelect }: SearchModalProps) {
                         className="w-8 h-8 mr-2"
                       />
                     )}
-                    <span className="ml-2">{game.name}</span>
+                    <span className="ml-2 text-black">{game.name}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          </Box>
-        </Modal>
+          </ModalContent>
+        </StyledModal>
       </div>
     );
   }
-  

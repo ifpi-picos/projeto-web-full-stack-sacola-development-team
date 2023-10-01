@@ -25,7 +25,7 @@ export default function TelaJogo() {
                 })
                 .then((data) => {
                     if (data.length > 0) {
-                        setGameInfo(data[0]); // Assuming you expect a single game in the response
+                        setGameInfo(data[0]); 
                     } else {
                         throw new Error('Jogo não encontrado.');
                     }
@@ -42,15 +42,20 @@ export default function TelaJogo() {
             <div className="flex flex-col md:flex-row">
                 {gameInfo ? (
                     <div className="w-full md:w-4/12 bg-blue-jeans-50 p-4">
-                        {/* Render game information here */}
-                        {gameInfo && gameInfo.cover && (
-                            <img
-                                src={`https://images.igdb.com/igdb/image/upload/t_original/${gameInfo.cover.image_id}.jpg`}
-                                alt={gameInfo.name}
-                                className="w-full md:w-96  mx-auto md:ml-14"
-                            />
-                        )}
-                        <h2 className="text-center mt-2 text-white">{gameInfo.name}</h2>
+                
+                        
+{gameInfo && gameInfo.cover && (
+  <div className="flex justify-center">
+    <Image
+      src={`https://images.igdb.com/igdb/image/upload/t_original/${gameInfo.cover.image_id}.jpg`}
+      alt={gameInfo.name}
+      width={300} 
+      height={300} 
+      className="mx-auto"
+    />
+  </div>
+)}
+                        <h2 className="text-center  mt-2 text-white">{gameInfo.name}</h2>
                         <div className="flex justify-center mt-2">
                             <span
                                 className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">Adicionar Jogo</span>
@@ -74,7 +79,7 @@ export default function TelaJogo() {
                                 </>
                             )}
                         </div>
-                        {/* Render genres and platforms here */}
+                    
                         {gameInfo && gameInfo.genres && gameInfo.genres.length > 0 && (
                             <div className="mt-5">
                                 <h4 className="text-white md:ml-14">Gêneros:</h4>
@@ -106,24 +111,25 @@ export default function TelaJogo() {
                 ) : (
                     <Loading isLoading={true}/>
                 )}
-                <div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
-                    {/* Conditional rendering of the screenshot section */}
-                    {gameInfo && gameInfo.screenshots && gameInfo.screenshots.length > 0 && (
-                        <>
-                            <Image
-                                src={`https://images.igdb.com/igdb/image/upload/t_original/${gameInfo.screenshots[0]?.image_id}.jpg`}
-                                alt=""
-                                width={900}
-                                height={500}
-                                className="mx-auto md:ml-5" // Alterei md:ml-14 para md:ml-0
-                            />
-                            <div
-                                className="text-center mt-4 text-justify text-white md:ml-0"> {/* Alterei md:ml-14 para md:ml-0 */}
-                                <h2>{gameInfo.summary}</h2>
-                            </div>
-                        </>
-                    )}
-                </div>
+               <div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
+    {gameInfo && gameInfo.screenshots && gameInfo.screenshots.length > 0 && (
+        <>
+            <div className="flex items-center justify-center">
+                <Image
+                    src={`https://images.igdb.com/igdb/image/upload/t_original/${gameInfo.screenshots[0]?.image_id}.jpg`}
+                    alt=""
+                    width={800}  
+                    height={450}
+                    className="mx-auto"
+                />
+            </div>
+            <div className="mt-4 text-justify text-white mx-auto max-w-screen-md">
+                <h2 className="text-justify">{gameInfo.summary}</h2>
+            </div>
+        </>
+    )}
+</div>
+
             </div>
             <div className="h-16"></div>
             <FooterNavbar/>
