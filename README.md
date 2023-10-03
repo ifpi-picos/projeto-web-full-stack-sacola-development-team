@@ -8,9 +8,6 @@ O GameMate é um sistema tracker para seus jogos
  - Navegador Web (De sua preferência)
  - IDE -  [VsCode](https://code.visualstudio.com/docs)
 
-```
-Dar exemplos
-```
 
 ### 🔧 Instalação
 
