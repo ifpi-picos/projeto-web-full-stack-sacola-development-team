@@ -36,6 +36,7 @@ npm run dev
 * [Next.js](https://nextjs.org/docs) - Framework do React para desenvolvimento web
 * [Typescript](https://www.typescriptlang.org/docs/) - Superset Javascript
 * [Tailwind CSS](https://tailwindcss.com/docs/installation) - Framework CSS
+* [Firebase](https://firebase.google.com/docs?hl=pt-br) -  Serviço em nuvem
 ## ✒️ Autores
 
 
