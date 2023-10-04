@@ -4,16 +4,17 @@ import MyCloudinaryUploadWidget from '../Utils/CloudinaryUploadWidget';
 interface FormularioCadastroProps {
     onChangeName?: (name: string) => void;
     onChangeUser?: (username: string) => void;
+    onURLChange?: (url: string) => void; // Adicione esta prop
 }
 
-const FormularioCadastro: React.FC<FormularioCadastroProps> = ({onChangeName, onChangeUser}) => {
+const FormularioCadastro: React.FC<FormularioCadastroProps> = ({ onChangeName, onChangeUser, onURLChange }) => {
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.value;
         if (onChangeName) {
             onChangeName(name);
         } else {
-            console.warn('Você precisa passar a prop onChange para o componente ExibirSenha');
+            console.warn('Você precisa passar a prop onChangeName para o componente FormularioCadastro');
         }
     }
 
@@ -22,7 +23,7 @@ const FormularioCadastro: React.FC<FormularioCadastroProps> = ({onChangeName, on
         if (onChangeUser) {
             onChangeUser(username);
         } else {
-            console.warn('Você precisa passar a prop onChange para o componente ExibirSenha');
+            console.warn('Você precisa passar a prop onChangeUser para o componente FormularioCadastro');
         }
     }
 
@@ -63,10 +64,9 @@ const FormularioCadastro: React.FC<FormularioCadastroProps> = ({onChangeName, on
                     Nome de usuário
                 </label>
             </div>
+            
 
-            <div className="relative mb-6" data-te-input-wrapper-init="">
-
-            </div>
+            
 
             
 
