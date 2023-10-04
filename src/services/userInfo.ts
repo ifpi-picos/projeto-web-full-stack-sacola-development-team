@@ -2,7 +2,7 @@ import Player from "@/core/Player";
 
 export async function getUserInfo() {
     const Client_Token = process.env.NEXT_PUBLIC_VERCEL_TOKEN;
-    const url = process.env.NEXT_PUBLIC_VERCEL_URL;
+    const url = process.env.NEXT_PUBLIC_RAILWAY_URL;
     const Token = localStorage.getItem('acessToken');
 
     try {
