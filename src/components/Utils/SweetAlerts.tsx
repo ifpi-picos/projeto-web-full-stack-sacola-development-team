@@ -12,5 +12,6 @@ export async function SweetAlerts(icon: SweetAlertIcon, title: string = '', text
         icon: icon,
         confirmButtonText: 'Ok',
         color: 'aliceblue',
+        background:'#545454',
     })
 }

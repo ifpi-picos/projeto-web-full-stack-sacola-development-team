@@ -111,7 +111,7 @@ export default function TelaJogo() {
                 ) : (
                     <Loading isLoading={true}/>
                 )}
-               <div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
+        <div className="w-full md:w-8/12 bg-blue-jeans-50 p-4">
     {gameInfo && gameInfo.screenshots && gameInfo.screenshots.length > 0 && (
         <>
             <div className="flex items-center justify-center">
@@ -121,6 +121,7 @@ export default function TelaJogo() {
                     width={800}  
                     height={450}
                     className="mx-auto"
+                    quality={100}
                 />
             </div>
             <div className="mt-4 text-justify text-white mx-auto max-w-screen-md">
@@ -129,6 +130,7 @@ export default function TelaJogo() {
         </>
     )}
 </div>
+
 
             </div>
             <div className="h-16"></div>
