@@ -84,7 +84,6 @@ export default function useAuth() {
 
             if (credential === null) throw new Error('credential is null')
 
-            const token = credential.accessToken
             const user = res.user
 
             if (user === null) throw new Error(user)
