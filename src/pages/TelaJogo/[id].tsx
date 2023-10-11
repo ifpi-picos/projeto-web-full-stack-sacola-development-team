@@ -6,7 +6,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Loading from "@/components/Main/loading";
-
+import { addGameToUser } from "@/services/addGame";
+import { add } from "date-fns";
+import { SweetAlerts, SweetAlertsConfirm } from "@/components/Utils/SweetAlerts";
 export default function TelaJogo() {
   const router = useRouter();
   const { id } = router.query;
@@ -15,6 +17,12 @@ export default function TelaJogo() {
 
   const handleClick = () => {
     setClicked(!clicked);
+    // addGameToUser(id as string);
+    if (clicked) {
+      SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!");
+      
+    }
+  
   };
   useEffect(() => {
     if (id) {
@@ -38,6 +46,8 @@ export default function TelaJogo() {
         });
     }
   }, [id]);
+
+  
 
   return (
     <div className="bg-blue-jeans-50">
