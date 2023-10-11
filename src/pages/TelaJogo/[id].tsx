@@ -58,16 +58,13 @@ export default function TelaJogo() {
             )}
             <h2 className="text-center  mt-2 text-white">{gameInfo.name}</h2>
             <div className="flex justify-center mt-2">
-              <span
-                onClick={handleClick}
-                className={`bg-${
-                  clicked ? "red-400" : "azul-infos-50"
-                } rounded-full px-3 py-1 text-sm font-semibold ${
-                  clicked ? "text-white" : "text-azul-textos-50"
-                } mr-2 mb-2 cursor-pointer`}
-              >
-                {clicked ? "Remover Jogo" : "Adicionar Jogo"}
-              </span>
+            <span
+  onClick={handleClick}
+  className={`bg-${clicked ? } rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2 cursor-pointer`}
+>
+  {clicked ? "Remover Jogo" : "Adicionar Jogo"}
+</span>
+
 
               <span className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">
                 <FormatListBulletedIcon className="text-lg" />

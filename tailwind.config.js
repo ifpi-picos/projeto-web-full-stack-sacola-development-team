@@ -23,6 +23,9 @@ module.exports = {
         "azul-textos": {
           50:"#35B4FB"
         },
+        "vermelho": {
+          50:"#FF0000"
+        },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
