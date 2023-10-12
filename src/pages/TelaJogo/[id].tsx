@@ -20,9 +20,9 @@ export default function TelaJogo() {
     addGameToUser(id as string);
     if (clicked) {
       SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!");
-      
+    } else {
+      SweetAlerts("success", "Sucesso", "Jogo adicionado com sucesso!");
     }
-  
   };
   useEffect(() => {
     if (id) {
