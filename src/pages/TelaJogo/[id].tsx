@@ -17,7 +17,7 @@ export default function TelaJogo() {
 
   const handleClick = () => {
     setClicked(!clicked);
-    // addGameToUser(id as string);
+    addGameToUser(id as string);
     if (clicked) {
       SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!");
       

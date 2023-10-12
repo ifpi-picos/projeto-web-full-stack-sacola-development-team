@@ -35,7 +35,8 @@ export async function SweetAlertsConfirm(icon: SweetAlertIcon, title: string = '
                 title: 'Removido!',
                 text: 'Este jogo foi removido da sua conta.',
                 icon: 'success',
-                background: '#545454'
+                background: '#545454',
+                color: 'aliceblue',
             });
         }
     });

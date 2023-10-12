@@ -20,6 +20,9 @@ module.exports = {
         "azul-infos": {
           50:"#002664"
         },
+        "azul-escuro": {
+          50:"#011b45"
+        },
         "azul-textos": {
           50:"#35B4FB"
         },
