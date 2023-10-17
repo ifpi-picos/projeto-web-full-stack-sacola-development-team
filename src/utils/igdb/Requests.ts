@@ -11,25 +11,26 @@ export async function getLatestGameInfo(locale = 'en_US') {
           return apiCache.get('latestGames');
       }
 
-      const today = new Date();
-      const startOfWeek = new Date(today);
-      startOfWeek.setHours(0, 0, 0, 0);
-      startOfWeek.setDate(today.getDate() - today.getDay()); // Define o início da semana como o domingo
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // next week
+    const startOfWeek = new Date(today);
+    startOfWeek.setHours(0, 0, 0, 0);
+    startOfWeek.setDate(today.getDate() - today.getDay()); // Define o início da semana como o domingo
 
-      const endOfWeek = new Date(today);
-      endOfWeek.setHours(23, 59, 59, 999);
-      endOfWeek.setDate(startOfWeek.getDate() + 8); // Define o final da semana como o sábado
+    const endOfNextWeek = new Date(nextWeek);
+    endOfNextWeek.setHours(23, 59, 59, 999);
+    endOfNextWeek.setDate(startOfWeek.getDate() + 15); // Define o final da próxima semana como o sábado
 
-      const queryString = `
-          fields id, cover.image_id, first_release_date, summary;
-          where first_release_date >= ${Math.floor(startOfWeek.getTime() / 1000)}
-          & first_release_date <= ${Math.floor(endOfWeek.getTime() / 1000)}
-          & cover != null 
-          & cover.image_id != null;
-        
-          sort first_release_date desc;
-          limit 10;
-      `;
+    const queryString = `
+        fields id, cover.image_id, first_release_date, summary, platforms;
+        where first_release_date >= ${Math.floor(startOfWeek.getTime() / 1000)}
+        & first_release_date <= ${Math.floor(endOfNextWeek.getTime() / 1000)}
+        & cover != null 
+        & cover.image_id != null;
+        & platforms = [49,48,6]
+        sort popularity desc;
+        limit 20;
+    `;
 
       const response = await fetch(endpoint + 'games', {
           method: 'POST',

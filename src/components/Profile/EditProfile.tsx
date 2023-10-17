@@ -33,7 +33,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 
   return isOpen ? (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur backdrop-filter bg-gray-800 bg-opacity-50">
-      <div className="bg-white p-4 rounded-lg shadow-md w-full md:w-96">
+      <div className="bg-white p-12 rounded-lg shadow-md md:w-3/12  ">
         <h2 className="text-2xl font-semibold mb-4 text-black text-center">Editar Perfil</h2>
         <div className="mb-4 flex flex-col md:flex-row items-center justify-center gap-4">
         <div className='p-2 text-lg'>

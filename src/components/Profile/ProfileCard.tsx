@@ -92,7 +92,7 @@ export default function ProfileCard() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row justify-center items-center rounded-lg text-lg mt-4 md:mt-8 w-56 h-12 bg-azul-infos-50 cursor-pointer  text-white hover:bg-azul-escuro-50">
+          <div className="flex flex-row justify-center items-center rounded-lg text-lg mt-4 md:mt-8 w-56 h-12 bg-azul-infos-50 cursor-pointer  text-white hover:bg-azul-escuro-50  ">
                     <h3>Vincular com a Steam</h3>
                   </div>
         </div>
