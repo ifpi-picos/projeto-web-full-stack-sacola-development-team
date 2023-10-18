@@ -9,20 +9,30 @@ import Loading from "@/components/Main/loading";
 import { addGameToUser } from "@/services/addGame";
 import { add } from "date-fns";
 import { SweetAlerts, SweetAlertsConfirm } from "@/components/Utils/SweetAlerts";
+import { removeGameUser } from "@/services/removeGame";
 export default function TelaJogo() {
   const router = useRouter();
   const { id } = router.query;
   const [gameInfo, setGameInfo] = useState<any | null>(null);
-  const [clicked, setClicked] = useState(false);
+  const isGameInUser = localStorage.getItem(`game_${id}`)
+  const [clicked, setClicked] = useState(isGameInUser === "true") ;
+
+ 
 
   const handleClick = () => {
-    setClicked(!clicked);
-    addGameToUser(id as string);
     if (clicked) {
-      SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!");
+      // Se o jogo já está na biblioteca, remova-o e atualize o localStorage
+      removeGameUser(id as string);
+      localStorage.setItem(`game_${id}`, "false");
+      SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!")
     } else {
-      SweetAlerts("success", "Sucesso", "Jogo adicionado com sucesso!");
+      // Se o jogo não está na biblioteca, adicione-o e atualize o localStorage
+      addGameToUser(id as string);
+      localStorage.setItem(`game_${id}`, "true");
+      SweetAlerts("success", "Adicionado", "Jogo adicionado à sua biblioteca com sucesso!");
     }
+    // Alterne o estado do clique após a adição/remoção
+    setClicked(!clicked);
   };
   useEffect(() => {
     if (id) {
