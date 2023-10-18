@@ -10,7 +10,7 @@ export async function addGameToUser(id: string){
             Authorization:  `Bearer ${Token}`
         },
         body: JSON.stringify({game: id})
-        
+
     })
     console.log(id)
     const data = await response.json()

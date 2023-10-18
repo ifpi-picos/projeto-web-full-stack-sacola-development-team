@@ -23,17 +23,18 @@ export default function TelaJogo() {
     if (clicked) {
       // Se o jogo já está na biblioteca, remova-o e atualize o localStorage
       removeGameUser(id as string);
-      localStorage.setItem(`game_${id}`, "false");
+      // localStorage.setItem(`game_${id}`, "false");
       SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!")
     } else {
       // Se o jogo não está na biblioteca, adicione-o e atualize o localStorage
       addGameToUser(id as string);
-      localStorage.setItem(`game_${id}`, "true");
+      // localStorage.setItem(`game_${id}`, "true");
       SweetAlerts("success", "Adicionado", "Jogo adicionado à sua biblioteca com sucesso!");
     }
     // Alterne o estado do clique após a adição/remoção
     setClicked(!clicked);
   };
+
   useEffect(() => {
     if (id) {
       // Chame a função da API para buscar as informações do jogo aqui
