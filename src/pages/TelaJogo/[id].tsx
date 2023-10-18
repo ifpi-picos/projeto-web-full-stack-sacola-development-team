@@ -14,7 +14,8 @@ export default function TelaJogo() {
   const router = useRouter();
   const { id } = router.query;
   const [gameInfo, setGameInfo] = useState<any | null>(null);
-  const isGameInUser = localStorage.getItem(`game_${id}`)
+  const isGameInUser = useState({});
+  // @ts-ignore
   const [clicked, setClicked] = useState(isGameInUser === "true") ;
 
  
@@ -23,12 +24,12 @@ export default function TelaJogo() {
     if (clicked) {
       // Se o jogo já está na biblioteca, remova-o e atualize o localStorage
       removeGameUser(id as string);
-      // localStorage.setItem(`game_${id}`, "false");
+      localStorage.setItem(`game_${id}`, "false");
       SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!")
     } else {
       // Se o jogo não está na biblioteca, adicione-o e atualize o localStorage
       addGameToUser(id as string);
-      // localStorage.setItem(`game_${id}`, "true");
+      localStorage.setItem(`game_${id}`, "true");
       SweetAlerts("success", "Adicionado", "Jogo adicionado à sua biblioteca com sucesso!");
     }
     // Alterne o estado do clique após a adição/remoção
@@ -56,6 +57,9 @@ export default function TelaJogo() {
           console.error(error);
         });
     }
+
+    // @ts-ignore
+    isGameInUser[0] = localStorage.getItem(`game_${id}`);
   }, [id]);
 
   
