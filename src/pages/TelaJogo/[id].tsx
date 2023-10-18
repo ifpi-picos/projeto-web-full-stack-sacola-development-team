@@ -36,6 +36,8 @@ export default function TelaJogo() {
     setClicked(!clicked);
   };
 
+
+
   useEffect(() => {
     if (id) {
       // Chame a função da API para buscar as informações do jogo aqui
@@ -60,6 +62,8 @@ export default function TelaJogo() {
 
     // @ts-ignore
     isGameInUser[0] = localStorage.getItem(`game_${id}`);
+    const savedGames = localStorage.getItem(`game_${id}`);
+    console.log(`game_${id}`, savedGames);
   }, [id]);
 
   
