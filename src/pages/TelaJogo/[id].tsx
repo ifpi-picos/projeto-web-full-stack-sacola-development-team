@@ -14,31 +14,22 @@ export default function TelaJogo() {
   const router = useRouter();
   const { id } = router.query;
   const [gameInfo, setGameInfo] = useState<any | null>(null);
-  const isGameInUser = useState({});
-  // @ts-ignore
-  const [clicked, setClicked] = useState(isGameInUser === "true") ;
+  const [isGameInUser, setIsGameInUser] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
  
 
-  const handleClick = () => {
-    if (clicked) {
-      // Se o jogo já está na biblioteca, remova-o e atualize o localStorage
-      removeGameUser(id as string);
-      localStorage.setItem(`game_${id}`, "false");
-      SweetAlertsConfirm("warning", "Você tem certeza?", "Você não poderá reverter isso!")
-    } else {
-      // Se o jogo não está na biblioteca, adicione-o e atualize o localStorage
-      addGameToUser(id as string);
-      localStorage.setItem(`game_${id}`, "true");
-      SweetAlerts("success", "Adicionado", "Jogo adicionado à sua biblioteca com sucesso!");
-    }
-    // Alterne o estado do clique após a adição/remoção
-    setClicked(!clicked);
-  };
-
+ 
 
 
   useEffect(() => {
+    const savedState = localStorage.getItem(`game_${id}`);
+    setIsGameInUser(savedState === "true");
+    setClicked(savedState === "true");
+    console.log(`game_${id}`, savedState);
+  
+
+
     if (id) {
       // Chame a função da API para buscar as informações do jogo aqui
       fetch(`/api/game?id=${id}`)
@@ -60,13 +51,26 @@ export default function TelaJogo() {
         });
     }
 
-    // @ts-ignore
-    isGameInUser[0] = localStorage.getItem(`game_${id}`);
-    const savedGames = localStorage.getItem(`game_${id}`);
-    console.log(`game_${id}`, savedGames);
-  }, [id]);
+  }
+  , [id]);
 
-  
+  const handleClick = () => {
+    if (isGameInUser) {
+      // If the game is in the library, remove it and update localStorage
+      removeGameUser(id as string);
+      localStorage.setItem(`game_${id}`, "false");
+      console.log("Game removed from library");
+    } else {
+      // If the game is not in the library, add it and update localStorage
+      addGameToUser(id as string);
+      localStorage.setItem(`game_${id}`, "true");
+      console.log("Game added to library");
+    }
+    // Toggle the state of isGameInUser and clicked
+    setIsGameInUser(!isGameInUser);
+    setClicked(!isGameInUser);
+  };
+
 
   return (
     <div className="bg-blue-jeans-50">
