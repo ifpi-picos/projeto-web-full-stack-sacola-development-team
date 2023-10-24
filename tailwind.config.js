@@ -24,7 +24,7 @@ module.exports = {
           50:"#011b45"
         },
         "azul-textos": {
-          50:"#35B4FB"
+          50:"#69c6fa"
         },
         "vermelho": {
           50:"#FF0000"

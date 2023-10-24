@@ -33,7 +33,7 @@ export default function Biblioteca({ games }: LibraryProps) {
         useEffect(() => {
             userLibraryGames()
                 .then((response) => {
-                    console.log(response.games.game_List);
+                    
                     setUserGames(response.games.game_List);
                 })
                 .catch((error) => {
@@ -78,9 +78,9 @@ export default function Biblioteca({ games }: LibraryProps) {
     
 
         return (
-            <div>
+            <div className="bg-blue-jeans-50">
                 <Header />
-                <div className="grid grid-rows-2 grid-flow-col gap-4">
+                <div className="grid grid-rows-4 grid-flow-col gap-8">
                     {userGames &&
                         userGames.map((gameId) => (
                             <div key={gameId}>
@@ -91,7 +91,7 @@ export default function Biblioteca({ games }: LibraryProps) {
                                         alt={cardsGames[gameId].name}
                                         width={200}
                                         height={300}
-                                        className="max-w-xs"
+                                        className="max-w-xs cursor-pointer"
                                         onClick={() => pickGameId(cardsGames[gameId])}
                                     />
                                 
@@ -103,6 +103,7 @@ export default function Biblioteca({ games }: LibraryProps) {
                         ))}
                        
                 </div>
+                <div className="h-16"></div>
                 <FooterNavbar />
             </div>
             
