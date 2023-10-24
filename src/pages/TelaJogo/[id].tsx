@@ -8,8 +8,13 @@ import { useRouter } from "next/router";
 import Loading from "@/components/Main/loading";
 import { addGameToUser } from "@/services/addGame";
 import { add } from "date-fns";
-import { SweetAlerts, SweetAlertsConfirm } from "@/components/Utils/SweetAlerts";
+import {
+  SweetAlerts,
+  SweetAlertsConfirm,
+} from "@/components/Utils/SweetAlerts";
 import { removeGameUser } from "@/services/removeGame";
+
+
 export default function TelaJogo() {
   const router = useRouter();
   const { id } = router.query;
@@ -17,18 +22,11 @@ export default function TelaJogo() {
   const [isGameInUser, setIsGameInUser] = useState(false);
   const [clicked, setClicked] = useState(false);
 
- 
-
- 
-
-
   useEffect(() => {
     const savedState = localStorage.getItem(`game_${id}`);
     setIsGameInUser(savedState === "true");
     setClicked(savedState === "true");
     console.log(`game_${id}`, savedState);
-  
-
 
     if (id) {
       // Chame a função da API para buscar as informações do jogo aqui
@@ -50,9 +48,7 @@ export default function TelaJogo() {
           console.error(error);
         });
     }
-
-  }
-  , [id]);
+  }, [id]);
 
   const handleClick = () => {
     if (isGameInUser) {
@@ -70,7 +66,6 @@ export default function TelaJogo() {
     setIsGameInUser(!isGameInUser);
     setClicked(!isGameInUser);
   };
-
 
   return (
     <div className="bg-blue-jeans-50">

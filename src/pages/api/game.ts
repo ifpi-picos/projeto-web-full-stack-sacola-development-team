@@ -35,3 +35,4 @@ export default async function getGameDetails (req: NextApiRequest, res: NextApiR
         res.status(500).json({error: 'Erro interno do servidor.'});
     }
 }
+
