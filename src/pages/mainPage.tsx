@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import Header from '../components/Main/Header';
 import FooterNavbar from '../components/Main/FooterNavbar';
 import Carrossel from '@/components/Main/Carrossel';
-import {getLatestGameInfo} from '@/utils/igdb/Requests';
+import {getLatestGameInfo} from './api/carousel'
 import useAuth from "@/hooks/useAuth";
 
 

@@ -56,13 +56,13 @@ export default function TelaJogo() {
       removeGameUser(id as string);
       localStorage.setItem(`game_${id}`, "false");
       localStorage.removeItem('userGames');
-      console.log("Game removed from library");
+      SweetAlertsConfirm("warning", "Jogo removido da biblioteca");
     } else {
       // If the game is not in the library, add it and update localStorage
       addGameToUser(id as string);
       localStorage.setItem(`game_${id}`, "true");
       localStorage.removeItem('userGames');
-      console.log("Game added to library");
+      SweetAlerts("success", "Jogo adicionado à biblioteca");
     }
     // Toggle the state of isGameInUser and clicked
     setIsGameInUser(!isGameInUser);

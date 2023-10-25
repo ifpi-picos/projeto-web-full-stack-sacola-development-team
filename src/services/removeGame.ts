@@ -13,6 +13,5 @@ export async function removeGameUser(id: string){
         
     })
     console.log(id)
-    const data = await response.json()
-    return data
+    console.log('Jogo removido com sucesso!')
 }
