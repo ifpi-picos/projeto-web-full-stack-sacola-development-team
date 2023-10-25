@@ -16,3 +16,4 @@ export async function addGameToUser(id: string){
     const data = await response.json()
     return data
 }
+
