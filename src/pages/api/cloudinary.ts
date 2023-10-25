@@ -1,7 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { v2 as cloudinary } from 'cloudinary';
+import { NextApiRequest, NextApiResponse } from "next";
+import { v2 as cloudinary } from "cloudinary";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const body = JSON.parse(req.body) || {};
   const { paramsToSign } = body;
 
@@ -15,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   } catch (error) {
     res.status(500).json({
-        error,
+      error,
     });
   }
 }

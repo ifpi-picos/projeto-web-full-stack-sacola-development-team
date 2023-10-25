@@ -1,15 +1,13 @@
-import { format, addDays } from 'date-fns';
-
-const endpoint = 'https://api.igdb.com/v4/';
+const endpoint = "https://api.igdb.com/v4/";
 
 const apiCache = new Map();
 
-export async function getLatestGameInfo(locale = 'en_US') {
+export async function getLatestGameInfo(locale = "en_US") {
   try {
-      // Verifica se os dados estão em cache
-      if (apiCache.has('latestGames')) {
-          return apiCache.get('latestGames');
-      }
+    // Verifica se os dados estão em cache
+    if (apiCache.has("latestGames")) {
+      return apiCache.get("latestGames");
+    }
 
     const today = new Date();
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // next week
@@ -32,50 +30,51 @@ export async function getLatestGameInfo(locale = 'en_US') {
         limit 20;
     `;
 
-      const response = await fetch(endpoint + 'games', {
-          method: 'POST',
-          body: queryString,
-          headers: {
-              'Client-ID': process.env.IGDB_CLIENT_ID,
-              'Authorization': 'Bearer ' + process.env.IGDB_ACCESS_TOKEN,
-          },
-      } as RequestInit);
+    const response = await fetch(endpoint + "games", {
+      method: "POST",
+      body: queryString,
+      headers: {
+        "Client-ID": process.env.IGDB_CLIENT_ID,
+        Authorization: "Bearer " + process.env.IGDB_ACCESS_TOKEN,
+      },
+    } as RequestInit);
 
-      if (!response.ok) {
-          throw new Error('Erro ao buscar informações dos jogos: ' + response.statusText);
-      }
+    if (!response.ok) {
+      throw new Error(
+        "Erro ao buscar informações dos jogos: " + response.statusText
+      );
+    }
 
-      const gameInfo = await response.json();
+    const gameInfo = await response.json();
 
-      apiCache.set('latestGames', gameInfo);
-      setTimeout(() => {
-          apiCache.delete('latestGames');
-      }, 24 * 60 * 60 * 1000); // 24 horas
+    apiCache.set("latestGames", gameInfo);
+    setTimeout(() => {
+      apiCache.delete("latestGames");
+    }, 24 * 60 * 60 * 1000); // 24 horas
 
-      return gameInfo;
+    return gameInfo;
   } catch (error) {
-      console.error('Erro ao buscar informações dos jogos:', error);
-      throw error; // Lança o erro para que seja tratado posteriormente
+    console.error("Erro ao buscar informações dos jogos:", error);
+    throw error; // Lança o erro para que seja tratado posteriormente
   }
 }
 
-
 export async function getGameInfo() {
-    const gameId = 1942;
-    const queryString = `
+  const gameId = 1942;
+  const queryString = `
         fields name, cover.image_id, genres.name, platforms.name, summary, screenshots.image_id, release_dates.human, rating, rating_count, involved_companies.company.name, web;
         where id = ${gameId};
     `;
 
-    const data = await fetch(endpoint + 'games', {
-        method: 'POST',
-        body: queryString,
-        headers: {
-            'Client-ID': process.env.IGDB_CLIENT_ID,
-            'Authorization': 'Bearer ' + process.env.IGDB_ACCESS_TOKEN,
-        }
-    } as RequestInit);
+  const data = await fetch(endpoint + "games", {
+    method: "POST",
+    body: queryString,
+    headers: {
+      "Client-ID": process.env.IGDB_CLIENT_ID,
+      Authorization: "Bearer " + process.env.IGDB_ACCESS_TOKEN,
+    },
+  } as RequestInit);
 
-    const gameInfo = await data.json();
-    return gameInfo;
+  const gameInfo = await data.json();
+  return gameInfo;
 }

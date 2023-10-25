@@ -28,7 +28,7 @@ export default function CloudinaryUploadWidget({
     // Atualiza o estado com a URL da imagem
     setImageURL(imageUrl);
 
-    setButtonText("Reenviar Imagem")
+    setButtonText("Reenviar Imagem");
   }
 
   return (

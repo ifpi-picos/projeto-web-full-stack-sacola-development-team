@@ -1,7 +1,5 @@
 import EditIcon from "@mui/icons-material/Edit";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Image from "next/image";
-import ShareIcon from "@mui/icons-material/Share";
 import React, { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { getUserInfo } from "@/services/userInfo";
@@ -93,8 +91,8 @@ export default function ProfileCard() {
             </div>
           </div>
           <div className="flex flex-row justify-center items-center rounded-lg text-lg mt-4 md:mt-8 w-56 h-12 bg-azul-infos-50 cursor-pointer  text-white hover:bg-azul-escuro-50  ">
-                    <h3>Vincular com a Steam</h3>
-                  </div>
+            <h3>Vincular com a Steam</h3>
+          </div>
         </div>
       ) : (
         <div>Carregando...</div>

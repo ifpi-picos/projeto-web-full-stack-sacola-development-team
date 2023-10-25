@@ -88,24 +88,23 @@ export default function Cadastro() {
       <Loading isLoading={isLoading} />
       <div className="container h-full px-6 py-24">
         <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between ">
-        <div className="flex flex-col justify-center items-center mb-12 md:mb-0 md:w-8/12 lg:w-6/12 sm:block hidden">
-  <header className="flex justify-center items-center">
-    <h1 className="font-sans text-4xl font-bold text-aliceblue-50 mb-5 text-center">
-      GameMate
-    </h1>
-  </header>
-  
-  {imageUrl && (
-    <div className="flex justify-center items-center mb-5">
-      <Image src={imageUrl} width={250} height={250} alt="" />
-    </div>
-  )}
+          <div className="flex flex-col justify-center items-center mb-12 md:mb-0 md:w-8/12 lg:w-6/12 sm:block hidden">
+            <header className="flex justify-center items-center">
+              <h1 className="font-sans text-4xl font-bold text-aliceblue-50 mb-5 text-center">
+                GameMate
+              </h1>
+            </header>
 
-  <div className="flex  justify-center items-center">
-    <MyCloudinaryUploadWidget onURLChange={onURLChange} />
-  </div>
-</div>
+            {imageUrl && (
+              <div className="flex justify-center items-center mb-5">
+                <Image src={imageUrl} width={250} height={250} alt="" />
+              </div>
+            )}
 
+            <div className="flex  justify-center items-center">
+              <MyCloudinaryUploadWidget onURLChange={onURLChange} />
+            </div>
+          </div>
 
           <div className="md:w-8/12 lg:ml-6 lg:w-5/12 h-max">
             <form onSubmit={handleRegister}>
@@ -148,7 +147,10 @@ export default function Cadastro() {
                 />
               </div>
 
-              <div className="relative mb-6 sm:hidden " data-te-input-wrapper-init="">
+              <div
+                className="relative mb-6 sm:hidden "
+                data-te-input-wrapper-init=""
+              >
                 <MyCloudinaryUploadWidget onURLChange={onURLChange} />
               </div>
 

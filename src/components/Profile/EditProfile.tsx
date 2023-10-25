@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import MyCloudinaryUploadWidget from '@/components/Utils/CloudinaryUploadWidget';
+import { useState } from "react";
+import MyCloudinaryUploadWidget from "@/components/Utils/CloudinaryUploadWidget";
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 }) => {
   const [username, setUsername] = useState(userData.username);
   const [avatarUrl, setAvatarUrl] = useState(userData.avatarUrl);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
 
   const onURLChange = (url: string) => {
     setImageUrl(url);
@@ -34,28 +34,34 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   return isOpen ? (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur backdrop-filter bg-gray-800 bg-opacity-50">
       <div className="bg-white p-12 rounded-lg shadow-md md:w-3/12  ">
-        <h2 className="text-2xl font-semibold mb-4 text-black text-center">Editar Perfil</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-black text-center">
+          Editar Perfil
+        </h2>
         <div className="mb-4 flex flex-col md:flex-row items-center justify-center gap-4">
-        <div className='p-2 text-lg'>
-          <MyCloudinaryUploadWidget onURLChange={onURLChange} />
+          <div className="p-2 text-lg">
+            <MyCloudinaryUploadWidget onURLChange={onURLChange} />
+          </div>
+          <label
+            htmlFor="avatar"
+            className="cursor-pointer w-24 h-24 md:w-40 md:h-40 flex items-center justify-center overflow-hidden "
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="Avatar"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span>Sem foto</span>
+            )}
+          </label>
         </div>
-  <label
-    htmlFor="avatar"
-    className="cursor-pointer w-24 h-24 md:w-40 md:h-40 flex items-center justify-center overflow-hidden "
-  >
-    
-    {imageUrl ? (
-      <img src={imageUrl} alt="Avatar" className="w-full h-full object-cover" />
-    ) : (
-      <span>Sem foto</span>
-    )}
-   
-  </label>
-  
-</div>
 
         <div className="mb-4">
-          <label htmlFor="username" className="flex items-start p-1 font-medium text-lg text-black">
+          <label
+            htmlFor="username"
+            className="flex items-start p-1 font-medium text-lg text-black"
+          >
             Nome de Usuário
           </label>
           <input

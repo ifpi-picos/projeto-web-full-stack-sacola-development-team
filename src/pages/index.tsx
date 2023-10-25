@@ -5,7 +5,7 @@ import Link from "next/link";
 import GoogleButton from "@/components/LoginAndRegister/GoogleButton";
 import Loading from "@/components/Main/loading";
 import { SweetAlerts } from "@/components/Utils/SweetAlerts";
-import { addUserDocument } from "@/services/registerService";
+
 
 export default function Home() {
   const { login, loginOrRegisterWithGoogle } = useAuth();
@@ -76,17 +76,17 @@ export default function Home() {
 
       <div className="container h-full px-6 py-24">
         <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between ">
-        <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12 mx-auto">
-  <header className="flex flex-col gap-4 w-full max-w-[350px] pl-16">
-    <h1 className="font-sans text-4xl font-bold text-aliceblue-50 pl-4">
-      GameMate
-    </h1>
-    <p className="font-sans font-normal text-base text-aliceblue-50">
-      A melhor plataforma para encontrar jogadores e jogar com seus amigos.
-    </p>
-  </header>
-</div>
-
+          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12 mx-auto">
+            <header className="flex flex-col gap-4 w-full max-w-[350px] pl-16">
+              <h1 className="font-sans text-4xl font-bold text-aliceblue-50 pl-4">
+                GameMate
+              </h1>
+              <p className="font-sans font-normal text-base text-aliceblue-50">
+                A melhor plataforma para encontrar jogadores e jogar com seus
+                amigos.
+              </p>
+            </header>
+          </div>
 
           <div className="md:w-8/12 lg:ml-6 lg:w-5/12 h-max">
             <form>

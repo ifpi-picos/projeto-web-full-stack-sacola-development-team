@@ -7,13 +7,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Loading from "@/components/Main/loading";
 import { addGameToUser } from "@/services/addGame";
-import { add } from "date-fns";
 import {
   SweetAlerts,
   SweetAlertsConfirm,
 } from "@/components/Utils/SweetAlerts";
 import { removeGameUser } from "@/services/removeGame";
-
 
 export default function TelaJogo() {
   const router = useRouter();
@@ -55,13 +53,13 @@ export default function TelaJogo() {
       // If the game is in the library, remove it and update localStorage
       removeGameUser(id as string);
       localStorage.setItem(`game_${id}`, "false");
-      localStorage.removeItem('userGames');
+      localStorage.removeItem("userGames");
       SweetAlertsConfirm("warning", "Jogo removido da biblioteca");
     } else {
       // If the game is not in the library, add it and update localStorage
       addGameToUser(id as string);
       localStorage.setItem(`game_${id}`, "true");
-      localStorage.removeItem('userGames');
+      localStorage.removeItem("userGames");
       SweetAlerts("success", "Jogo adicionado à biblioteca");
     }
     // Toggle the state of isGameInUser and clicked
