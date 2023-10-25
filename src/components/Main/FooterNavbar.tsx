@@ -55,6 +55,7 @@ export default function LabelBottomNavigation() {
         left: "50%",
         transform: "translateX(-50%)",
         width: "100%",
+        height: '50px',
         maxWidth: 500,
       }}
       value={value}
