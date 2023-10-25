@@ -96,7 +96,7 @@ export default function Biblioteca({ games }: LibraryProps) {
                   />
                 </div>
               )}
-              <h2 className="text-xl mt-2 text-center">
+              <h2 className="text-xl mt-2 text-center text-white">
                 {cardsGames && cardsGames[gameId] && cardsGames[gameId].name}
               </h2>
             </div>
