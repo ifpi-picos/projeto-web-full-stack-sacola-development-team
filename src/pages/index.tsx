@@ -71,7 +71,7 @@ export default function Home() {
   }
 
   return (
-    <section className="h-screen">
+    <section className="h-screen bg-linear-50">
       <Loading isLoading={isLoading} />
 
       <div className="container h-full px-6 py-24">

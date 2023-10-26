@@ -12,6 +12,7 @@ import {
   SweetAlertsConfirm,
 } from "@/components/Utils/SweetAlerts";
 import { removeGameUser } from "@/services/removeGame";
+import SelectionBox from "@/components/Utils/Selector";
 
 export default function TelaJogo() {
   const router = useRouter();
@@ -100,9 +101,7 @@ export default function TelaJogo() {
               <span className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">
                 <FormatListBulletedIcon className="text-lg" />
               </span>
-              <span className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">
-                <MoreHorizIcon className="text-lg" />
-              </span>
+              <SelectionBox />
             </div>
             <h3 className="flex justify-center items-center mt-2 text-white">
               SOBRE

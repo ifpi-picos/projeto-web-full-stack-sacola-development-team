@@ -78,31 +78,32 @@ export default function Biblioteca({ games }: LibraryProps) {
   }, [userGames]);
 
   return (
-    <div className="bg-blue-jeans-50">
-      <Header />
-      <div className="grid grid-cols-2 gap-x-20  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-4 ">
-        {userGames &&
-          userGames.map((gameId) => (
-            <div key={gameId} className="rounded p-4">
-              {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
-                <div className="text-center">
-                  <Image
-                    src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
-                    alt={cardsGames[gameId].name}
-                    width={200}
-                    height={300}
-                    className="max-w-xs cursor-pointer mx-auto "
-                    onClick={() => pickGameId(cardsGames[gameId])}
-                  />
-                </div>
-              )}
-              <h2 className="text-xl mt-2 text-center text-white">
-                {cardsGames && cardsGames[gameId] && cardsGames[gameId].name}
-              </h2>
+<div className="bg-blue-jeans-50 min-h-screen">
+  <Header />
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+    {userGames &&
+      userGames.map((gameId) => (
+        <div key={gameId} className="rounded p-4">
+          {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
+            <div className="text-center">
+              <Image
+                src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
+                alt={cardsGames[gameId].name}
+                width={150}
+                height={250}
+                className="cursor-pointer mx-auto"
+                onClick={() => pickGameId(cardsGames[gameId])}
+              />
             </div>
-          ))}
-      </div>
+          )}
+          <h2 className="text-lg mt-2 text-center text-white">
+            {cardsGames && cardsGames[gameId] && cardsGames[gameId].name}
+          </h2>
+        </div>
+      ))}
+  </div>
 
+  
       <div className="h-16"></div>
       <FooterNavbar />
     </div>

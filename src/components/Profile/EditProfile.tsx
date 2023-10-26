@@ -6,7 +6,7 @@ interface ProfileModalProps {
   onClose: () => void;
   userData: {
     username: string;
-    avatarUrl: string;
+    avatarUrl: string;  
   };
   onSave: (userData: { username: string; avatarUrl: string }) => void;
 }
