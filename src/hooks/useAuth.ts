@@ -142,6 +142,7 @@ export default function useAuth() {
     try {
       await auth.signOut();
       localStorage.removeItem("acessToken");
+      localStorage.removeItem("userGames");
       window.location.href = "/";
     } catch (e: any) {
       console.log(e.code);
