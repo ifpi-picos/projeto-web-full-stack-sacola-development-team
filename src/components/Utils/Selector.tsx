@@ -1,10 +1,11 @@
 import * as React from "react";
 import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem"; // Import MenuItem
+import {
+  SweetAlerts,
+  SweetAlertsConfirm,
+} from "@/components/Utils/SweetAlerts";
 
 export default function SelectionBox() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -18,6 +19,26 @@ export default function SelectionBox() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleJaZerei = () => {
+    SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
+    handleClose();
+  }
+
+  const handleQueroZerar = () => {
+    SweetAlerts("success", "Jogo adicionado a sua lista de jogos para zerar ");
+    handleClose();
+  }
+
+  const handleEstouJogando = () => {
+    SweetAlerts("info", "Você está jogando o jogo atualmente."); 
+    handleClose();
+  }
+
+  const handleDesisti = () => {
+    SweetAlerts("error", "Você desistiu de zerar/jogar o jogo.");
+    handleClose();
+  }
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -42,10 +63,10 @@ export default function SelectionBox() {
         }}
       >
         <div className="flex flex-col gap-2">
-          <Button onClick={handleClose}>Já zerei</Button>
-          <Button onClick={handleClose}>Quero zerar</Button>
-          <Button onClick={handleClose}>Estou jogando</Button>
-          <Button onClick={handleClose}>Desisti de zerar/jogar</Button>
+          <Button onClick={handleJaZerei}>Já zerei</Button>
+          <Button onClick={handleQueroZerar}>Quero zerar</Button>
+          <Button onClick={handleEstouJogando}>Estou jogando</Button>
+          <Button onClick={handleDesisti}>Desisti de zerar/jogar</Button>
         </div>
       </Popover>
     </div>

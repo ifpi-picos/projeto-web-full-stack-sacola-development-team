@@ -41,7 +41,7 @@ export default function MainPage({gamesData}: MainPageProps) {
     }, []);
 
     return (
-        <div className='bg-blue-jeans-50 h-screen   '>
+        <div className='bg-blue-jeans-50 min-h-screen   '>
             <Header></Header>
 
             <div className=''>
