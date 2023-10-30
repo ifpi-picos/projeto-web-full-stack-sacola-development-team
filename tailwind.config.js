@@ -26,6 +26,9 @@ module.exports = {
         "azul-textos": {
           50:"#69c6fa"
         },
+        "azul-primary":{
+          50:"#0B6BCB"
+        },
         "vermelho": {
           50:"#FF0000"
         },

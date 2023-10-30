@@ -89,7 +89,7 @@ export default function Biblioteca({ games }: LibraryProps) {
               <Image
                 src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
                 alt={cardsGames[gameId].name}
-                width={150}
+                width={250}
                 height={250}
                 className="cursor-pointer mx-auto"
                 onClick={() => pickGameId(cardsGames[gameId])}
