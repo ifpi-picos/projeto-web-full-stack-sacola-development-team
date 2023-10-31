@@ -4,6 +4,12 @@ import FormLabel from '@mui/joy/FormLabel';
 import FormHelperText from '@mui/joy/FormHelperText';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
+import {
+  SweetAlerts,
+  SweetAlertsConfirm,
+} from "@/components/Utils/SweetAlerts";
+import Swal from 'sweetalert2';
+
 
 export default function VincularSteam() {
   const [data, setData] = React.useState<{
@@ -21,7 +27,16 @@ export default function VincularSteam() {
       // Replace timeout with real backend operation
       setTimeout(() => {
         setData({ steamId: '', status: 'sent' });
-      }, 1500);
+      }, 1500)
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: 'Steam vinculada com sucesso!',
+        confirmButtonText: 'Ok',
+        color: 'aliceblue',
+        background: '#545454'
+      })
+      ;
     } catch (error) {
       setData((current) => ({ ...current, status: 'failure' }));
     }
@@ -34,12 +49,12 @@ export default function VincularSteam() {
           sx={(theme) => ({
             '--FormLabel-color': theme.vars.palette.primary.plainColor,
           })}
-          className="flex justify-center"
+          className="mx-auto"
         >
           Vincular com a Steam
         </FormLabel>
         <Input
-          sx={{ '--Input-decoratorChildHeight': '45px' }}
+          sx={{ '--Input-decoratorChildHeight': '45px', width: '105%' }}
           placeholder="Ex: 76581198524378123"
           
           
@@ -54,6 +69,7 @@ export default function VincularSteam() {
               variant="solid"
               color="primary"
               loading={data.status === 'loading'}
+              
               type="submit"
               sx={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
               className='bg-azul-primary-50'

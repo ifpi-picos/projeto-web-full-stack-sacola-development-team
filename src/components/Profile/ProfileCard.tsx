@@ -34,7 +34,7 @@ export default function ProfileCard() {
   }, []);
 
   return (
-    <div className="w-screen h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
+    <div className="w-screen min-h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
       {profileData ? (
         <div className="mx-auto w-full md:w-2/3">
           <div className="rounded-3xl shadow-lg bg-gray-900 md:bg-gray-900 w-full flex flex-row flex-wrap p-3 antialiased">
@@ -91,10 +91,11 @@ export default function ProfileCard() {
               </div>
             </div>
           </div>
-          <div className="w-fit ">
+          <div className="w-fit mx-auto mt-8 ">
             <VincularSteam />
             
           </div>
+          <div className="h-4"></div>
         </div>
       ) : (
         <div>Carregando...</div>
