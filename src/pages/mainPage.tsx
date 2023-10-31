@@ -11,6 +11,7 @@ interface Game {
     cover: {
         image_id: string
     },
+    name: string
 }
 
 interface MainPageProps {
@@ -44,7 +45,7 @@ export default function MainPage({gamesData}: MainPageProps) {
         <div className='bg-blue-jeans-50 min-h-screen   '>
             <Header></Header>
 
-            <div className=''>
+            <div>
                 <Carrossel games={gamesData}></Carrossel>
             </div>
             <div

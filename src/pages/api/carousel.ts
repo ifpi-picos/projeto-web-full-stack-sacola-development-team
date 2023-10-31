@@ -10,23 +10,26 @@ export async function getLatestGameInfo(locale = "en_US") {
     }
 
     const today = new Date();
-    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // next week
-    const startOfWeek = new Date(today);
-    startOfWeek.setHours(0, 0, 0, 0);
-    startOfWeek.setDate(today.getDate() - today.getDay()); // Define o início da semana como o domingo
+const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // next week
 
-    const endOfNextWeek = new Date(nextWeek);
-    endOfNextWeek.setHours(23, 59, 59, 999);
-    endOfNextWeek.setDate(startOfWeek.getDate() + 15); // Define o final da próxima semana como o sábado
+const startOfWeek = new Date(today);
+startOfWeek.setHours(0, 0, 0, 0);
+startOfWeek.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1)); // Set the start of the week as Sunday
+
+const endOfNextWeek = new Date(nextWeek);
+endOfNextWeek.setHours(23, 59, 59, 999);
+endOfNextWeek.setDate(startOfWeek.getDate() + 13); // Set the end of the next week as Saturday
+
+
 
     const queryString = `
-        fields id, cover.image_id, first_release_date, summary, platforms;
+        fields id, name, cover.image_id, first_release_date, summary, platforms;
         where first_release_date >= ${Math.floor(startOfWeek.getTime() / 1000)}
         & first_release_date <= ${Math.floor(endOfNextWeek.getTime() / 1000)}
         & cover != null 
         & cover.image_id != null;
         & platforms = [49,48,6]
-        sort popularity desc;
+        sort popularity asc;
         limit 20;
     `;
 

@@ -127,7 +127,7 @@ export default function TelaJogo() {
                     </h4>
                     <h4>
                       Publicadora:{" "}
-                      {gameInfo.involved_companies[1]?.company?.name || "N/A"}
+                      {gameInfo.involved_companies[0]?.company?.name || "N/A"}
                     </h4>
                   </>
                 )}
@@ -177,7 +177,7 @@ export default function TelaJogo() {
                 <div className="flex items-center justify-center">
                   <Image
                     src={`https://images.igdb.com/igdb/image/upload/t_original/${gameInfo.screenshots[0]?.image_id}.jpg`}
-                    alt=""
+                    alt={gameInfo.name} 
                     width={800}
                     height={450}
                     className="mx-auto"

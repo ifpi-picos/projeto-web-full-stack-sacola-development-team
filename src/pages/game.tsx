@@ -5,7 +5,7 @@ const Game = () => {
 
   useEffect(() => {
     // Chame a função da API para buscar as informações do jogo aqui
-    fetch("/api/game?id=12") // Este caminho corresponde ao arquivo que você criou em "api/game.ts"
+    fetch("/api/game?id=5013") // Este caminho corresponde ao arquivo que você criou em "api/game.ts"
       .then((response) => response.json())
       .then((data) => {
         setGameInfo(data);

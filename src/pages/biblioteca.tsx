@@ -80,7 +80,7 @@ export default function Biblioteca({ games }: LibraryProps) {
   return (
 <div className="bg-blue-jeans-50 min-h-screen">
   <Header />
-  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+  <div className="grid grid-cols-2 min-w-max sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
     {userGames &&
       userGames.map((gameId) => (
         <div key={gameId} className="rounded p-4">
@@ -91,7 +91,7 @@ export default function Biblioteca({ games }: LibraryProps) {
                 alt={cardsGames[gameId].name}
                 width={250}
                 height={250}
-                className="cursor-pointer mx-auto"
+                className="cursor-pointer mx-auto "
                 onClick={() => pickGameId(cardsGames[gameId])}
               />
             </div>
