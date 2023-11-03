@@ -1,4 +1,4 @@
-export async function userGameStatus(id: string, status: string) {
+export async function userAddGameStatus(id: string | string[] | undefined, status: string) {
     const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
     const url = "http://localhost:5000/api/v1" || process.env.NEXT_PUBLIC_RAILWAY_URL;
     const Token = localStorage.getItem("acessToken");
@@ -9,9 +9,8 @@ export async function userGameStatus(id: string, status: string) {
             Client_Token: `${Client_Token}`,
             Authorization: `Bearer ${Token}`,
         },
-        body: JSON.stringify({ game: id, gameStatus: status }),
+        body: JSON.stringify({ game: id, status: status }),
     });
-    console.log(response);
     const data = await response.json();
     return data;
 }

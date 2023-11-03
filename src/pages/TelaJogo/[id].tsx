@@ -77,6 +77,7 @@ export default function TelaJogo() {
         setClicked(!isGameInUser);
     };
 
+    // @ts-ignore
     return (
         <div className="bg-blue-jeans-50">
             <Header/>
@@ -111,7 +112,7 @@ export default function TelaJogo() {
                                 className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">
                 <FormatListBulletedIcon className="text-lg"/>
               </span>
-                            <SelectionBox/>
+                            <SelectionBox id={id}/>
                         </div>
                         <h3 className="flex justify-center items-center mt-2 text-white">
                             SOBRE

@@ -2,73 +2,104 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import {
-  SweetAlerts,
-  SweetAlertsConfirm,
-} from "@/components/Utils/SweetAlerts";
+import {SweetAlerts,} from "@/components/Utils/SweetAlerts";
+import {userAddGameStatus} from "@/services/userAddGameStatus";
 
-export default function SelectionBox() {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
+interface SelectionBoxProps {
+    id: string | string[] | undefined;
+}
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+export default function SelectionBox(Props: SelectionBoxProps) {
+    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+        null
+    );
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const handleJaZerei = () => {
-    SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
-    handleClose();
-  }
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
-  const handleQueroZerar = () => {
-    SweetAlerts("success", "Jogo adicionado a sua lista de jogos para zerar ");
-    handleClose();
-  }
+    const handleJaZerei = () => {
+        const res = userAddGameStatus(Props.id, "complete");
+        res.then((result) => {
+            console.log(result)
+            if (result.message === "Status do jogo atualizado com sucesso!") {
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
+            } else {
+                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos completos.");
+            }
+        });
+        handleClose();
+    }
 
-  const handleEstouJogando = () => {
-    SweetAlerts("info", "Você está jogando o jogo atualmente."); 
-    handleClose();
-  }
+    const handleQueroZerar = () => {
+        const res = userAddGameStatus(Props.id, "playingLater");
+        res.then((result) => {
+            if (result.message === "Status do jogo atualizado com sucesso!") {
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos que quer zerar!");
+            } else {
+                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos que quer zerar.");
+            }
+        });
+        handleClose();
+    }
 
-  const handleDesisti = () => {
-    SweetAlerts("error", "Você desistiu de zerar/jogar o jogo.");
-    handleClose();
-  }
+    const handleEstouJogando = () => {
+        const res = userAddGameStatus(Props.id, "playingNow");
+        res.then((result) => {
+            if (result.message === "Status do jogo atualizado com sucesso!") {
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos que está jogando!");
+            } else {
+                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos que está jogando.");
+            }
+        });
+        handleClose();
+    }
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+    const handleDesisti = () => {
+        const res = userAddGameStatus(Props.id, "abandoned");
+        res.then((result) => {
+            if (result.message === "Status do jogo atualizado com sucesso!") {
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desistiu de jogar!");
+            } else {
+                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos que desistiu de jogar.");
+            }
+        });
+        handleClose();
+    }
 
-  return (
-    <div>
+    const open = Boolean(anchorEl);
+    const id = open ? "simple-popover" : undefined;
+
+    return (
+        <div>
       <span
-        className="bg-azul-infos-50 rounded-full px-3 py-2 text-sm font-semibold text-azul-textos-50 mr-2 mb-2 cursor-pointer"
-        onClick={handleClick}
+          className="bg-azul-infos-50 rounded-full px-3 py-2 text-sm font-semibold text-azul-textos-50 mr-2 mb-2 cursor-pointer"
+          onClick={handleClick}
       >
-        <MoreHorizIcon className="text-lg" />
+        <MoreHorizIcon className="text-lg"/>
       </span>
 
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <div className="flex flex-col gap-2">
-          <Button onClick={handleJaZerei}>Já zerei</Button>
-          <Button onClick={handleQueroZerar}>Quero zerar</Button>
-          <Button onClick={handleEstouJogando}>Estou jogando</Button>
-          <Button onClick={handleDesisti}>Desisti de zerar/jogar</Button>
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                }}
+            >
+                <div className="flex flex-col gap-2">
+                    <Button onClick={handleJaZerei}>Já zerei</Button>
+                    <Button onClick={handleQueroZerar}>Quero zerar</Button>
+                    <Button onClick={handleEstouJogando}>Estou jogando</Button>
+                    <Button onClick={handleDesisti}>Desisti de zerar/jogar</Button>
+                </div>
+            </Popover>
         </div>
-      </Popover>
-    </div>
-  );
+    );
 }
