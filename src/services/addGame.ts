@@ -1,6 +1,6 @@
 export async function addGameToUser(id: string) {
   const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
-  const url = process.env.NEXT_PUBLIC_RAILWAY_URL;
+  const url = "http://localhost:5000/api/v1" || process.env.NEXT_PUBLIC_RAILWAY_URL;
   const Token = localStorage.getItem("acessToken");
   const response = await fetch(url + "/user/games", {
     method: "PUT",
