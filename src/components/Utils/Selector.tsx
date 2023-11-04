@@ -2,8 +2,9 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import {SweetAlerts,} from "@/components/Utils/SweetAlerts";
+import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
+import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
 
 interface SelectionBoxProps {
     id: string | string[] | undefined;
@@ -29,7 +30,25 @@ export default function SelectionBox(Props: SelectionBoxProps) {
             if (result.message === "Status do jogo atualizado com sucesso!") {
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
             } else {
-                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos completos.");
+                if (result.message === "Jogo já está na lista!") {
+                    SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos completos!", "Deseja remover o" +
+                        " jogo da sua lista de jogos completos?", "Removido!", "O jogo foi removido da sua lista de" +
+                        " jogos completos!").then((result) => {
+                        if (result) {
+                            const res = userRemoveGameStatus(Props.id, "complete");
+                            res.then((result) => {
+                                console.log(result)
+                                if (result === "Status do jogo atualizado com sucesso!") {
+                                    SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
+                                } else {
+                                    SweetAlerts("error", "Erro ao remover jogo da sua lista de jogos completos.");
+                                }
+                            });
+                        } else {
+                            console.log("não remover")
+                        }
+                    });
+                }
             }
         });
         handleClose();
