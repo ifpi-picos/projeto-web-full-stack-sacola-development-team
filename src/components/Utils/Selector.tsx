@@ -66,7 +66,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                         " jogo da sua lista de jogos completos?", "Removido!", "O jogo foi removido da sua lista de" +
                         " jogos Quero zerar!").then((result) => {
                         if (result) {
-                            const res = userRemoveGameStatus(Props.id, "complete");
+                            const res = userRemoveGameStatus(Props.id, "playingLater");
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
@@ -98,7 +98,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                         " jogo da sua lista de jogos que está jogando?", "Removido!", "O jogo foi removido da sua" +
                         " lista de jogos que está jogando!").then((result) => {
                         if (result) {
-                            const res = userRemoveGameStatus(Props.id, "complete");
+                            const res = userRemoveGameStatus(Props.id, "playingNow");
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
@@ -125,11 +125,12 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
-                    SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos completos!", "Deseja remover o" +
+                    SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos que desisti de zerar!", "Deseja" +
+                        " remover o" +
                         " jogo da sua lista que desisti de zerar?", "Removido!", "O jogo foi removido da sua lista" +
                         " jogos que desisti de zerar!").then((result) => {
                         if (result) {
-                            const res = userRemoveGameStatus(Props.id, "complete");
+                            const res = userRemoveGameStatus(Props.id, "abandoned");
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
