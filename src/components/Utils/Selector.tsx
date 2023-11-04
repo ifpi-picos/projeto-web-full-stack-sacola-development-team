@@ -57,10 +57,29 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     const handleQueroZerar = () => {
         const res = userAddGameStatus(Props.id, "playingLater");
         res.then((result) => {
+            console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                SweetAlerts("success", "Jogo adicionado à sua lista de jogos que quer zerar!");
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
-                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos que quer zerar.");
+                if (result.message === "Jogo já está na lista!") {
+                    SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos completos!", "Deseja remover o" +
+                        " jogo da sua lista de jogos completos?", "Removido!", "O jogo foi removido da sua lista de" +
+                        " jogos Quero zerar!").then((result) => {
+                        if (result) {
+                            const res = userRemoveGameStatus(Props.id, "complete");
+                            res.then((result) => {
+                                console.log(result)
+                                if (result === "Status do jogo atualizado com sucesso!") {
+                                    SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
+                                } else {
+                                    SweetAlerts("error", "Erro ao remover jogo da sua lista de Quero zerar.");
+                                }
+                            });
+                        } else {
+                            console.log("não remover")
+                        }
+                    });
+                }
             }
         });
         handleClose();
@@ -69,10 +88,30 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     const handleEstouJogando = () => {
         const res = userAddGameStatus(Props.id, "playingNow");
         res.then((result) => {
+            console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                SweetAlerts("success", "Jogo adicionado à sua lista de jogos que está jogando!");
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
-                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos que está jogando.");
+                if (result.message === "Jogo já está na lista!") {
+                    SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos que está jogando!", "Deseja" +
+                        " remover o" +
+                        " jogo da sua lista de jogos que está jogando?", "Removido!", "O jogo foi removido da sua" +
+                        " lista de jogos que está jogando!").then((result) => {
+                        if (result) {
+                            const res = userRemoveGameStatus(Props.id, "complete");
+                            res.then((result) => {
+                                console.log(result)
+                                if (result === "Status do jogo atualizado com sucesso!") {
+                                    SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
+                                } else {
+                                    SweetAlerts("error", "Erro ao remover jogo da sua lista de que está jogando.");
+                                }
+                            });
+                        } else {
+                            console.log("não remover")
+                        }
+                    });
+                }
             }
         });
         handleClose();
@@ -81,10 +120,29 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     const handleDesisti = () => {
         const res = userAddGameStatus(Props.id, "abandoned");
         res.then((result) => {
+            console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desistiu de jogar!");
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
             } else {
-                SweetAlerts("error", "Erro ao adicionar jogo à sua lista de jogos que desistiu de jogar.");
+                if (result.message === "Jogo já está na lista!") {
+                    SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos completos!", "Deseja remover o" +
+                        " jogo da sua lista que desisti de zerar?", "Removido!", "O jogo foi removido da sua lista" +
+                        " jogos que desisti de zerar!").then((result) => {
+                        if (result) {
+                            const res = userRemoveGameStatus(Props.id, "complete");
+                            res.then((result) => {
+                                console.log(result)
+                                if (result === "Status do jogo atualizado com sucesso!") {
+                                    SweetAlerts("success", "Jogo removido da sua lista de jogos que desisti de zerar!");
+                                } else {
+                                    SweetAlerts("error", "Erro ao remover jogo da sua lista que desisti de zerar.");
+                                }
+                            });
+                        } else {
+                            console.log("não remover")
+                        }
+                    });
+                }
             }
         });
         handleClose();
