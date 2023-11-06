@@ -11,22 +11,22 @@ export default function LabelBottomNavigation() {
   const [value, setValue] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    // Define o valor inicial com base no pathname atual
     const path = router.pathname;
     switch (path) {
-      case "mainPage":
+      case "/mainPage":
         setValue("home");
         break;
-      case "biblioteca":
+      case "/biblioteca":
         setValue("biblioteca");
         break;
-      case "telaPerfil":
+      case "/telaPerfil":
         setValue("perfil");
         break;
       default:
         setValue(null);
     }
   }, [router.pathname]);
+  
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
