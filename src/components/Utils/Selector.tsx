@@ -5,12 +5,16 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
+import {useEffect, useState} from "react";
+import {getStatusFromGameId, getUserGamesStatusList} from "@/services/userGetGameStatus";
 
 interface SelectionBoxProps {
     id: string | string[] | undefined;
 }
 
 export default function SelectionBox(Props: SelectionBoxProps) {
+    const [gameStatus, setGameStatus] = useState<any | null>(null);
+
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
         null
     );
@@ -23,11 +27,35 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         setAnchorEl(null);
     };
 
+    function loadStatus() {
+        if (gameStatus === null) {
+            const savedState = localStorage.getItem("gameStatusList");
+            if (localStorage.getItem("gameStatusList") === null) {
+                getUserGamesStatusList().then((result) => {
+                    localStorage.setItem("gameStatusList", JSON.stringify(result));
+                    getStatusFromGameId(Props.id as string, savedState).then((result) => {
+                        setGameStatus(result);
+                    });
+                });
+            } else {
+                getStatusFromGameId(Props.id as string, savedState).then((result) => {
+                    setGameStatus(result);
+                });
+            }
+        }
+    }
+
+
+    useEffect(() => {
+        loadStatus();
+    }, []);
+
     const handleJaZerei = () => {
         const res = userAddGameStatus(Props.id, "complete");
         res.then((result) => {
-            console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
+                localStorage.removeItem("gameStatusList");
+                setGameStatus("completeGames")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -39,6 +67,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
+                                    localStorage.removeItem("gameStatusList");
+                                    setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
                                 } else {
                                     SweetAlerts("error", "Erro ao remover jogo da sua lista de jogos completos.");
@@ -59,6 +89,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
+                localStorage.removeItem("gameStatusList");
+                setGameStatus("playingLaterGames")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -70,6 +102,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
+                                    localStorage.removeItem("gameStatusList");
+                                    setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
                                 } else {
                                     SweetAlerts("error", "Erro ao remover jogo da sua lista de Quero zerar.");
@@ -90,6 +124,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
+                localStorage.removeItem("gameStatusList");
+                setGameStatus("playingGames")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -102,6 +138,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
+                                    localStorage.removeItem("gameStatusList");
+                                    setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
                                 } else {
                                     SweetAlerts("error", "Erro ao remover jogo da sua lista de que está jogando.");
@@ -122,6 +160,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
+                localStorage.removeItem("gameStatusList");
+                setGameStatus("abandonedGames")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -134,6 +174,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
+                                    localStorage.removeItem("gameStatusList");
+                                    setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos que desisti de zerar!");
                                 } else {
                                     SweetAlerts("error", "Erro ao remover jogo da sua lista que desisti de zerar.");
@@ -172,10 +214,26 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 }}
             >
                 <div className="flex flex-col gap-2">
-                    <Button onClick={handleJaZerei}>Já zerei</Button>
-                    <Button onClick={handleQueroZerar}>Quero zerar</Button>
-                    <Button onClick={handleEstouJogando}>Estou jogando</Button>
-                    <Button onClick={handleDesisti}>Desisti de zerar/jogar</Button>
+                    <Button className={
+                        gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-azul-infos-500" +
+                            " text-azul-infos-50"
+                    } onClick={handleJaZerei}>Já zerei</Button>
+
+                    <Button className={
+                        gameStatus === "playingLaterGames" ? "bg-yellow-400 text-white" : "bg-azul-infos-500" +
+                            " text-azul-infos-50"
+                    } onClick={handleQueroZerar}>Quero zerar</Button>
+
+                    <Button className={
+                        gameStatus === "playingGames" ? "bg-blue-400 text-white" : "bg-azul-infos-500" +
+                            " text-azul-infos-50"
+                    } onClick={handleEstouJogando}>Estou jogando</Button>
+
+                    <Button className={
+                        gameStatus === "abandonedGames" ? "bg-red-500 text-white" : "bg-azul-infos-500" +
+                            " text-azul-infos-50"
+                    } onClick={handleDesisti}>Desisti de zerar/jogar</Button>
+
                 </div>
             </Popover>
         </div>

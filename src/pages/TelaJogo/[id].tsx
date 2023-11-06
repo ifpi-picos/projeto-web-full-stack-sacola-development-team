@@ -18,24 +18,8 @@ export default function TelaJogo() {
     const [isGameInUser, setIsGameInUser] = useState(false);
     const [clicked, setClicked] = useState(false);
 
+
     useEffect(() => {
-        const savedState = localStorage.getItem(`game_${id}`);
-        if (localStorage.getItem(`game_${id}`) === null) {
-            const res = userLibraryGames();
-            res.then((result) => {
-                const game = result.games.game_List.find((game: any) => game === id);
-                if (game) {
-                    setIsGameInUser(true);
-                    setClicked(true);
-                    localStorage.setItem(`game_${id}`, "true");
-                }
-            });
-        }
-
-        setIsGameInUser(savedState === "true");
-        setClicked(savedState === "true");
-        console.log(`game_${id}`, savedState);
-
         if (id) {
             // Chame a função da API para buscar as informações do jogo aqui
             fetch(`/api/game?id=${id}`)
@@ -56,6 +40,25 @@ export default function TelaJogo() {
                     console.error(error);
                 });
         }
+
+        const savedState = localStorage.getItem(`game_${id}`);
+        if (localStorage.getItem(`game_${id}`) === null) {
+            const res = userLibraryGames();
+            res.then((result) => {
+                const game = result.games.game_List.find((game: any) => game === id);
+                if (game) {
+                    setIsGameInUser(true);
+                    setClicked(true);
+                    localStorage.setItem(`game_${id}`, "true");
+                }
+            });
+        }
+
+        setIsGameInUser(savedState === "true");
+        setClicked(savedState === "true");
+        console.log(`game_${id}`, savedState);
+
+
     }, [id]);
 
     const handleClick = () => {
@@ -66,6 +69,7 @@ export default function TelaJogo() {
                     removeGameUser(id as string);
                     localStorage.setItem(`game_${id}`, "false");
                     localStorage.removeItem("userGames");
+                    localStorage.removeItem("gameStatusList");
                 } else {
                     console.log("não remover")
                 }
@@ -75,6 +79,7 @@ export default function TelaJogo() {
             addGameToUser(id as string);
             localStorage.setItem(`game_${id}`, "true");
             localStorage.removeItem("userGames");
+            localStorage.removeItem("gameStatusList");
             SweetAlerts("success", "Jogo adicionado à biblioteca");
         }
         // Toggle the state of isGameInUser and clicked

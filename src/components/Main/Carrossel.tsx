@@ -66,7 +66,7 @@ export default function Carrossel({ games }: CarrosselProps) {
             onClick={() => pickGameId(game)}
             className="cursor-pointer "
           />
-          <h2 className="text-center mt-2 text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">
+          <h2 className="text-center text-white mt-2 text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">
             {game.name}
           </h2>
         </div>
