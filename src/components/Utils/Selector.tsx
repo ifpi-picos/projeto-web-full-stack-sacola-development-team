@@ -25,7 +25,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         setAnchorEl(null);
     };
 
-    const [gameStatus, setGameStatus] = useState<any>(null);
+    const [gameStatus, setGameStatus] = useState<any>("completeGames");
 
     useEffect(() => {
         async function fetchData() {
