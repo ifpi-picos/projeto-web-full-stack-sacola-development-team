@@ -25,7 +25,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         setAnchorEl(null);
     };
 
-    const [gameStatus, setGameStatus] = useState<any>("completeGames");
+    const [gameStatus, setGameStatus] = useState<any>(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -210,14 +210,14 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 }}
             >
                 <div className="flex flex-col gap-2">
-                    <Button className={
-                        gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-green-700" +
-                            " text-azul-infos-50"
+                    <Button className={ "bg-green-700 text-white"
+                        // gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-green-700" +
+                        //     " text-azul-infos-50"
                     } onClick={handleJaZerei}>Já zerei</Button>
 
-                    <Button className={
-                        gameStatus === "playingLaterGames" ? "bg-yellow-400 text-white" : "bg-azul-infos-500" +
-                            " text-azul-infos-50"
+                    <Button className={ "bg-yellow-400 text-white"
+                        // gameStatus === "playingLaterGames" ? "bg-yellow-400 text-white" : "bg-azul-infos-500" +
+                        //     " text-azul-infos-50"
                     } onClick={handleQueroZerar}>Quero zerar</Button>
 
                     <Button className={
