@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import Popover from "@mui/material/Popover";
-import Button from "@mui/material/Button";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
@@ -212,25 +211,53 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 }}
             >
                 <div className="flex flex-col gap-2">
-                    <Button className={
-                        gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-azul-infos-500" +
-                            " text-azul-infos-50"
-                    } onClick={handleJaZerei}>Já zerei</Button>
+                    <button
+                        className={
+                            gameStatus === "completeGames"
+                                ? "bg-green-700 text-white px-4 py-2 rounded-md cursor-pointer"
+                                : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
+                        }
+                        onClick={handleJaZerei}
+                    >
+                        Já zerei
+                    </button>
 
-                    <Button className={
-                        gameStatus === "playingLaterGames" ? "bg-yellow-400 text-white" : "bg-azul-infos-500" +
-                            " text-azul-infos-50"
-                    } onClick={handleQueroZerar}>Quero zerar</Button>
 
-                    <Button className={
-                        gameStatus === "playingGames" ? "bg-blue-400 text-white" : "bg-azul-infos-500" +
-                            " text-azul-infos-50"
-                    } onClick={handleEstouJogando} color={"warning"}>Estou jogando</Button>
+                    <button
+                        className={
+                            gameStatus === "playingLaterGames"
+                                ? "bg-yellow-400 text-white px-4 py-2 rounded-md cursor-pointer"
+                                : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
+                        }
+                        onClick={handleQueroZerar}
+                    >
+                        Quero zerar
+                    </button>
 
-                    <Button className={
-                        gameStatus === "abandonedGames" ? "bg-red-500 text-white" : "bg-azul-infos-500" +
-                            " text-azul-infos-50"
-                    } onClick={handleDesisti}>Desisti de zerar/jogar</Button>
+
+                    <button
+                        className={
+                            gameStatus === "playingGames"
+                                ? "bg-blue-400 text-white px-4 py-2 rounded-md cursor-pointer"
+                                : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
+                        }
+                        onClick={handleEstouJogando}
+                    >
+                        Estou jogando
+                    </button>
+
+
+                    <button
+                        className={
+                            gameStatus === "abandonedGames"
+                                ? "bg-red-500 text-white px-4 py-2 rounded-md cursor-pointer"
+                                : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
+                        }
+                        onClick={handleDesisti}
+                    >
+                        Desisti de zerar/jogar
+                    </button>
+
 
                 </div>
             </Popover>
