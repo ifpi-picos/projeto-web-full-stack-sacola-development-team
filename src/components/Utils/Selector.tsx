@@ -210,10 +210,12 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 }}
             >
                 <div className="flex flex-col gap-2">
+
                     <Button className={ "bg-green-700 text-white"
                         // gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-green-700" +
                         //     " text-azul-infos-50"
-                    } onClick={handleJaZerei}>Já zerei</Button>
+                    } onClick={handleJaZerei}>Já zerei
+                    </Button>
 
                     <Button className={ "bg-yellow-400 text-white"
                         // gameStatus === "playingLaterGames" ? "bg-yellow-400 text-white" : "bg-azul-infos-500" +
@@ -223,12 +225,18 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                     <Button className={
                         gameStatus === "playingGames" ? "bg-blue-400 text-white" : "bg-azul-infos-500" +
                             " text-azul-infos-50"
-                    } onClick={handleEstouJogando}>Estou jogando</Button>
+                    } onClick={handleEstouJogando} color={"warning"}>Estou jogando</Button>
 
                     <Button className={
                         gameStatus === "abandonedGames" ? "bg-red-500 text-white" : "bg-azul-infos-500" +
                             " text-azul-infos-50"
                     } onClick={handleDesisti}>Desisti de zerar/jogar</Button>
+
+                    <Button className={"bg-amber-300"}>
+                        <a href={`/game/${Props.id}`} target="_blank" rel="noreferrer">
+                            Ver mais
+                        </a>
+                    </Button>
 
                 </div>
             </Popover>
