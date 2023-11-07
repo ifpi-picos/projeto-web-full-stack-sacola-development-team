@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { userLibraryGames } from "@/services/userLibraryGames";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import CardModal from "@/components/Utils/CardModal";
+import Loading from "@/components/Main/loading";
+
 
 interface Game {
   id: number;
@@ -22,6 +25,7 @@ export default function Biblioteca({ games }: LibraryProps) {
   function pickGameId(game: Game) {
     router.push(`/TelaJogo/${game.id}`);
   }
+  const [isLoading, setIsLoading] = useState(true);
   const [userGames, setUserGames] = useState<string[] | null>(null);
   const [cardsGames, setCardGames] = useState<{ [key: string]: any } | null>(
     null
@@ -30,6 +34,7 @@ export default function Biblioteca({ games }: LibraryProps) {
   useEffect(() => {
     if (localStorage.getItem("userGames")) {
       setUserGames(JSON.parse(localStorage.getItem("userGames") || "{}"));
+      setIsLoading(false)
     } else {
       userLibraryGames()
         .then((response) => {
@@ -38,6 +43,7 @@ export default function Biblioteca({ games }: LibraryProps) {
             "userGames",
             JSON.stringify(response.games.game_List)
           );
+          setIsLoading(false)
         })
         .catch((error) => {
           console.error(error);
@@ -46,7 +52,6 @@ export default function Biblioteca({ games }: LibraryProps) {
   }, []);
 
   useEffect(() => {
-    // Certifique-se de verificar se userGames não é nulo antes de fazer as solicitações
     if (userGames) {
       userGames.forEach((gameId: string) => {
         fetch(`/api/game?id=${gameId}`)
@@ -78,32 +83,37 @@ export default function Biblioteca({ games }: LibraryProps) {
   }, [userGames]);
 
   return (
-<div className="bg-blue-jeans-50 min-h-screen">
-  <Header />
-  <div className="grid grid-cols-2 min-w-max sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-    {userGames &&
-      userGames.map((gameId) => (
-        <div key={gameId} className="rounded p-4">
-          {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
-            <div className="text-center">
-              <Image
-                src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
-                alt={cardsGames[gameId].name}
-                width={250}
-                height={250}
-                className="cursor-pointer mx-auto "
-                onClick={() => pickGameId(cardsGames[gameId])}
-              />
+    <div className="bg-blue-jeans-50 min-h-screen">
+      <Header />
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+       
+       {isLoading ?(
+        <Loading isLoading = {true}/>
+       ) : (
+        userGames &&
+          userGames.map((gameId) => (
+            <div key={gameId} className="rounded p-4">
+              {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
+                <div className="text-center">
+                  <CardModal />
+                  <Image
+                    src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
+                    alt={cardsGames[gameId].name}
+                    width={250}
+                    height={250}
+                    className="cursor-pointer mx-auto "
+                    onClick={() => pickGameId(cardsGames[gameId])}
+                  />
+                </div>
+              )}
+              <h2 className="text-lg mt-2 text-center text-white">
+                {cardsGames && cardsGames[gameId] && cardsGames[gameId].name}
+              </h2>
             </div>
-          )}
-          <h2 className="text-lg mt-2 text-center text-white">
-            {cardsGames && cardsGames[gameId] && cardsGames[gameId].name}
-          </h2>
-        </div>
-      ))}
-  </div>
+          ))
+        )}
+      </div>
 
-  
       <div className="h-16"></div>
       <FooterNavbar />
     </div>
