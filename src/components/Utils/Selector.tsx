@@ -1,16 +1,17 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
-import {useEffect, useState} from "react";
 import {getStatusFromGameId, getUserGamesStatusList} from "@/services/userGetGameStatus";
 
 interface SelectionBoxProps {
     id: string | string[] | undefined;
 }
+
 
 export default function SelectionBox(Props: SelectionBoxProps) {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -42,6 +43,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 }
             }
         }
+
         fetchData();
     }, []);
 
@@ -210,16 +212,14 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 }}
             >
                 <div className="flex flex-col gap-2">
+                    <Button className={
+                        gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-azul-infos-500" +
+                            " text-azul-infos-50"
+                    } onClick={handleJaZerei}>Já zerei</Button>
 
-                    <Button className={ "bg-green-700 text-white"
-                        // gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-green-700" +
-                        //     " text-azul-infos-50"
-                    } onClick={handleJaZerei}>Já zerei
-                    </Button>
-
-                    <Button className={ "bg-yellow-400 text-white"
-                        // gameStatus === "playingLaterGames" ? "bg-yellow-400 text-white" : "bg-azul-infos-500" +
-                        //     " text-azul-infos-50"
+                    <Button className={
+                        gameStatus === "playingLaterGames" ? "bg-yellow-400 text-white" : "bg-azul-infos-500" +
+                            " text-azul-infos-50"
                     } onClick={handleQueroZerar}>Quero zerar</Button>
 
                     <Button className={
@@ -231,12 +231,6 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                         gameStatus === "abandonedGames" ? "bg-red-500 text-white" : "bg-azul-infos-500" +
                             " text-azul-infos-50"
                     } onClick={handleDesisti}>Desisti de zerar/jogar</Button>
-
-                    <Button className={"bg-amber-300"}>
-                        <a href={`/game/${Props.id}`} target="_blank" rel="noreferrer">
-                            Ver mais
-                        </a>
-                    </Button>
 
                 </div>
             </Popover>
