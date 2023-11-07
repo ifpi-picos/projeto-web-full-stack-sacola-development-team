@@ -13,8 +13,6 @@ interface SelectionBoxProps {
 }
 
 export default function SelectionBox(Props: SelectionBoxProps) {
-    const [gameStatus, setGameStatus] = useState<any | null>(null);
-
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
         null
     );
@@ -27,28 +25,26 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         setAnchorEl(null);
     };
 
-    function loadStatus() {
-        if (gameStatus === null) {
-            const savedState = localStorage.getItem("gameStatusList");
-            if (localStorage.getItem("gameStatusList") === null) {
-                getUserGamesStatusList().then((result) => {
-                    localStorage.setItem("gameStatusList", JSON.stringify(result));
-                    getStatusFromGameId(Props.id as string, savedState).then((result) => {
-                        setGameStatus(result);
-                    });
-                });
-            } else {
-                getStatusFromGameId(Props.id as string, savedState).then((result) => {
-                    setGameStatus(result);
-                });
-            }
-        }
-    }
-
+    const [gameStatus, setGameStatus] = useState<any>(null);
 
     useEffect(() => {
-        loadStatus();
+        async function fetchData() {
+            if (gameStatus === null) {
+                const savedState = localStorage.getItem("gameStatusList");
+                if (savedState === null) {
+                    const result = await getUserGamesStatusList();
+                    localStorage.setItem("gameStatusList", JSON.stringify(result));
+                    const gameStatusResult = await getStatusFromGameId(Props.id as string, JSON.stringify(result));
+                    setGameStatus(gameStatusResult);
+                } else {
+                    const gameStatusResult = await getStatusFromGameId(Props.id as string, savedState);
+                    setGameStatus(gameStatusResult);
+                }
+            }
+        }
+        fetchData();
     }, []);
+
 
     const handleJaZerei = () => {
         const res = userAddGameStatus(Props.id, "complete");

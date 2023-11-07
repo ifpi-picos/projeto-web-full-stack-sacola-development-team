@@ -13,6 +13,7 @@ import {userLibraryGames} from "@/services/userLibraryGames";
 
 export default function TelaJogo() {
     const router = useRouter();
+
     const {id} = router.query;
     const [gameInfo, setGameInfo] = useState<any | null>(null);
     const [isGameInUser, setIsGameInUser] = useState(false);
