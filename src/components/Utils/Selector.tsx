@@ -211,7 +211,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
             >
                 <div className="flex flex-col gap-2">
                     <Button className={
-                        gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-azul-infos-500" +
+                        gameStatus === "completeGames" ? "bg-green-700 text-white" : "bg-green-700" +
                             " text-azul-infos-50"
                     } onClick={handleJaZerei}>Já zerei</Button>
 
