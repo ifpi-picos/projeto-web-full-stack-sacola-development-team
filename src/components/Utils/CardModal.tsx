@@ -268,6 +268,7 @@ return (
                 >
                   Remover Jogo
                 </button>
+                
             </div>
         </Popover>
     </div>
