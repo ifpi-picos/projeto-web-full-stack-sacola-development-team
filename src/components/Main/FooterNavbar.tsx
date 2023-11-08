@@ -60,6 +60,7 @@ export default function LabelBottomNavigation() {
       }}
       value={value}
       onChange={handleChange}
+      
     >
       <BottomNavigationAction
         label="Biblioteca"
