@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import CardModal from "@/components/Utils/CardModal";
 import Loading from "@/components/Main/loading";
+import Filter from "@/components/Main/Filter";
 
 
 interface Game {
@@ -85,14 +86,15 @@ export default function Biblioteca({ games }: LibraryProps) {
   return (
     <div className="bg-blue-jeans-50 min-h-screen">
       <Header />
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <Filter />
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
        
        {isLoading ?(
         <Loading isLoading = {true}/>
        ) : (
         userGames &&
           userGames.map((gameId) => (
-            <div key={gameId} className="rounded p-4">
+            <div key={gameId} className="rounded p-2">
               {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
                 <div className="text-center">
                   <CardModal id={gameId} />
