@@ -51,15 +51,6 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         }
 
         fetchData();
-        console.log("gameStatus fora da função:", typeof(gameStatus))
-        const gameStatusCopy = gameStatus;
-        if (gameStatus === 'complete') {
-            console.log(true, 1)
-        } else if (gameStatus === gameStatusCopy){
-            console.log(true, 2)
-        } else {
-            console.log(false)
-        }
     }, []);
 
 
