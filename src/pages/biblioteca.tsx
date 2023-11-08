@@ -95,7 +95,7 @@ export default function Biblioteca({ games }: LibraryProps) {
             <div key={gameId} className="rounded p-4">
               {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
                 <div className="text-center">
-                  <CardModal />
+                  <CardModal id={gameId} />
                   <Image
                     src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
                     alt={cardsGames[gameId].name}
