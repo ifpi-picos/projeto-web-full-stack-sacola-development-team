@@ -5,7 +5,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
-import {getStatusFromGameId, getUserGamesStatusList} from "@/services/userGetGameStatus";
+import {getGameStatusById} from "@/services/userGetGameStatus";
 
 interface SelectionBoxProps {
     id: string | string[] | undefined;
@@ -25,25 +25,41 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         setAnchorEl(null);
     };
 
-    const [gameStatus, setGameStatus] = useState<any>(null);
+    const [gameStatus, setGameStatus] = useState<any>(sessionStorage.getItem(`gameStatus:${Props.id}`));
+
+    function removeFromSessionStorage() {
+        sessionStorage.removeItem(`gameStatus:${Props.id}`);
+    }
 
     useEffect(() => {
         async function fetchData() {
+            console.log("gameStatus:", gameStatus)
             if (gameStatus === null) {
-                const savedState = localStorage.getItem("gameStatusList");
+                const savedState = sessionStorage.getItem(`gameStatus:${Props.id}`);
                 if (savedState === null) {
-                    const result = await getUserGamesStatusList();
-                    localStorage.setItem("gameStatusList", JSON.stringify(result));
-                    const gameStatusResult = await getStatusFromGameId(Props.id as string, JSON.stringify(result));
+                    let gameStatusResult = await getGameStatusById(Props.id as string);
+
+                    if (gameStatusResult !== undefined) {
+                        sessionStorage.setItem(`gameStatus:${Props.id}`, gameStatusResult);
+                    }
                     setGameStatus(gameStatusResult);
                 } else {
-                    const gameStatusResult = await getStatusFromGameId(Props.id as string, savedState);
+                    const gameStatusResult = sessionStorage.getItem(`gameStatus:${Props.id}`);
                     setGameStatus(gameStatusResult);
                 }
             }
         }
 
         fetchData();
+        console.log("gameStatus fora da função:", typeof(gameStatus))
+        const gameStatusCopy = gameStatus;
+        if (gameStatus === 'complete') {
+            console.log(true, 1)
+        } else if (gameStatus === gameStatusCopy){
+            console.log(true, 2)
+        } else {
+            console.log(false)
+        }
     }, []);
 
 
@@ -51,8 +67,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         const res = userAddGameStatus(Props.id, "complete");
         res.then((result) => {
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                localStorage.removeItem("gameStatusList");
-                setGameStatus("completeGames")
+                removeFromSessionStorage()
+                setGameStatus("complete")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -64,7 +80,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    localStorage.removeItem("gameStatusList");
+                                    removeFromSessionStorage()
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
                                 } else {
@@ -86,8 +102,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                localStorage.removeItem("gameStatusList");
-                setGameStatus("playingLaterGames")
+                removeFromSessionStorage()
+                setGameStatus("playingLater")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -99,7 +115,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    localStorage.removeItem("gameStatusList");
+                                    removeFromSessionStorage()
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
                                 } else {
@@ -121,8 +137,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                localStorage.removeItem("gameStatusList");
-                setGameStatus("playingGames")
+                removeFromSessionStorage()
+                setGameStatus("playingNow")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -135,7 +151,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    localStorage.removeItem("gameStatusList");
+                                    removeFromSessionStorage()
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
                                 } else {
@@ -157,8 +173,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                localStorage.removeItem("gameStatusList");
-                setGameStatus("abandonedGames")
+                removeFromSessionStorage()
+                setGameStatus("abandoned")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
@@ -171,7 +187,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    localStorage.removeItem("gameStatusList");
+                                    removeFromSessionStorage()
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos que desisti de zerar!");
                                 } else {
@@ -213,7 +229,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 <div className="flex flex-col gap-2">
                     <button
                         className={
-                            gameStatus === "completeGames"
+                            gameStatus === "complete"
                                 ? "bg-green-700 text-white px-4 py-2 rounded-md cursor-pointer"
                                 : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
                         }
@@ -225,7 +241,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
 
                     <button
                         className={
-                            gameStatus === "playingLaterGames"
+                            gameStatus === "playingLater"
                                 ? "bg-yellow-400 text-white px-4 py-2 rounded-md cursor-pointer"
                                 : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
                         }
@@ -237,7 +253,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
 
                     <button
                         className={
-                            gameStatus === "playingGames"
+                            gameStatus === "playingNow"
                                 ? "bg-blue-400 text-white px-4 py-2 rounded-md cursor-pointer"
                                 : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
                         }
@@ -249,7 +265,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
 
                     <button
                         className={
-                            gameStatus === "abandonedGames"
+                            gameStatus === "abandoned"
                                 ? "bg-red-500 text-white px-4 py-2 rounded-md cursor-pointer"
                                 : "bg-azul-infos-500 text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
                         }
