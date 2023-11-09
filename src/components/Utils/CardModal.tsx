@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -11,9 +10,12 @@ import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
 import {getStatusFromGameId, getUserGamesStatusList} from "@/services/userGetGameStatus";
 import Popover from "@mui/material/Popover";
+import {removeGameUser} from "@/services/removeGame";
+import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Utils/utilities";
 
 interface CardModalProps{
   id: string | string[] | undefined;
+  forceReload: Function;
 }
 
 export default function CardModal(Props: CardModalProps) {
@@ -192,6 +194,20 @@ const handleDesisti = () => {
     handleClose();
 }
 
+const handleRemover = () => {
+    handleClose();
+    SweetAlertsConfirm("warning", "Remover jogo", "Tem certeza que deseja remover este jogo da biblioteca?", "Jogo Removido!", "Jogo removido da sua conta com sucesso!").then((result) => {
+        if (result) {
+            removeGameUser(Props.id as string).then(r => console.log(r));
+            removeFromSessionStorage(Props.id as string)
+            removeFromLocalStorage(Props.id as string)
+            Props.forceReload(Props.id as string)
+        } else {
+            console.log("não remover")
+        }
+    });
+}
+
 const open = Boolean(anchorEl);
 const id = open ? "simple-popover" : undefined;
 
@@ -264,7 +280,7 @@ return (
 
                 <button
                     className=" text-azul-infos-50 px-4 py-2 rounded-md cursor-pointer"
-                    onClick={handleClose}
+                    onClick={handleRemover}
                 >
                   Remover Jogo
                 </button>

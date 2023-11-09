@@ -10,6 +10,7 @@ import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {removeGameUser} from "@/services/removeGame";
 import SelectionBox from "@/components/Utils/Selector";
 import {userLibraryGames} from "@/services/userLibraryGames";
+import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Utils/utilities";
 
 export default function TelaJogo() {
     const router = useRouter();
@@ -68,9 +69,8 @@ export default function TelaJogo() {
             SweetAlertsConfirm("warning", "Remover jogo", "Tem certeza que deseja remover este jogo da biblioteca?", "Jogo Removido!", "Jogo removido da sua conta com sucesso!").then((result) => {
                 if (result) {
                     removeGameUser(id as string);
-                    localStorage.setItem(`game_${id}`, "false");
-                    localStorage.removeItem("userGames");
-                    localStorage.removeItem("gameStatusList");
+                    removeFromSessionStorage(id as string);
+                    removeFromLocalStorage(id as string);
                 } else {
                     console.log("não remover")
                 }

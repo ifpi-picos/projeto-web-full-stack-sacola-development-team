@@ -27,7 +27,7 @@ export default function Biblioteca({ games }: LibraryProps) {
     router.push(`/TelaJogo/${game.id}`);
   }
   const [isLoading, setIsLoading] = useState(true);
-  const [userGames, setUserGames] = useState<string[] | null>(null);
+  const [userGames, setUserGames] = useState<string[] | null | undefined>(null);
   const [cardsGames, setCardGames] = useState<{ [key: string]: any } | null>(
     null
   );
@@ -50,6 +50,10 @@ export default function Biblioteca({ games }: LibraryProps) {
           console.error(error);
         });
     }
+
+    const teste = ['100'];
+    const updatedUserGames = teste.filter(id => id !== '100');
+    console.log(updatedUserGames)
   }, []);
 
   useEffect(() => {
@@ -83,7 +87,16 @@ export default function Biblioteca({ games }: LibraryProps) {
     }
   }, [userGames]);
 
-  return (
+ function forceReload(gameId: string) {
+    console.log('gameId', gameId)
+   console.log(userGames)
+   const updatedUserGames = userGames?.filter(id => id !== gameId);
+   console.log('updatedUserGames' , updatedUserGames)
+   setUserGames(updatedUserGames);
+ }
+
+  // @ts-ignore
+    return (
     <div className="bg-blue-jeans-50 min-h-screen">
       <Header />
       <Filter />
@@ -97,7 +110,7 @@ export default function Biblioteca({ games }: LibraryProps) {
             <div key={gameId} className="rounded p-2">
               {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
                 <div className="text-center">
-                  <CardModal id={gameId} />
+                  <CardModal id={gameId} forceReload={forceReload}/>
                   <Image
                     src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
                     alt={cardsGames[gameId].name}
