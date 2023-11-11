@@ -1,10 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
@@ -200,7 +196,7 @@ const handleRemover = () => {
         if (result) {
             removeGameUser(Props.id as string).then(r => console.log(r));
             removeFromSessionStorage(Props.id as string)
-            removeFromLocalStorage(Props.id as string)
+            removeFromLocalStorage()
             Props.forceReload(Props.id as string)
         } else {
             console.log("não remover")
