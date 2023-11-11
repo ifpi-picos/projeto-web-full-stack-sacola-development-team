@@ -43,15 +43,15 @@ export default function TelaJogo() {
                 });
         }
 
-        const savedState = localStorage.getItem(`game_${id}`);
-        if (localStorage.getItem(`game_${id}`) === null) {
+        const savedState = sessionStorage.getItem(`game_${id}`);
+        if (sessionStorage.getItem(`game_${id}`) === null) {
             const res = userLibraryGames();
             res.then((result) => {
                 const game = result.games.game_List.find((game: any) => game === id);
                 if (game) {
                     setIsGameInUser(true);
                     setClicked(true);
-                    localStorage.setItem(`game_${id}`, "true");
+                    sessionStorage.setItem(`game_${id}`, "true");
                 }
             });
         }
@@ -70,7 +70,7 @@ export default function TelaJogo() {
                 if (result) {
                     removeGameUser(id as string);
                     removeFromSessionStorage(id as string);
-                    removeFromLocalStorage(id as string);
+                    removeFromLocalStorage();
                 } else {
                     console.log("não remover")
                 }
@@ -78,7 +78,7 @@ export default function TelaJogo() {
         } else {
             // If the game is not in the library, add it and update localStorage
             addGameToUser(id as string);
-            localStorage.setItem(`game_${id}`, "true");
+            sessionStorage.setItem(`game_${id}`, "true");
             localStorage.removeItem("userGames");
             localStorage.removeItem("gameStatusList");
             SweetAlerts("success", "Jogo adicionado à biblioteca");

@@ -106,42 +106,47 @@ export default function Biblioteca({games}: LibraryProps) {
         }
     }
 
+
     // @ts-ignore
     return (
         <div className="bg-blue-jeans-50 min-h-screen">
-            <Header/>
-            <Filter totalGames={totalGames} forceUpdate={forceReloadOnChooseFilter}/>
+            <Header />
+            <Filter totalGames={totalGames} forceUpdate={forceReloadOnChooseFilter} />
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
-
                 {isLoading ? (
-                    <Loading isLoading={true}/>
+                    <Loading isLoading={true} />
                 ) : (
-                    userGames &&
-                    userGames.map((gameId) => (
-                        <div key={gameId} className="rounded p-2">
-                            {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
-                                <div className="text-center">
-                                    <CardModal id={gameId} forceReload={forceReloadOnGameDelete}/>
-                                    <Image
-                                        src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
-                                        alt={cardsGames[gameId].name}
-                                        width={250}
-                                        height={250}
-                                        className="cursor-pointer mx-auto "
-                                        onClick={() => pickGameId(cardsGames[gameId])}
-                                    />
-                                </div>
-                            )}
-                            <h2 className="text-lg mt-2 text-center text-white">
-                                {cardsGames && cardsGames[gameId] && cardsGames[gameId].name}
-                            </h2>
-                        </div>
-                    ))
+                    (userGames && userGames.length > 0) ? (
+                        userGames.map((gameId) => (
+                            <div key={gameId} className="rounded p-2">
+                                {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
+                                    <div className="text-center">
+                                        <CardModal id={gameId} forceReload={forceReloadOnGameDelete} />
+                                        <Image
+                                            src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
+                                            alt={cardsGames[gameId].name}
+                                            width={250}
+                                            height={250}
+                                            className="cursor-pointer mx-auto "
+                                            onClick={() => pickGameId(cardsGames[gameId])}
+                                        />
+                                    </div>
+                                )}
+                                <h2 className="text-lg mt-2 text-center text-white">
+                                    {cardsGames && cardsGames[gameId] && cardsGames[gameId].name}
+                                </h2>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-white text-lg font-semibold text-center mt-4">
+                            Nenhum jogo encontrado
+                        </p>
+
+                    )
                 )}
             </div>
-
             <div className="h-16"></div>
-            <FooterNavbar/>
+            <FooterNavbar />
         </div>
     );
 }
