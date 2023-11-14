@@ -72,7 +72,7 @@ export default function TelaJogo() {
                     removeFromSessionStorage(id as string);
                     removeFromLocalStorage();
                 } else {
-                    console.log("não remover")
+                    setClicked(true);
                 }
             });
         } else {

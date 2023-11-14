@@ -54,6 +54,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     const handleJaZerei = () => {
         const res = userAddGameStatus(Props.id, "complete");
         res.then((result) => {
+            console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
                 removeFromSessionStorage(Props.id as string, true)
                 removeFromLocalStorage(true)
@@ -81,6 +82,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             console.log("não remover")
                         }
                     });
+                } else if (result === "Jogo não encontrado!") {
+                    SweetAlerts("error", "Jogo não encontrado na sua biblioteca. Por favor Adicione e tente novamente");
                 }
             }
         });
