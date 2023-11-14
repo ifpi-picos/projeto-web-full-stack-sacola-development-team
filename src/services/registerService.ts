@@ -1,7 +1,7 @@
 import Player from "@/core/Player";
 
 const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
-const url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL || process.env.NEXT_PUBLIC_RAILWAY_URL;
+const url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
 
 export async function addUserDocument(player: Player, Token: string) {
   try {
