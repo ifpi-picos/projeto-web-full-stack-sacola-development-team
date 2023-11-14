@@ -53,7 +53,7 @@ const handleJaZerei = () => {
     const res = userAddGameStatus(Props.id, "complete");
     res.then((result) => {
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true);
             setGameStatus("completeGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
         } else {
@@ -66,7 +66,7 @@ const handleJaZerei = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
                             } else {
@@ -88,7 +88,7 @@ const handleQueroZerar = () => {
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true)
             setGameStatus("playingLaterGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
@@ -101,7 +101,7 @@ const handleQueroZerar = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
                             } else {
@@ -123,7 +123,7 @@ const handleEstouJogando = () => {
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true)
             setGameStatus("playingGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
@@ -137,7 +137,7 @@ const handleEstouJogando = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
                             } else {
@@ -159,7 +159,7 @@ const handleDesisti = () => {
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true)
             setGameStatus("abandonedGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
         } else {
@@ -195,8 +195,8 @@ const handleRemover = () => {
     SweetAlertsConfirm("warning", "Remover jogo", "Tem certeza que deseja remover este jogo da biblioteca?", "Jogo Removido!", "Jogo removido da sua conta com sucesso!").then((result) => {
         if (result) {
             removeGameUser(Props.id as string).then(r => console.log(r));
-            removeFromSessionStorage(Props.id as string)
-            removeFromLocalStorage()
+            removeFromSessionStorage(Props.id as string, true, true)
+            removeFromLocalStorage(true, true)
             Props.forceReload(Props.id as string)
         } else {
             console.log("não remover")
