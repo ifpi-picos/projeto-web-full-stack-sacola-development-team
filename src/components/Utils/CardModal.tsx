@@ -54,6 +54,7 @@ const handleJaZerei = () => {
     res.then((result) => {
         if (result.message === "Status do jogo atualizado com sucesso!") {
             removeFromSessionStorage(Props.id as string, true);
+            removeFromLocalStorage(true)
             setGameStatus("completeGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
         } else {
@@ -67,6 +68,7 @@ const handleJaZerei = () => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
                                 removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
                             } else {
@@ -89,6 +91,7 @@ const handleQueroZerar = () => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
             removeFromSessionStorage(Props.id as string, true)
+            removeFromLocalStorage(true)
             setGameStatus("playingLaterGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
@@ -102,6 +105,7 @@ const handleQueroZerar = () => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
                                 removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
                             } else {
@@ -124,6 +128,7 @@ const handleEstouJogando = () => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
             removeFromSessionStorage(Props.id as string, true)
+            removeFromLocalStorage(true)
             setGameStatus("playingGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
@@ -138,6 +143,7 @@ const handleEstouJogando = () => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
                                 removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
                             } else {
@@ -160,6 +166,7 @@ const handleDesisti = () => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
             removeFromSessionStorage(Props.id as string, true)
+            removeFromLocalStorage(true)
             setGameStatus("abandonedGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
         } else {
@@ -173,7 +180,8 @@ const handleDesisti = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos que desisti de zerar!");
                             } else {
