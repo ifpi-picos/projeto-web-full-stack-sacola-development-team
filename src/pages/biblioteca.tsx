@@ -34,7 +34,7 @@ export default function Biblioteca({games}: LibraryProps) {
     );
     const [totalGames, setTotalGames] = useState<number>(0);
 
-    useEffect(() => {
+    function loadUserGames() {
         if (localStorage.getItem("userGames")) {
             const userGames = JSON.parse(localStorage.getItem("userGames") || "{}");
             setTotalGames(userGames.length);
@@ -55,10 +55,15 @@ export default function Biblioteca({games}: LibraryProps) {
                     console.error(error);
                 });
         }
+    }
+
+    useEffect(() => {
+        loadUserGames();
     }, []);
 
     useEffect(() => {
-        if (userGames) {
+        if (userGames && userGames.length > 0) {
+            console.log(userGames);
             userGames.forEach((gameId: string) => {
                 fetch(`/api/game?id=${gameId}`)
                     .then((response) => {
@@ -85,6 +90,8 @@ export default function Biblioteca({games}: LibraryProps) {
                         console.error(error);
                     });
             });
+        } else {
+            loadUserGames();
         }
     }, [userGames]);
 
