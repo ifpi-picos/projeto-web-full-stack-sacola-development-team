@@ -12,6 +12,7 @@ import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Uti
 interface CardModalProps{
   id: string | string[] | undefined;
   forceReload: Function;
+  forceReloadOnChange: Function;
 }
 
 export default function CardModal(Props: CardModalProps) {
@@ -36,10 +37,10 @@ useEffect(() => {
             if (savedState === null) {
                 const result = await getUserGamesStatusList();
                 localStorage.setItem("gameStatusList", JSON.stringify(result));
-                const gameStatusResult = await getStatusFromGameId(Props.id as string, JSON.stringify(result));
+                const gameStatusResult = getStatusFromGameId(Props.id as string, JSON.stringify(result));
                 setGameStatus(gameStatusResult);
             } else {
-                const gameStatusResult = await getStatusFromGameId(Props.id as string, savedState);
+                const gameStatusResult = getStatusFromGameId(Props.id as string, savedState);
                 setGameStatus(gameStatusResult);
             }
         }
@@ -48,6 +49,9 @@ useEffect(() => {
     fetchData();
 }, []);
 
+const handleStatusChange = () => {
+    Props.forceReloadOnChange();
+}
 
 const handleJaZerei = () => {
     const res = userAddGameStatus(Props.id, "complete");
@@ -56,6 +60,7 @@ const handleJaZerei = () => {
             removeFromSessionStorage(Props.id as string, true);
             removeFromLocalStorage(true)
             setGameStatus("completeGames")
+            handleStatusChange()
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
         } else {
             if (result.message === "Jogo já está na lista!") {
@@ -218,7 +223,7 @@ const id = open ? "simple-popover" : undefined;
 return (
     <div>
   <span
-      className="flex justify-end relative  top-10 sm:right-2 cursor-pointer"
+      className="flex justify-end relative  sm:right-1 cursor-pointer"
       onClick={handleClick}
   >
     <MoreVertIcon className=" right-0 sm:right-2  "/>
