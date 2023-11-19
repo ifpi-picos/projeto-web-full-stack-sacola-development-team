@@ -1,10 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
@@ -16,6 +12,7 @@ import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Uti
 interface CardModalProps{
   id: string | string[] | undefined;
   forceReload: Function;
+  forceReloadOnChange: Function;
 }
 
 export default function CardModal(Props: CardModalProps) {
@@ -40,10 +37,10 @@ useEffect(() => {
             if (savedState === null) {
                 const result = await getUserGamesStatusList();
                 localStorage.setItem("gameStatusList", JSON.stringify(result));
-                const gameStatusResult = await getStatusFromGameId(Props.id as string, JSON.stringify(result));
+                const gameStatusResult = getStatusFromGameId(Props.id as string, JSON.stringify(result));
                 setGameStatus(gameStatusResult);
             } else {
-                const gameStatusResult = await getStatusFromGameId(Props.id as string, savedState);
+                const gameStatusResult = getStatusFromGameId(Props.id as string, savedState);
                 setGameStatus(gameStatusResult);
             }
         }
@@ -52,13 +49,18 @@ useEffect(() => {
     fetchData();
 }, []);
 
+const handleStatusChange = () => {
+    Props.forceReloadOnChange();
+}
 
 const handleJaZerei = () => {
     const res = userAddGameStatus(Props.id, "complete");
     res.then((result) => {
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true);
+            removeFromLocalStorage(true)
             setGameStatus("completeGames")
+            handleStatusChange()
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
         } else {
             if (result.message === "Jogo já está na lista!") {
@@ -70,7 +72,8 @@ const handleJaZerei = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
                             } else {
@@ -92,7 +95,8 @@ const handleQueroZerar = () => {
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true)
+            removeFromLocalStorage(true)
             setGameStatus("playingLaterGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
@@ -105,7 +109,8 @@ const handleQueroZerar = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
                             } else {
@@ -127,7 +132,8 @@ const handleEstouJogando = () => {
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true)
+            removeFromLocalStorage(true)
             setGameStatus("playingGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
@@ -141,7 +147,8 @@ const handleEstouJogando = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
                             } else {
@@ -163,7 +170,8 @@ const handleDesisti = () => {
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
-            localStorage.removeItem("gameStatusList");
+            removeFromSessionStorage(Props.id as string, true)
+            removeFromLocalStorage(true)
             setGameStatus("abandonedGames")
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
         } else {
@@ -177,7 +185,8 @@ const handleDesisti = () => {
                         res.then((result) => {
                             console.log(result)
                             if (result === "Status do jogo atualizado com sucesso!") {
-                                localStorage.removeItem("gameStatusList");
+                                removeFromSessionStorage(Props.id as string, true)
+                                removeFromLocalStorage(true)
                                 setGameStatus(null)
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos que desisti de zerar!");
                             } else {
@@ -199,8 +208,8 @@ const handleRemover = () => {
     SweetAlertsConfirm("warning", "Remover jogo", "Tem certeza que deseja remover este jogo da biblioteca?", "Jogo Removido!", "Jogo removido da sua conta com sucesso!").then((result) => {
         if (result) {
             removeGameUser(Props.id as string).then(r => console.log(r));
-            removeFromSessionStorage(Props.id as string)
-            removeFromLocalStorage(Props.id as string)
+            removeFromSessionStorage(Props.id as string, true, true)
+            removeFromLocalStorage(true, true)
             Props.forceReload(Props.id as string)
         } else {
             console.log("não remover")
@@ -214,7 +223,7 @@ const id = open ? "simple-popover" : undefined;
 return (
     <div>
   <span
-      className="flex justify-end relative  top-10 sm:right-2 cursor-pointer"
+      className="flex justify-end relative  sm:right-1 cursor-pointer"
       onClick={handleClick}
   >
     <MoreVertIcon className=" right-0 sm:right-2  "/>

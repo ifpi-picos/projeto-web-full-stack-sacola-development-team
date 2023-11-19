@@ -14,9 +14,8 @@ export async function getUserGamesStatusList() {
     return data;
 }
 
-export async function getStatusFromGameId(id: string, gameStatusList: any) {
+export function getStatusFromGameId(id: string, gameStatusList: any) {
     const gameStatus = JSON.parse(gameStatusList)
-    console.log(gameStatus)
     if (gameStatus === null) return null;
     const gameStatusListArray = gameStatus.gameStatusList
 
@@ -30,7 +29,7 @@ export async function getStatusFromGameId(id: string, gameStatusList: any) {
 
 export async function getGameStatusById(gameId: string) {
     const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
-    const url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL || process.env.NEXT_PUBLIC_RAILWAY_URL;
+    const url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
     const Token = localStorage.getItem("acessToken");
     const response = await fetch(url + `/user/games/status/game/${gameId}`, {
         method: "GET",
@@ -41,8 +40,6 @@ export async function getGameStatusById(gameId: string) {
         },
     });
     const data = await response.json();
-    console.log(data)
     const status = data.gameStatus
-    console.log(status)
     return await status;
 }

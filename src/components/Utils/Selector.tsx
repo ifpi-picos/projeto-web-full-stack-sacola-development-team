@@ -6,7 +6,7 @@ import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
 import {getGameStatusById} from "@/services/userGetGameStatus";
-import {removeFromSessionStorage} from "@/components/Utils/utilities";
+import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Utils/utilities";
 
 interface SelectionBoxProps {
     id: string | string[] | undefined;
@@ -54,8 +54,10 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     const handleJaZerei = () => {
         const res = userAddGameStatus(Props.id, "complete");
         res.then((result) => {
+            console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                removeFromSessionStorage(Props.id as string)
+                removeFromSessionStorage(Props.id as string, true)
+                removeFromLocalStorage(true)
                 setGameStatus("complete")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
             } else {
@@ -68,7 +70,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    removeFromSessionStorage(Props.id as string)
+                                    removeFromSessionStorage(Props.id as string, true)
+                                    removeFromLocalStorage(true)
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
                                 } else {
@@ -79,6 +82,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             console.log("não remover")
                         }
                     });
+                } else if (result === "Jogo não encontrado!") {
+                    SweetAlerts("error", "Jogo não encontrado na sua biblioteca. Por favor Adicione e tente novamente");
                 }
             }
         });
@@ -90,7 +95,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                removeFromSessionStorage(Props.id as string)
+                removeFromSessionStorage(Props.id as string, true)
+                removeFromLocalStorage(true)
                 setGameStatus("playingLater")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
@@ -103,7 +109,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    removeFromSessionStorage(Props.id as string)
+                                    removeFromSessionStorage(Props.id as string, true)
+                                    removeFromLocalStorage(true)
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
                                 } else {
@@ -125,7 +132,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                removeFromSessionStorage(Props.id as string)
+                removeFromSessionStorage(Props.id as string, true)
+                removeFromLocalStorage(true)
                 setGameStatus("playingNow")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
             } else {
@@ -139,7 +147,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    removeFromSessionStorage(Props.id as string)
+                                    removeFromSessionStorage(Props.id as string, true)
+                                    removeFromLocalStorage(true)
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
                                 } else {
@@ -161,7 +170,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
-                removeFromSessionStorage(Props.id as string)
+                removeFromSessionStorage(Props.id as string, true)
+                removeFromLocalStorage(true)
                 setGameStatus("abandoned")
                 SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
             } else {
@@ -175,7 +185,8 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                             res.then((result) => {
                                 console.log(result)
                                 if (result === "Status do jogo atualizado com sucesso!") {
-                                    removeFromSessionStorage(Props.id as string)
+                                    removeFromSessionStorage(Props.id as string, true)
+                                    removeFromLocalStorage(true)
                                     setGameStatus(null)
                                     SweetAlerts("success", "Jogo removido da sua lista de jogos que desisti de zerar!");
                                 } else {
