@@ -9,6 +9,8 @@ import Loading from "@/components/Main/loading";
 import Filter from "@/components/Main/Filter";
 import {getGameStatusById, getStatusFromGameId, getUserGamesStatusList} from "@/services/userGetGameStatus";
 import StatusCardName from "@/components/Utils/StatusCardName";
+import SteamLogo from "@/components/Utils/SteamLogo";
+import GameMateLogo from "@/components/Utils/GameMateLogo";
 
 
 interface Game {
@@ -156,11 +158,11 @@ export default function Biblioteca({games}: LibraryProps) {
                                 {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
 
                                     <div className="text-center relative mx-auto">
-                                        <div className={`top-0 left-0 w-full h-full ${pickColorForCard(gameId)} rounded border-2 border-solid`}>
+                                        <div className={`top-0 left-0 w-fit h-fit ${pickColorForCard(gameId)} rounded border-2  border-solid`}>
                                             {/* Barra superior */}
                                             <div className={`w-full h-8 sm:h-10 ${pickColorForCard(gameId)} flex items-center justify-between rounded-t`}>
                                                 {/* Título de status */}
-                                                <div className="text-white py-1 px-2 rounded-t">
+                                                <div className="text-white text-sm py-1 px-2 rounded-t  ">
                                                     <StatusCardName gameId={gameId}/>
                                                 </div>
                                                 {/* CardModal */}
@@ -170,13 +172,16 @@ export default function Biblioteca({games}: LibraryProps) {
                                             </div>
 
                                             {/* Adicionando imagem do jogo */}
+                                            {/* <SteamLogo /> */}
+                                            <GameMateLogo />
                                             <Image
+                                            
                                                 src={`https://images.igdb.com/igdb/image/upload/t_original/${cardsGames[gameId].cover.image_id}.jpg`}
                                                 alt={cardsGames[gameId].name}
                                                 width={250}
                                                 height={250}
                                                 onClick={() => pickGameId(cardsGames[gameId])}
-                                                className="rounded cursor-pointer hover:opacity-80 transition duration-200 ease-in-out z-50"
+                                                className="rounded cursor-pointer "
                                             />
                                         </div>
                                     </div>
@@ -194,6 +199,7 @@ export default function Biblioteca({games}: LibraryProps) {
                     )
                 )}
             </div>
+            
             <div className="h-16"></div>
             <FooterNavbar />
         </div>

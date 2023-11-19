@@ -22,7 +22,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import { blue } from "@mui/material/colors";
 import SearchModal from "./SearchModal";
 import useAuth from "@/hooks/useAuth";
-
+import router, { useRouter} from "next/router";
 interface GameInfo {
   id: number;
   name: string;
@@ -95,6 +95,10 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  
+  const redirectToHome = () => {
+    router.push('/mainPage');
+  };
 
   const Backdrop = styled("div")<{ open?: boolean }>(({ open }) => ({
     position: "fixed",
@@ -148,6 +152,7 @@ export default function PersistentDrawerLeft() {
             alt="Logo"
             width={150}
             height={150}
+            onClick={redirectToHome}
           />
           <SearchModal
             onGameSelect={function (game: GameInfo): void {
