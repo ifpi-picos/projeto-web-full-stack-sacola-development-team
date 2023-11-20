@@ -4,7 +4,8 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Swal from 'sweetalert2';
-import { addSteamUser, syncSteamGames } from '@/services/userSteam';
+import {addSteamUser, syncSteamGames, removeSteamUser, getSteamUser} from '@/services/userSteam';
+import {useEffect} from "react";
 
 export default function SteamCard() {
     const [data, setData] = React.useState<{
@@ -14,6 +15,22 @@ export default function SteamCard() {
         steamId: '',
         status: 'initial',
     });
+
+    const [steamId, setSteamId] = React.useState<string>('');
+
+    useEffect(() => {
+        async function getSteamId() {
+            try {
+                const response = await getSteamUser();
+                // @ts-ignore
+                setSteamId(response.steamId);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        getSteamId();
+    }, []);
 
     const handleLinkSteam = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,7 +55,7 @@ export default function SteamCard() {
 
     const handleSyncGames = () => {
         // Replace this with your sync logic
-        syncSteamGames().then(response => {{
+        syncSteamGames().then((response) => {
             if (response.message === 'Jogos adicionados com sucesso!') {
                 Swal.fire({
                     icon: 'success',
@@ -58,8 +75,21 @@ export default function SteamCard() {
                     background: '#545454',
                 });
             }
-        }
-        })
+        });
+    };
+
+    const handleUnlinkSteam = () => {
+        removeSteamUser().then(() => {
+            setData((current) => ({ ...current, steamId: '', status: 'initial' }));
+            Swal.fire({
+                icon: 'success',
+                title: 'Desvinculado!',
+                text: 'Steam desvinculada com sucesso!',
+                confirmButtonText: 'Ok',
+                color: 'aliceblue',
+                background: '#545454',
+            });
+        });
     };
 
     return (
@@ -97,6 +127,22 @@ export default function SteamCard() {
                     />
                 </FormControl>
             </form>
+
+            <div className="mt-4">
+                <p>Steam ID: {steamId}</p>
+                <Button
+                    variant="solid"
+                    color="primary"
+                    onClick={handleUnlinkSteam}
+                    sx={{
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0,
+                    }}
+                    className="bg-red-500 text-white"
+                >
+                    Desvincular Steam
+                </Button>
+            </div>
 
             <Button
                 variant="solid"
