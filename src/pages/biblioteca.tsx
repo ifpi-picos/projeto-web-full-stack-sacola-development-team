@@ -47,6 +47,14 @@ export default function Biblioteca({games}: LibraryProps) {
         } else {
             userLibraryGames()
                 .then((response) => {
+                    console.log(response);
+                    if (response.games.game_List.length === 0) {
+                        setUserGames([]);
+                        setTotalGames(0);
+                        localStorage.setItem("userGames", JSON.stringify([]));
+                        setIsLoading(false)
+                        return;
+                    }
                     setUserGames(response.games.game_List);
                     setTotalGames(response.games.game_List.length);
                     localStorage.setItem(
@@ -57,6 +65,7 @@ export default function Biblioteca({games}: LibraryProps) {
                 })
                 .catch((error) => {
                     console.error(error);
+                    setIsLoading(false)
                 });
         }
     }

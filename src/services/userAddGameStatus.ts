@@ -1,3 +1,5 @@
+import {verifyIfTheUserIsLogged} from "@/components/Utils/utilities";
+
 export async function userAddGameStatus(id: string | string[] | undefined, status: string) {
     try {
         const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
@@ -16,7 +18,7 @@ export async function userAddGameStatus(id: string | string[] | undefined, statu
         if (data.message === "Jogo não encontrado!") {
             throw new Error(data.message);
         }
-        return data;
+        return verifyIfTheUserIsLogged(data);
     } catch (error: any) {
         if (error.message === "Jogo não encontrado!") {
             return error.message;
