@@ -7,7 +7,11 @@ import Swal from 'sweetalert2';
 import {addSteamUser, syncSteamGames, removeSteamUser, getSteamUser} from '@/services/userSteam';
 import {useEffect} from "react";
 
-export default function SteamCard() {
+interface SteamCardProps {
+    refresh: Function;
+}
+
+export default function SteamCard(Props: SteamCardProps) {
     const [data, setData] = React.useState<{
         steamId: string;
         status: 'initial' | 'loading' | 'failure' | 'sent';
@@ -17,6 +21,11 @@ export default function SteamCard() {
     });
 
     const [steamId, setSteamId] = React.useState<string>('');
+    const [refresh, setRefresh] = React.useState<boolean>(false);
+
+    function refreshPage() {
+        setRefresh(!refresh);
+    }
 
     useEffect(() => {
         async function getSteamId() {
@@ -30,7 +39,7 @@ export default function SteamCard() {
         }
 
         getSteamId();
-    }, []);
+    }, [refresh]);
 
     const handleLinkSteam = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -47,6 +56,8 @@ export default function SteamCard() {
                     color: 'aliceblue',
                     background: '#545454',
                 });
+                Props.refresh();
+                refreshPage();
             });
         } catch (error) {
             setData((current) => ({ ...current, status: 'failure' }));
@@ -65,6 +76,8 @@ export default function SteamCard() {
                     color: 'aliceblue',
                     background: '#545454',
                 });
+                Props.refresh();
+                refreshPage();
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -89,6 +102,8 @@ export default function SteamCard() {
                 color: 'aliceblue',
                 background: '#545454',
             });
+            Props.refresh();
+            setSteamId('')
         });
     };
 

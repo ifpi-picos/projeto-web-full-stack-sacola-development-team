@@ -204,7 +204,6 @@ export default function Biblioteca({games}: LibraryProps) {
                         <p className="text-white text-lg font-semibold text-center mt-4">
                             Nenhum jogo encontrado
                         </p>
-
                     )
                 )}
             </div>
