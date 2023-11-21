@@ -86,13 +86,13 @@ export default function ProfileCard() {
                                     Level: <span>1</span>
                                 </div>
                                 <div className="flex justify-center items-center flex-col">
-                                    <div
+                                    {/* <div
                                         className="flex flex-row justify-center items-center gap-2 text-2xl mt-4 md:mt-8 w-56 h-16 bg-zinc-800 text-white">
                                         <h3>
                                             Amigos:{" "}
                                             <span>{profileData.userFriends.friends_total}</span>
                                         </h3>
-                                    </div>
+                                    </div> */}
                                     <div
                                         className="flex flex-row justify-center items-center gap-2 text-2xl mt-4 md:mt-8 w-56 h-16 bg-zinc-800 text-white">
                                         <h3>

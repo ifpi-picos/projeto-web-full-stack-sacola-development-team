@@ -9,7 +9,7 @@ export default function SteamLogo() {
         alt="Steam Logo"
         width={50}
         height={50}
-        className="w-[3.5rem]  "
+        className="w-[3.5rem] "
       />
     </div>
   </div>
