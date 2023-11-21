@@ -119,10 +119,10 @@ export default function TelaJogo() {
                 {clicked ? "Remover Jogo" : "Adicionar Jogo"}
               </span>
 
-                            <span
+                            {/* <span
                                 className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">
                 <FormatListBulletedIcon className="text-lg"/>
-              </span>
+              </span> */}
                             <SelectionBox id={id}/>
                         </div>
                         <h3 className="flex justify-center items-center mt-2 text-white">

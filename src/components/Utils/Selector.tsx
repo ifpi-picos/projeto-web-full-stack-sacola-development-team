@@ -212,7 +212,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
           className=" bg-azul-infos-50 rounded-full p-2 px-3 text-sm font-semibold bottom-6 text-azul-textos-50 mr-2 relative cursor-pointer"
           onClick={handleClick}
       >
-        <MoreHorizIcon className="text-lg"/>
+        Status
       </span>
 
             <Popover
