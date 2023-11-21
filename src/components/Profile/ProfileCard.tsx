@@ -15,6 +15,7 @@ export default function ProfileCard() {
     const {getUser} = useAuth();
     const [profileData, setProfileData] = React.useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     const handleSaveProfile = (newUserData: UserData) => {
         // Implemente a lógica para salvar os dados do usuário no estado global ou em algum backend aqui.
@@ -34,9 +35,13 @@ export default function ProfileCard() {
                 console.log(e);
             }
         }
-
+        console.log("profileData")
         handleInfos();
-    }, []);
+    }, [refresh]);
+
+    function refreshPage() {
+        setRefresh(!refresh);
+    }
 
     return (
         <div className="w-screen min-h-screen bg-blue-jeans-50 flex flex-row flex-wrap p-3">
@@ -101,8 +106,7 @@ export default function ProfileCard() {
                         </div>
                     </div>
                     <div className="w-fit mx-auto mt-8 ">
-                        <VincularSteam/>
-
+                        <VincularSteam refresh={refreshPage}/>
                     </div>
                     <div className="h-4"></div>
                 </div>
