@@ -15,6 +15,7 @@ export async function addSteamUser(steamId: string) {
         body: JSON.stringify({steamId: steamId}),
     });
     const data = await response.json();
+    await syncSteamGames();
     return verifyIfTheUserIsLogged(data);
 }
 
