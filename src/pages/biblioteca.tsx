@@ -11,6 +11,7 @@ import {getGameStatusById, getStatusFromGameId, getUserGamesStatusList} from "@/
 import StatusCardName from "@/components/Utils/StatusCardName";
 import SteamLogo from "@/components/Utils/SteamLogo";
 import GameMateLogo from "@/components/Utils/GameMateLogo";
+import {getSteamGames} from "@/services/userSteam";
 
 
 interface Game {
@@ -67,6 +68,12 @@ export default function Biblioteca({games}: LibraryProps) {
                     console.error(error);
                     setIsLoading(false)
                 });
+
+            getSteamGames().then(r => {
+                let totalGames = JSON.parse(localStorage.getItem("userGames") || "{}").length;
+                totalGames += r.games.length;
+                setTotalGames(totalGames);
+            })
         }
     }
 
@@ -204,7 +211,6 @@ export default function Biblioteca({games}: LibraryProps) {
                         <p className="text-white text-lg font-semibold text-center mt-4">
                             Nenhum jogo encontrado
                         </p>
-
                     )
                 )}
             </div>
