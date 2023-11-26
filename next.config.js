@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.igdb.com', 'res.cloudinary.com', 'lh3.googleusercontent.com'],
+    domains: ['images.igdb.com', 'res.cloudinary.com', 'lh3.googleusercontent.com', 'steamcdn-a.akamaihd.net'],
   },
     async headers() {
         return [
