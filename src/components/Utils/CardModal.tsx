@@ -29,6 +29,11 @@ const handleClose = () => {
 };
 
 const [gameStatus, setGameStatus] = useState<any>(null);
+const [reload, setReload] = useState<boolean>(false);
+
+function forceReload() {
+    setReload(!reload);
+}
 
 useEffect(() => {
     async function fetchData() {
@@ -47,10 +52,12 @@ useEffect(() => {
     }
 
     fetchData();
-}, []);
+}, [reload]);
 
 const handleStatusChange = () => {
     Props.forceReloadOnChange();
+    Props.forceReload(Props.id);
+    forceReload();
 }
 
 const handleJaZerei = () => {
@@ -98,6 +105,7 @@ const handleQueroZerar = () => {
             removeFromSessionStorage(Props.id as string, true)
             removeFromLocalStorage(true)
             setGameStatus("playingLaterGames")
+            handleStatusChange()
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
             if (result.message === "Jogo já está na lista!") {
@@ -112,6 +120,7 @@ const handleQueroZerar = () => {
                                 removeFromSessionStorage(Props.id as string, true)
                                 removeFromLocalStorage(true)
                                 setGameStatus(null)
+                                handleStatusChange()
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos Quero zerar!");
                             } else {
                                 SweetAlerts("error", "Erro ao remover jogo da sua lista de Quero zerar.");
@@ -135,6 +144,7 @@ const handleEstouJogando = () => {
             removeFromSessionStorage(Props.id as string, true)
             removeFromLocalStorage(true)
             setGameStatus("playingGames")
+            handleStatusChange()
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
         } else {
             if (result.message === "Jogo já está na lista!") {
@@ -150,6 +160,7 @@ const handleEstouJogando = () => {
                                 removeFromSessionStorage(Props.id as string, true)
                                 removeFromLocalStorage(true)
                                 setGameStatus(null)
+                                handleStatusChange()
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos que está jogando!");
                             } else {
                                 SweetAlerts("error", "Erro ao remover jogo da sua lista de que está jogando.");
@@ -173,6 +184,7 @@ const handleDesisti = () => {
             removeFromSessionStorage(Props.id as string, true)
             removeFromLocalStorage(true)
             setGameStatus("abandonedGames")
+            handleStatusChange()
             SweetAlerts("success", "Jogo adicionado à sua lista de jogos que desisti de zerar!");
         } else {
             if (result.message === "Jogo já está na lista!") {
@@ -188,6 +200,7 @@ const handleDesisti = () => {
                                 removeFromSessionStorage(Props.id as string, true)
                                 removeFromLocalStorage(true)
                                 setGameStatus(null)
+                                handleStatusChange()
                                 SweetAlerts("success", "Jogo removido da sua lista de jogos que desisti de zerar!");
                             } else {
                                 SweetAlerts("error", "Erro ao remover jogo da sua lista que desisti de zerar.");
@@ -210,7 +223,7 @@ const handleRemover = () => {
             removeGameUser(Props.id as string).then(r => console.log(r));
             removeFromSessionStorage(Props.id as string, true, true)
             removeFromLocalStorage(true, true)
-            Props.forceReload(Props.id as string)
+            handleStatusChange()
         } else {
             console.log("não remover")
         }

@@ -1,6 +1,6 @@
 import Header from "@/components/Main/Header";
 import FooterNavbar from "@/components/Main/FooterNavbar";
-import {ReactNode, useEffect, useState} from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 import {getUserGamesByStatus, userLibraryGames} from "@/services/userLibraryGames";
 import Image from "next/image";
 import {useRouter} from "next/router";
@@ -12,6 +12,7 @@ import StatusCardName from "@/components/Utils/StatusCardName";
 import SteamLogo from "@/components/Utils/SteamLogo";
 import GameMateLogo from "@/components/Utils/GameMateLogo";
 import {getSteamGames} from "@/services/userSteam";
+import {boolean} from "zod";
 
 
 interface Game {
@@ -38,6 +39,11 @@ export default function Biblioteca({games}: LibraryProps) {
         null
     );
     const [totalGames, setTotalGames] = useState<number>(0);
+    const [refresh, setRefresh] = useState<boolean>(false);
+
+    function forceUpdate() {
+        setRefresh(!refresh);
+    }
 
     function loadUserGames() {
         if (localStorage.getItem("userGames")) {
@@ -79,7 +85,7 @@ export default function Biblioteca({games}: LibraryProps) {
 
     useEffect(() => {
         loadUserGames();
-    }, []);
+    }, [refresh]);
 
     useEffect(() => {
         if (userGames && userGames.length > 0) {
@@ -115,6 +121,7 @@ export default function Biblioteca({games}: LibraryProps) {
         } else {
             loadUserGames();
         }
+        console.log('Entrou no useEffect')
     }, [userGames]);
 
 
@@ -124,12 +131,16 @@ export default function Biblioteca({games}: LibraryProps) {
         setTotalGames(updatedUserGames?.length || 0)
         const result = await getUserGamesStatusList();
         localStorage.setItem("gameStatusList", JSON.stringify(result));
+        forceUpdate();
     }
 
     function forceReloadOnGameDelete(gameId: string) {
+        console.log('Entrou no forceReloadOnGameDelete', gameId)
         const updatedUserGames = userGames?.filter(id => id !== gameId);
         setUserGames(updatedUserGames);
-        setTotalGames(updatedUserGames?.length || 0)
+        setTotalGames(updatedUserGames?.length || 0);
+        localStorage.setItem("userGames", JSON.stringify(updatedUserGames));
+        forceUpdate();
     }
 
     async function forceReloadOnChooseFilter(status: string) {
@@ -179,7 +190,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                             <div className={`w-full h-8 sm:h-10 ${pickColorForCard(gameId)} flex items-center justify-between rounded-t`}>
                                                 {/* Título de status */}
                                                 <div className="text-white text-sm py-1 px-2 rounded-t  ">
-                                                    <StatusCardName gameId={gameId}/>
+                                                    <StatusCardName gameId={gameId} refresh={refresh}/>
                                                 </div>
                                                 {/* CardModal */}
                                                 <div className="right-0 text-white py-1 px-2 rounded cursor-pointer items-center">

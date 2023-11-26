@@ -135,7 +135,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                 removeFromSessionStorage(Props.id as string, true)
                 removeFromLocalStorage(true)
                 setGameStatus("playingNow")
-                SweetAlerts("success", "Jogo adicionado à sua lista de jogos Quero zerar!");
+                SweetAlerts("success", "Jogo adicionado à sua lista Estou jogando!");
             } else {
                 if (result.message === "Jogo já está na lista!") {
                     SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos que está jogando!", "Deseja" +

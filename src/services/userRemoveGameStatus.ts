@@ -13,12 +13,18 @@ export async function userRemoveGameStatus(id: string | string[] | undefined, st
         },
         body: JSON.stringify({ game: id, status: status }),
     });
-    const data = await response.json();
-    verifyIfTheUserIsLogged(data);
-    if (data.message === "Jogo não encontrado!") {
-        throw new Error(data.message);
+    if (!response.ok) {
+        const data = await response.json();
+        if (data.message === "Jogo não encontrado!") {
+            throw new Error(data.message);
+        }
+        if (response.status === 204) {
+            return "Status do jogo atualizado com sucesso!";
+        }
+        verifyIfTheUserIsLogged(data);
     }
-    if (response.status === 204) {
-        return "Status do jogo atualizado com sucesso!";
-    }
+    return "Status do jogo atualizado com sucesso!";
+
+
+
 }

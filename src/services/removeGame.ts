@@ -13,6 +13,9 @@ export async function removeGameUser(id: string) {
         },
         body: JSON.stringify({game: id}),
     });
-    const data = await response.json();
-    return verifyIfTheUserIsLogged(data);
+    if (!response.ok) {
+        const data = await response.json();
+        return verifyIfTheUserIsLogged(data)
+    }
+    return true;
 }
