@@ -320,13 +320,15 @@ export default function Biblioteca({games}: LibraryProps) {
                                             {/* Adicionando imagem do jogo */}
                                             <SteamLogo/>
                                             <Image
-                                                src={`https://steamcdn-a.akamaihd.net/steam/apps/${game._id}/library_600x900.jpg`}
+                                                src={game.cover}
                                                 alt={game.infos?.name}
                                                 width={225}
-                                                height={0}
+                                                height={150} // Altura definida para manter a proporção, pode ser ajustada conforme necessário
                                                 onClick={() => pickGameId(cardsSteamGames[game._id])}
                                                 className="rounded cursor-pointer sm:w-[225px] w-[145px]"
+                                                objectFit={"cover"}
                                             />
+
 
                                         </div>
                                     </div>

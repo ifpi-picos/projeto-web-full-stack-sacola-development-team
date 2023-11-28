@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.igdb.com', 'res.cloudinary.com', 'lh3.googleusercontent.com', 'steamcdn-a.akamaihd.net', 'cdn.akamai.steamstatic.com', 'cdn.cloudflare.steamstatic.com'],
+    domains: ['images.igdb.com', 'res.cloudinary.com', 'lh3.googleusercontent.com', 'steamcdn-a.akamaihd.net',
+        'cdn.akamai.steamstatic.com', 'cdn.cloudflare.steamstatic.com', 'cdn2.steamgriddb.com'],
   },
     async headers() {
         return [

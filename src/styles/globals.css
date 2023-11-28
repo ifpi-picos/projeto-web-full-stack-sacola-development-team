@@ -23,3 +23,11 @@ body {
   color: rgb(var(--white-rgb));
   background:linear-gradient(255deg, #1f1f1f, #2e2e2e, #3d3d3d);
 }
+
+/* Estilos CSS */
+.game-card {
+  width: 225px; /* Largura fixa desejada para o card */
+  height: 300px; /* Altura fixa desejada para o card */
+  /* Outros estilos desejados para o card */
+}
+
