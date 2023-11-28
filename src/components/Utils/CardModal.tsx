@@ -56,7 +56,6 @@ useEffect(() => {
 
 const handleStatusChange = () => {
     Props.forceReloadOnChange();
-    Props.forceReload(Props.id);
     forceReload();
 }
 
@@ -223,7 +222,9 @@ const handleRemover = () => {
             removeGameUser(Props.id as string).then(r => console.log(r));
             removeFromSessionStorage(Props.id as string, true, true)
             removeFromLocalStorage(true, true)
-            handleStatusChange()
+            handleStatusChange();
+            Props.forceReload(Props.id as string);
+            SweetAlerts("success", "Jogo removido da sua conta com sucesso!");
         } else {
             console.log("não remover")
         }
