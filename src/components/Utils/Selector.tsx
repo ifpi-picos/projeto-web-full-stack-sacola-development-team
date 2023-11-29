@@ -52,7 +52,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
 
 
     const handleJaZerei = () => {
-        const res = userAddGameStatus(Props.id, "complete");
+        const res = userAddGameStatus(Props.id, "complete", 'local');
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -91,7 +91,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     }
 
     const handleQueroZerar = () => {
-        const res = userAddGameStatus(Props.id, "playingLater");
+        const res = userAddGameStatus(Props.id, "playingLater", 'local');
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -128,7 +128,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     }
 
     const handleEstouJogando = () => {
-        const res = userAddGameStatus(Props.id, "playingNow");
+        const res = userAddGameStatus(Props.id, "playingNow", 'local');
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -166,7 +166,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     }
 
     const handleDesisti = () => {
-        const res = userAddGameStatus(Props.id, "abandoned");
+        const res = userAddGameStatus(Props.id, "abandoned", 'local');
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
