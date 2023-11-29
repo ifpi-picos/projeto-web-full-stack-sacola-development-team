@@ -206,12 +206,25 @@ export default function Biblioteca({games}: LibraryProps) {
     async function forceReloadOnChooseFilter(status: string) {
         if (status === "AllGames") {
             const userGames = JSON.parse(localStorage.getItem("userGames") || "{}");
-            setTotalGames(userGames.length);
+            const userSteamGames = JSON.parse(
+                localStorage.getItem("userSteamGames") || "{}"
+            );
+            setTotalGames(userGames.length + userSteamGames.length);
             setUserGames(JSON.parse(localStorage.getItem("userGames") || "{}"));
+            setUserSteamGames(JSON.parse(localStorage.getItem("userSteamGames") || "{}"));
         } else {
             const updatedUserGames = await getUserGamesByStatus(status);
-            setUserGames(updatedUserGames.gameStatusList);
-            setTotalGames(updatedUserGames.gameStatusList.length);
+            const localGames = updatedUserGames.gameStatusList.localGames;
+            // Pegar o userSteamGames do localStorage e filtrar os jogos pelos ids que estão em updatedUserGames.gameStatusList.steamGames
+            const steamGames = JSON.parse(
+                localStorage.getItem("userSteamGames") || "{}"
+            ).filter((game: any) => {
+                return updatedUserGames.gameStatusList.steamGames.includes(game._id);
+            });
+
+            setUserGames(localGames);
+            setUserSteamGames(steamGames);
+            setTotalGames(localGames.length + steamGames.length);
         }
     }
 
