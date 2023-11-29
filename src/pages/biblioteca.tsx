@@ -55,67 +55,25 @@ export default function Biblioteca({games}: LibraryProps) {
     }
 
     function loadUserGames() {
-        if (localStorage.getItem("userGames")) {
-            const userGames = JSON.parse(localStorage.getItem("userGames") || "{}");
-            const userSteamGames = JSON.parse(
-                localStorage.getItem("userSteamGames") || "{}"
-            );
-            setUserSteamGames(userSteamGames);
-            setTotalGames(userGames.length + userSteamGames.length);
-            setUserGames(userGames);
-
-            // Criar cards para os jogos do Steam quando os dados estiverem disponíveis
-            const steamCards = {[userSteamGames[0]._id]: userSteamGames[0]};
-            userSteamGames.forEach((game: any) => {
-                console.log("Entrou no forEach do loadUserGames");
-                steamCards[game._id] = {
-                    name: game.infos?.name,
-                    cover: {
-                        image_id: game._id,
-                    },
-                };
-            });
-            setCardSteamGames(steamCards);
-            setIsLoading(false);
-        } else {
-            userLibraryGames()
-                .then((response) => {
-                    console.log(response);
-                    if (response.games.game_List.length === 0) {
-                        setUserGames([]);
-                        setTotalGames(0);
-                        localStorage.setItem("userGames", JSON.stringify([]));
-                        setIsLoading(false);
-                        return;
-                    }
-                    setUserGames(response.games.game_List);
-                    setTotalGames(response.games.game_List.length);
-                    localStorage.setItem(
-                        "userGames",
-                        JSON.stringify(response.games.game_List)
-                    );
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    setIsLoading(false);
-                });
-
-            getSteamGames().then((r) => {
-                localStorage.setItem(
-                    "userSteamGames",
-                    JSON.stringify(r.games.map((game: any) => game))
+        try {
+            if (localStorage.getItem("userGames")) {
+                const userGames = JSON.parse(localStorage.getItem("userGames") || "{}");
+                const userSteamGames = JSON.parse(
+                    localStorage.getItem("userSteamGames") || "{}"
                 );
-                let totalGames = JSON.parse(
-                    localStorage.getItem("userGames") || "{}"
-                ).length;
-                totalGames += r.games.length;
-                setUserSteamGames(r.games);
-                setTotalGames(totalGames);
+                setUserSteamGames(userSteamGames);
+                setTotalGames(userGames.length + userSteamGames.length);
+                setUserGames(userGames);
 
                 // Criar cards para os jogos do Steam quando os dados estiverem disponíveis
-                const steamCards = {[r.games[0]._id]: r.games[0]};
-                r.games.forEach((game: any) => {
+                if (userSteamGames.length === 0) {
+                    setCardSteamGames(null);
+                    setIsLoading(false);
+                    return;
+                }
+                const steamCards = {[userSteamGames[0]._id]: userSteamGames[0]};
+                userSteamGames.forEach((game: any) => {
+                    console.log("Entrou no forEach do loadUserGames");
                     steamCards[game._id] = {
                         name: game.infos?.name,
                         cover: {
@@ -124,7 +82,63 @@ export default function Biblioteca({games}: LibraryProps) {
                     };
                 });
                 setCardSteamGames(steamCards);
-            });
+                setIsLoading(false);
+            } else {
+                userLibraryGames()
+                    .then((response) => {
+                        console.log(response);
+                        if (response.games.game_List.length === 0) {
+                            setUserGames([]);
+                            setTotalGames(0);
+                            localStorage.setItem("userGames", JSON.stringify([]));
+                            setIsLoading(false);
+                            return;
+                        }
+                        setUserGames(response.games.game_List);
+                        setTotalGames(response.games.game_List.length);
+                        localStorage.setItem(
+                            "userGames",
+                            JSON.stringify(response.games.game_List)
+                        );
+                        setIsLoading(false);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        setIsLoading(false);
+                    });
+
+                getSteamGames().then((r) => {
+                    if (r.games.length === 0) {
+                        setUserSteamGames([]);
+                        localStorage.setItem("userSteamGames", JSON.stringify([]));
+                        return;
+                    }
+                    localStorage.setItem(
+                        "userSteamGames",
+                        JSON.stringify(r.games.map((game: any) => game))
+                    );
+                    let totalGames = JSON.parse(
+                        localStorage.getItem("userGames") || "{}"
+                    ).length;
+                    totalGames += r.games.length;
+                    setUserSteamGames(r.games);
+                    setTotalGames(totalGames);
+
+                    // Criar cards para os jogos do Steam quando os dados estiverem disponíveis
+                    const steamCards = {[r.games[0]._id]: r.games[0]};
+                    r.games.forEach((game: any) => {
+                        steamCards[game._id] = {
+                            name: game.infos?.name,
+                            cover: {
+                                image_id: game._id,
+                            },
+                        };
+                    });
+                    setCardSteamGames(steamCards);
+                });
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
