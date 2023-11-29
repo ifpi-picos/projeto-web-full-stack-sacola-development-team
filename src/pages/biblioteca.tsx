@@ -264,6 +264,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                                 className="right-0 text-white py-1 px-2 rounded cursor-pointer items-center">
                                                 <CardModal
                                                     id={gameId}
+                                                    location={"local"}
                                                     forceReload={forceReloadOnGameDelete}
                                                     forceReloadOnChange={forceReloadOnGameStatusChange}
                                                 />
@@ -325,6 +326,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                                     className="right-0 text-white py-1 px-2 rounded cursor-pointer items-center">
                                                     <CardModal
                                                         id={game._id}
+                                                        location={"steam"}
                                                         forceReload={forceReloadOnGameDelete}
                                                         forceReloadOnChange={forceReloadOnGameStatusChange}
                                                     />
@@ -340,7 +342,6 @@ export default function Biblioteca({games}: LibraryProps) {
                                                 height={150} // Altura definida para manter a proporção, pode ser ajustada conforme necessário
                                                 onClick={() => pickGameId(cardsSteamGames[game._id])}
                                                 className="rounded cursor-pointer sm:w-[225px] w-[145px]"
-                                                objectFit={"cover"}
                                             />
 
 

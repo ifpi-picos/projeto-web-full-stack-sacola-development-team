@@ -6,6 +6,7 @@ import Button from '@mui/joy/Button';
 import Swal from 'sweetalert2';
 import {addSteamUser, syncSteamGames, removeSteamUser, getSteamUser} from '@/services/userSteam';
 import {useEffect} from "react";
+import {removeFromLocalStorage} from "@/components/Utils/utilities";
 
 interface SteamCardProps {
     refresh: Function;
@@ -56,6 +57,7 @@ export default function SteamCard(Props: SteamCardProps) {
                     color: 'aliceblue',
                     background: '#545454',
                 });
+                removeFromLocalStorage(true, true);
                 Props.refresh();
                 refreshPage();
             });
@@ -78,6 +80,7 @@ export default function SteamCard(Props: SteamCardProps) {
                 });
                 Props.refresh();
                 refreshPage();
+                removeFromLocalStorage(true, true)
             } else {
                 Swal.fire({
                     icon: 'error',

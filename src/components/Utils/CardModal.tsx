@@ -11,6 +11,7 @@ import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Uti
 
 interface CardModalProps{
   id: string | string[] | undefined;
+  location: string;
   forceReload: Function;
   forceReloadOnChange: Function;
 }
@@ -38,7 +39,7 @@ function forceReload() {
 useEffect(() => {
     async function fetchData() {
         if (gameStatus === null) {
-            const savedState = localStorage.getItem("gameStatusList");
+            const savedState = localStorage.getItem("gameStatusLis");
             if (savedState === null) {
                 const result = await getUserGamesStatusList();
                 localStorage.setItem("gameStatusList", JSON.stringify(result));
@@ -60,44 +61,50 @@ const handleStatusChange = () => {
 }
 
 const handleJaZerei = () => {
-    const res = userAddGameStatus(Props.id, "complete");
-    res.then((result) => {
-        if (result.message === "Status do jogo atualizado com sucesso!") {
-            removeFromSessionStorage(Props.id as string, true);
-            removeFromLocalStorage(true)
-            setGameStatus("completeGames")
-            handleStatusChange()
-            SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
-        } else {
-            if (result.message === "Jogo já está na lista!") {
-                SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos completos!", "Deseja remover o" +
-                    " jogo da sua lista de jogos completos?", "Removido!", "O jogo foi removido da sua lista de" +
-                    " jogos completos!").then((result) => {
-                    if (result) {
-                        const res = userRemoveGameStatus(Props.id, "complete");
-                        res.then((result) => {
-                            console.log(result)
-                            if (result === "Status do jogo atualizado com sucesso!") {
-                                removeFromSessionStorage(Props.id as string, true)
-                                removeFromLocalStorage(true)
-                                setGameStatus(null)
-                                SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
-                            } else {
-                                SweetAlerts("error", "Erro ao remover jogo da sua lista de jogos completos.");
-                            }
-                        });
-                    } else {
-                        console.log("não remover")
-                    }
-                });
+    try {
+        const res = userAddGameStatus(Props.id, "complete", Props.location);
+        res.then((result) => {
+            if (result.message === "Status do jogo atualizado com sucesso!") {
+                removeFromSessionStorage(Props.id as string, true);
+                removeFromLocalStorage(true)
+                setGameStatus("completeGames")
+                handleStatusChange()
+                SweetAlerts("success", "Jogo adicionado à sua lista de jogos completos!");
+            } else {
+                if (result.message === "Jogo já está na lista!") {
+                    SweetAlertsConfirm("warning", "Jogo já está na sua lista de jogos completos!", "Deseja remover o" +
+                        " jogo da sua lista de jogos completos?", "Removido!", "O jogo foi removido da sua lista de" +
+                        " jogos completos!").then((result) => {
+                        if (result) {
+                            const res = userRemoveGameStatus(Props.id, "complete");
+                            res.then((result) => {
+                                console.log(result)
+                                if (result === "Status do jogo atualizado com sucesso!") {
+                                    removeFromSessionStorage(Props.id as string, true)
+                                    removeFromLocalStorage(true)
+                                    setGameStatus(null)
+                                    SweetAlerts("success", "Jogo removido da sua lista de jogos completos!");
+                                } else {
+                                    SweetAlerts("error", "Erro ao remover jogo da sua lista de jogos completos.");
+                                }
+                            }).catch((error) => {
+                                console.log(error)
+                            });
+                        } else {
+                            console.log("não remover")
+                        }
+                    });
+                }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.log(error)
+    }
     handleClose();
 }
 
 const handleQueroZerar = () => {
-    const res = userAddGameStatus(Props.id, "playingLater");
+    const res = userAddGameStatus(Props.id, "playingLater", Props.location);
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -136,7 +143,7 @@ const handleQueroZerar = () => {
 }
 
 const handleEstouJogando = () => {
-    const res = userAddGameStatus(Props.id, "playingNow");
+    const res = userAddGameStatus(Props.id, "playingNow", Props.location);
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -176,7 +183,7 @@ const handleEstouJogando = () => {
 }
 
 const handleDesisti = () => {
-    const res = userAddGameStatus(Props.id, "abandoned");
+    const res = userAddGameStatus(Props.id, "abandoned", Props.location);
     res.then((result) => {
         console.log(result)
         if (result.message === "Status do jogo atualizado com sucesso!") {

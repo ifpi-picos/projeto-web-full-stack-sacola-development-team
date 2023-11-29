@@ -1,6 +1,6 @@
 import {verifyIfTheUserIsLogged} from "@/components/Utils/utilities";
 
-export async function userAddGameStatus(id: string | string[] | undefined, status: string) {
+export async function userAddGameStatus(id: string | string[] | undefined, status: string, location: string) {
     try {
         const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
         const url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
@@ -12,7 +12,7 @@ export async function userAddGameStatus(id: string | string[] | undefined, statu
                 Client_Token: `${Client_Token}`,
                 Authorization: `Bearer ${Token}`,
             },
-            body: JSON.stringify({ game: id, status: status }),
+            body: JSON.stringify({ game: id, status: status, location: location }),
         });
         const data = await response.json();
         if (data.message === "Jogo não encontrado!") {
