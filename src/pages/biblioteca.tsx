@@ -254,7 +254,13 @@ export default function Biblioteca({games}: LibraryProps) {
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
                 {isLoading ? (
                     <Loading isLoading={true}/>
-                ) : userGames && userGames.length > 0 ? (
+                ) : !(userGames && userGames.length > 0 && userSteamGames && userSteamGames.length > 0) ? (
+                    <div className="flex justify-center items-center h-96 ">
+                        <h2 className="text-2xl text-white ml-20">
+                            Nenhum resultado encontrado.
+                        </h2>
+                    </div>
+                ) : (
                     userGames.map((gameId) => (
                         <div key={gameId} className="rounded p-2 relative top-2">
                             {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
@@ -305,12 +311,7 @@ export default function Biblioteca({games}: LibraryProps) {
                             </h2>
                         </div>
                     ))
-                ) : (
-                    <p className="text-white text-lg font-semibold text-center mt-4">
-                        Nenhum jogo encontrado
-                    </p>
                 )}
-
                 {/* Cards dos userSteamGames*/}
                 {userSteamGames &&
                     userSteamGames.length > 0 &&
