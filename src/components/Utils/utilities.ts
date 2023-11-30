@@ -14,6 +14,7 @@ export function removeFromLocalStorage(gameStatusList?: boolean, userGames?: boo
         localStorage.removeItem("gameStatusList");
     } else if (userGames && gameStatusList) {
         localStorage.removeItem("userGames");
+        localStorage.removeItem("userSteamGames")
         localStorage.removeItem("gameStatusList");
     }
 }
