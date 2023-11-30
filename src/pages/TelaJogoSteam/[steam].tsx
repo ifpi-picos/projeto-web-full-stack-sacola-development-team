@@ -1,16 +1,11 @@
 import FooterNavbar from "@/components/Main/FooterNavbar";
 import Header from "@/components/Main/Header";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import Loading from "@/components/Main/loading";
-import {addGameToUser} from "@/services/addGame";
-import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
-import {removeGameUser} from "@/services/removeGame";
 import SelectionBox from "@/components/Utils/Selector";
 import {userLibraryGames} from "@/services/userLibraryGames";
-import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Utils/utilities";
 
 export default function TelaJogoSteam() {
     const router = useRouter();
@@ -63,7 +58,6 @@ export default function TelaJogoSteam() {
 
     }, [id]);
 
-    
 
     // @ts-ignore
     return (
@@ -85,7 +79,7 @@ export default function TelaJogoSteam() {
                         )}
                         <h2 className="text-center  mt-2 text-white">{gameInfo.name}</h2>
                         <div className="flex justify-center mt-2">
-              
+
 
                             {/* <span
                                 className="bg-azul-infos-50 rounded-full px-3 py-1 text-sm font-semibold text-azul-textos-50 mr-2 mb-2">

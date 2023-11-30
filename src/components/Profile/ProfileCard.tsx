@@ -74,6 +74,7 @@ export default function ProfileCard() {
                                         onClose={() => setIsModalOpen(false)}
                                         userData={profileData}
                                         onSave={handleSaveProfile}
+                                        refresh={refreshPage}
                                     />
                                 </div>
 
