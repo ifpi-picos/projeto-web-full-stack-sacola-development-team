@@ -279,7 +279,7 @@ export default function Biblioteca({games}: LibraryProps) {
                         </h2>
                     </div>
                 ) : (
-                    userGames.map((gameId) => (
+                    userGames?.map((gameId) => (
                         <div key={gameId} className="rounded p-2 relative top-2">
                             {cardsGames && cardsGames[gameId] && cardsGames[gameId].cover && (
                                 <div className="text-center relative mx-auto">
