@@ -73,7 +73,6 @@ export default function Biblioteca({games}: LibraryProps) {
                 }
                 const steamCards = {[userSteamGames[0]._id]: userSteamGames[0]};
                 userSteamGames.forEach((game: any) => {
-                    console.log(game._id);
                     if (game._id === null) return;
                     steamCards[game._id] = {
                         name: game.infos?.name,
@@ -128,7 +127,7 @@ export default function Biblioteca({games}: LibraryProps) {
                     // Criar cards para os jogos do Steam quando os dados estiverem disponíveis
                     const steamCards = {[r.games[0]._id]: r.games[0]};
                     r.games.forEach((game: any) => {
-                        console.log(game._id)
+                        if (game._id === null) return;
                         steamCards[game._id] = {
                             name: game.infos?.name,
                             cover: {
