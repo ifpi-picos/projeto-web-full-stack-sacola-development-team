@@ -73,7 +73,8 @@ export default function Biblioteca({games}: LibraryProps) {
                 }
                 const steamCards = {[userSteamGames[0]._id]: userSteamGames[0]};
                 userSteamGames.forEach((game: any) => {
-                    console.log("Entrou no forEach do loadUserGames");
+                    console.log(game._id);
+                    if (game._id === null) return;
                     steamCards[game._id] = {
                         name: game.infos?.name,
                         cover: {
@@ -127,7 +128,7 @@ export default function Biblioteca({games}: LibraryProps) {
                     // Criar cards para os jogos do Steam quando os dados estiverem disponíveis
                     const steamCards = {[r.games[0]._id]: r.games[0]};
                     r.games.forEach((game: any) => {
-                        console.log(game)
+                        console.log(game._id)
                         steamCards[game._id] = {
                             name: game.infos?.name,
                             cover: {
@@ -294,7 +295,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                             width={250}
                                             height={250}
                                             onClick={() => pickGameId(cardsGames[gameId])}
-                                            className="rounded cursor-pointer "
+                                            className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[250px] sm:h-[337px]"
                                         />
                                     </div>
                                 </div>
@@ -353,9 +354,10 @@ export default function Biblioteca({games}: LibraryProps) {
                                                 src={game.cover}
                                                 alt={game.infos?.name}
                                                 width={225}
-                                                height={150} // Altura definida para manter a proporção, pode ser ajustada conforme necessário
+                                                height={145} // Altura definida para manter a proporção, pode ser
+                                                // ajustada conforme necessário
                                                 onClick={() => pickGameId(cardsSteamGames[game._id])}
-                                                className="rounded cursor-pointer sm:w-[225px] w-[145px]"
+                                                className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[250px] sm:h-[337px]"
                                             />
 
 
