@@ -68,46 +68,55 @@ export default function SteamCard(Props: SteamCardProps) {
 
     const handleSyncGames = () => {
         // Replace this with your sync logic
-        syncSteamGames().then((response) => {
-            if (response.message === 'Jogos adicionados com sucesso!') {
+        try {
+            syncSteamGames().then((response) => {
+                if (response.message === 'Jogos adicionados com sucesso!') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sucesso!',
+                        text: 'Jogos sincronizados com sucesso!',
+                        confirmButtonText: 'Ok',
+                        color: 'aliceblue',
+                        background: '#545454',
+                    });
+                    Props.refresh();
+                    refreshPage();
+                    removeFromLocalStorage(true, true)
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Ocorreu um erro ao sincronizar os jogos!',
+                        confirmButtonText: 'Ok',
+                        color: 'aliceblue',
+                        background: '#545454',
+                    });
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleUnlinkSteam = () => {
+        try {
+            removeSteamUser().then(() => {
+                setData((current) => ({ ...current, steamId: '', status: 'initial' }));
                 Swal.fire({
                     icon: 'success',
-                    title: 'Sucesso!',
-                    text: 'Jogos sincronizados com sucesso!',
+                    title: 'Desvinculado!',
+                    text: 'Steam desvinculada com sucesso!',
                     confirmButtonText: 'Ok',
                     color: 'aliceblue',
                     background: '#545454',
                 });
                 Props.refresh();
-                refreshPage();
-                removeFromLocalStorage(true, true)
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Ocorreu um erro ao sincronizar os jogos!',
-                    confirmButtonText: 'Ok',
-                    color: 'aliceblue',
-                    background: '#545454',
-                });
-            }
-        });
-    };
-
-    const handleUnlinkSteam = () => {
-        removeSteamUser().then(() => {
-            setData((current) => ({ ...current, steamId: '', status: 'initial' }));
-            Swal.fire({
-                icon: 'success',
-                title: 'Desvinculado!',
-                text: 'Steam desvinculada com sucesso!',
-                confirmButtonText: 'Ok',
-                color: 'aliceblue',
-                background: '#545454',
+                setSteamId('')
+                removeFromLocalStorage(true, true);
             });
-            Props.refresh();
-            setSteamId('')
-        });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

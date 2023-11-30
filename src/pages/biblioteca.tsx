@@ -65,14 +65,32 @@ export default function Biblioteca({games}: LibraryProps) {
                 setTotalGames(userGames.length + userSteamGames.length);
                 setUserGames(userGames);
 
-                // Criar cards para os jogos do Steam quando os dados estiverem disponíveis
-                if (userSteamGames.length === 0) {
-                    setCardSteamGames(null);
+                if ((userGames && userGames.length === 0 ) && (userSteamGames && userSteamGames.length > 0)) {
+                    setTotalGames(userSteamGames.length);
+                    setUserGames([]);
+                    setIsLoading(false);
+                    return;
+                } else if ((userGames && userGames.length > 0 ) && (userSteamGames && userSteamGames.length === 0)) {
+                    setTotalGames(userGames.length);
+                    setUserSteamGames([]);
+                    setIsLoading(false);
+                    return;
+                } else if ((userGames && userGames.length === 0 ) && (userSteamGames && userSteamGames.length === 0)) {
+                    setTotalGames(0);
+                    setUserSteamGames([]);
+                    setUserGames([]);
+                    setIsLoading(false);
+                    return;
+                } else if (userGames.length === 0) {
+                    setUserGames([]);
+                    setTotalGames(0);
                     setIsLoading(false);
                     return;
                 }
+
                 const steamCards = {[userSteamGames[0]._id]: userSteamGames[0]};
                 userSteamGames.forEach((game: any) => {
+                    console.log(game._id);
                     if (game._id === null) return;
                     steamCards[game._id] = {
                         name: game.infos?.name,
@@ -246,6 +264,7 @@ export default function Biblioteca({games}: LibraryProps) {
         }
     }
 
+
     return (
         <div className="bg-blue-jeans-50 min-h-screen">
             <Header/>
@@ -253,7 +272,7 @@ export default function Biblioteca({games}: LibraryProps) {
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
                 {isLoading ? (
                     <Loading isLoading={true}/>
-                ) : !(userGames && userGames.length > 0 && userSteamGames && userSteamGames.length > 0) ? (
+                ) : (totalGames === 0) ? (
                     <div className="flex justify-center items-center h-96 ">
                         <h2 className="text-2xl text-white ml-20">
                             Nenhum resultado encontrado.
