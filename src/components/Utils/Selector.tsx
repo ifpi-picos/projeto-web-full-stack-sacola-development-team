@@ -272,8 +272,6 @@ export default function SelectionBox(Props: SelectionBoxProps) {
                     >
                         Desisti de zerar/jogar
                     </button>
-
-
                 </div>
             </Popover>
         </div>
