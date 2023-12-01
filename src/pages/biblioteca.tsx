@@ -31,8 +31,14 @@ interface LibraryProps {
 export default function Biblioteca({games}: LibraryProps) {
     const router = useRouter();
 
-    function pickGameId(game: Game) {
-        router.push(`/TelaJogo/${game.id}`);
+    function pickGameIdAndRedirect(game: Game, location?: string) {
+        if (location === "steam") {
+            router.push(`/TelaJogoSteam/${game}`);
+            return;
+        } else if (location === "local") {
+            router.push(`/TelaJogo/${game.id}`);
+            return;
+        }
     }
 
     const [isLoading, setIsLoading] = useState(true);
@@ -69,7 +75,6 @@ export default function Biblioteca({games}: LibraryProps) {
                     setTotalGames(userSteamGames.length);
                     setUserGames([]);
                     setIsLoading(false);
-                    return;
                 } else if ((userGames && userGames.length > 0 ) && (userSteamGames && userSteamGames.length === 0)) {
                     setTotalGames(userGames.length);
                     setUserSteamGames([]);
@@ -318,7 +323,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                             alt={cardsGames[gameId].name}
                                             width={250}
                                             height={250}
-                                            onClick={() => pickGameId(cardsGames[gameId])}
+                                            onClick={() => pickGameIdAndRedirect(cardsGames[gameId], "local")}
                                             className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[250px] sm:h-[337px]"
                                         />
                                     </div>
@@ -375,7 +380,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                                 width={225}
                                                 height={145} // Altura definida para manter a proporção, pode ser
                                                 // ajustada conforme necessário
-                                                onClick={() => pickGameId(cardsSteamGames[game._id])}
+                                                onClick={() => pickGameIdAndRedirect(game._id, "steam")}
                                                 className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[250px] sm:h-[337px]"
                                             />
 
