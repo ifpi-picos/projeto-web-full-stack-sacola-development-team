@@ -1,6 +1,6 @@
 import {verifyIfTheUserIsLogged} from "@/components/Utils/utilities";
 
-export async function userAddGameStatus(id: string | string[] | undefined, status: string, location: string) {
+export async function userAddGameStatus(id: string | string[] | undefined, status: string, location: string | undefined) {
     try {
         const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
         const url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL || process.env.NEXT_PUBLIC_VERCEL_URL;

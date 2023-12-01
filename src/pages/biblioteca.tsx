@@ -95,7 +95,6 @@ export default function Biblioteca({games}: LibraryProps) {
 
                 const steamCards = {[userSteamGames[0]._id]: userSteamGames[0]};
                 userSteamGames.forEach((game: any) => {
-                    console.log(game._id);
                     if (game._id === null) return;
                     steamCards[game._id] = {
                         name: game.infos?.name,

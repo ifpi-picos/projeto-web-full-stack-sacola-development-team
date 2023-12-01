@@ -5,11 +5,12 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {SweetAlerts, SweetAlertsConfirm,} from "@/components/Utils/SweetAlerts";
 import {userAddGameStatus} from "@/services/userAddGameStatus";
 import {userRemoveGameStatus} from "@/services/userRemoveGameStatus";
-import {getGameStatusById} from "@/services/userGetGameStatus";
+import {getGameStatusById, getStatusFromGameId, getUserGamesStatusList} from "@/services/userGetGameStatus";
 import {removeFromLocalStorage, removeFromSessionStorage} from "@/components/Utils/utilities";
 
 interface SelectionBoxProps {
     id: string | string[] | undefined;
+    location?: string;
 }
 
 
@@ -30,18 +31,15 @@ export default function SelectionBox(Props: SelectionBoxProps) {
 
     useEffect(() => {
         async function fetchData() {
-            console.log("gameStatus:", gameStatus)
             if (gameStatus === null) {
-                const savedState = sessionStorage.getItem(`gameStatus:${Props.id}`);
+                const savedState = localStorage.getItem("gameStatusLis");
                 if (savedState === null) {
-                    let gameStatusResult = await getGameStatusById(Props.id as string);
-
-                    if (gameStatusResult !== undefined) {
-                        sessionStorage.setItem(`gameStatus:${Props.id}`, gameStatusResult);
-                    }
+                    const result = await getUserGamesStatusList();
+                    localStorage.setItem("gameStatusList", JSON.stringify(result));
+                    const gameStatusResult = getStatusFromGameId(Props.id as string, JSON.stringify(result));
                     setGameStatus(gameStatusResult);
                 } else {
-                    const gameStatusResult = sessionStorage.getItem(`gameStatus:${Props.id}`);
+                    const gameStatusResult = getStatusFromGameId(Props.id as string, savedState);
                     setGameStatus(gameStatusResult);
                 }
             }
@@ -52,7 +50,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
 
 
     const handleJaZerei = () => {
-        const res = userAddGameStatus(Props.id, "complete", 'local');
+        const res = userAddGameStatus(Props.id, "complete", Props.location);
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -91,7 +89,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     }
 
     const handleQueroZerar = () => {
-        const res = userAddGameStatus(Props.id, "playingLater", 'local');
+        const res = userAddGameStatus(Props.id, "playingLater", Props.location);
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -128,7 +126,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     }
 
     const handleEstouJogando = () => {
-        const res = userAddGameStatus(Props.id, "playingNow", 'local');
+        const res = userAddGameStatus(Props.id, "playingNow", Props.location);
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
@@ -166,7 +164,7 @@ export default function SelectionBox(Props: SelectionBoxProps) {
     }
 
     const handleDesisti = () => {
-        const res = userAddGameStatus(Props.id, "abandoned", 'local');
+        const res = userAddGameStatus(Props.id, "abandoned", Props.location);
         res.then((result) => {
             console.log(result)
             if (result.message === "Status do jogo atualizado com sucesso!") {
