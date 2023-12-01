@@ -18,9 +18,7 @@ export default function TelaJogoSteam() {
 
     useEffect(() => {
         try {
-            console.log(steamAppId);
             if (steamAppId) {
-                console.log(steamAppId)
                 getSteamGame(steamAppId).then((result) => {
                     setGameInfo(result.Game);
                     const platforms = []
@@ -34,7 +32,6 @@ export default function TelaJogoSteam() {
                         platforms.push({name: "Linux", id: 3})
                     }
                     setPlatforms(platforms);
-                    console.log(result.Game);
                 }).catch((e) => {
                     console.log(e)
                 });
@@ -148,7 +145,7 @@ export default function TelaJogoSteam() {
                                 <div className="flex items-center justify-center">
                                     <Image
                                         src={gameInfo.infos.screenshots[0].path_thumbnail}
-                                        alt={gameInfo.name}
+                                        alt={gameInfo.infos?.name}
                                         width={800}
                                         height={450}
                                         className="mx-auto"
