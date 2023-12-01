@@ -39,6 +39,9 @@ export default function CloudinaryUploadWidget({
       <CldUploadWidget
         uploadPreset={uploadPreset}
         onSuccess={handleUploadSuccess}
+        options={{
+          clientAllowedFormats: ["png", "jpg", "jpeg", "gif", "svg"],
+        }}
       >
         {({ open }) => {
           // Função chamada quando o botão "Upload an Image" é clicado

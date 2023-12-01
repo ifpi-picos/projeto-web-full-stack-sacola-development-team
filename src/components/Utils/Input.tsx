@@ -147,7 +147,7 @@ export default function SteamCard(Props: SteamCardProps) {
                 color="primary"
                 loading={data.status === "loading"}
                 type="submit"
-                className="ml-2 bg-azul-primary-50 text-white px-4 py-2 rounded-md"
+                className="ml-3 bg-azul-primary-50 text-white px-4 py-[0.65rem] rounded-md"
               >
                 Vincular
               </Button>
