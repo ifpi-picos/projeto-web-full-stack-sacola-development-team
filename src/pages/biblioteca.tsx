@@ -323,7 +323,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                             width={250}
                                             height={250}
                                             onClick={() => pickGameIdAndRedirect(cardsGames[gameId], "local")}
-                                            className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[250px] sm:h-[337px]"
+                                            className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[200px] sm:h-[337px]"
                                         />
                                     </div>
                                 </div>
@@ -380,7 +380,7 @@ export default function Biblioteca({games}: LibraryProps) {
                                                 height={145} // Altura definida para manter a proporção, pode ser
                                                 // ajustada conforme necessário
                                                 onClick={() => pickGameIdAndRedirect(game._id, "steam")}
-                                                className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[250px] sm:h-[337px]"
+                                                className="rounded cursor-pointer w-[150px] sm:w-[250px] h-[200px] sm:h-[337px]"
                                             />
 
 

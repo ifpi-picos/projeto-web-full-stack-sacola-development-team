@@ -3,12 +3,13 @@ import { useState } from "react";
 
 interface UploadImageProps {
   onURLChange?: (url: string) => void;
+  maxHeight?: number;
 }
 
 const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
 export default function CloudinaryUploadWidget({
-  onURLChange,
+  onURLChange, maxHeight
 }: UploadImageProps) {
   const [imageURL, setImageURL] = useState(""); // Inicializa o estado imageURL como uma string vazia
   const [buttonText, setButtonText] = useState("Enviar Imagem");
@@ -18,6 +19,7 @@ export default function CloudinaryUploadWidget({
     const imageUrl = result.info.secure_url;
     if (onURLChange) {
       onURLChange(imageUrl);
+      maxHeight = 300;
     } else {
       console.warn(
         "Você precisa passar a prop onChange para o formulário de cadastro"

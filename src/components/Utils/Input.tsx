@@ -155,14 +155,14 @@ export default function SteamCard(Props: SteamCardProps) {
           </form>
           <div className="flex justify-between items-center">
             <div>
-              <p>Steam ID: {steamId}</p>
+              <p className='text-white'>Steam ID: {steamId}</p>
             </div>
           </div>
     
           <div className="flex mt-4">
             <Button
               variant="solid"
-              color="primary"
+              
               onClick={handleUnlinkSteam}
               className="bg-red-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-red-700"
             >
