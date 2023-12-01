@@ -160,22 +160,20 @@ export default function SteamCard(Props: SteamCardProps) {
           </div>
     
           <div className="flex mt-4">
-            <Button
-              variant="solid"
+            <button
+              
               
               onClick={handleUnlinkSteam}
-              className="bg-red-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-red-700"
+              className="bg-red-500 text-white px-4 py-2 rounded-md mr-2 text-[15px] hover:bg-red-700"
             >
               Desvincular Steam
-            </Button>
-            <Button
-              variant="solid"
-              color="primary"
+            </button>
+            <button
               onClick={handleSyncGames}
               className="bg-azul-primary-50 text-white px-4 py-2 rounded-md"
             >
               Sincronizar Jogos da Steam
-            </Button>
+            </button>
           </div>
         </div>
       );
