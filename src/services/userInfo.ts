@@ -32,7 +32,7 @@ export async function getUserInfo() {
     }
 }
 
-export async function updateUserInfo(username: string, photoURL: string) {
+export async function updateUserInfo(username: string, photo: string) {
     const Client_Token = process.env.NEXT_PUBLIC_CLIENT_TOKEN;
     const url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
     const Token = localStorage.getItem("acessToken");
@@ -52,7 +52,7 @@ export async function updateUserInfo(username: string, photoURL: string) {
             },
             body: JSON.stringify({
                 username,
-                photoURL,
+                photo,
             })
         });
 
