@@ -156,7 +156,7 @@ export default function TelaJogoSteam() {
                                     />
                                 </div>
                                 <div className="mt-4 text-justify text-white mx-auto max-w-screen-md">
-                                    <h2 className="text-justify">{gameInfo.infos?.about_the_game}</h2>
+                                    <h2 className="text-justify">{gameInfo.infos?.short_description}</h2>
                                 </div>
                             </>
                         )}
