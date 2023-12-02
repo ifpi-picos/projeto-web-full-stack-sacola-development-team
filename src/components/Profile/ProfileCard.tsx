@@ -51,7 +51,7 @@ export default function ProfileCard() {
                         className="rounded-3xl shadow-lg bg-gray-900 md:bg-gray-900 w-full flex flex-row flex-wrap p-3 antialiased">
                         <div className="w-full md:w-1/3 ">
                             <Image
-                                className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14 "
+                                className="rounded-lg shadow-lg antialiased mt-6 mx-auto md:mt-14 md:ml-14 md:mr-0 max-h-[250px] max-w-[250px]"
                                 src={
                                     profileData.photo
                                         ? profileData.photo
@@ -59,7 +59,7 @@ export default function ProfileCard() {
                                 }
                                 alt="Profile"
                                 width={250}
-                                height={100}
+                                height={250}
                             />
                         </div>
                         <div className="md:w-2/3 w-full px-3 flex flex-row flex-wrap">

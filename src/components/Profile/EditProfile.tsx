@@ -24,10 +24,14 @@ const ProfileModal: React.FC<ProfileModalProps> = ({isOpen, onClose, userData, o
     };
 
     const handleSave = () => {
-        onSave({username, avatarUrl});
-        updateUserInfo(username, avatarUrl);
-        refresh();
-        onClose();
+        try {
+            onSave({username, avatarUrl});
+            updateUserInfo(username, avatarUrl);
+            refresh();
+            onClose();
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return isOpen ? (
