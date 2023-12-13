@@ -2,6 +2,9 @@
 # GameMate
 
 O GameMate é um sistema tracker para seus jogos
+
+System Design do projeto: [System.Design.-.GameMate.pdf](https://github.com/ifpi-picos/projeto-web-full-stack-sacola-development-team/files/13664267/System.Design.-.GameMate.pdf)
+
 ### 📋 Pré-requisitos
 
  
