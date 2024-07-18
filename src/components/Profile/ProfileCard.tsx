@@ -18,7 +18,7 @@ export default function ProfileCard() {
     const [refresh, setRefresh] = useState(false);
 
     const handleSaveProfile = (newUserData: UserData) => {
-        // Implemente a lógica para salvar os dados do usuário no estado global ou em algum backend aqui.
+        
         console.log("Dados do usuário salvos:", newUserData);
 
         setIsModalOpen(false);
